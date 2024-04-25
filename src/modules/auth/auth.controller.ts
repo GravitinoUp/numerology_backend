@@ -1,22 +1,17 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Patch,
-  Param,
   Delete,
   HttpException,
   HttpStatus,
   Ip,
   Req,
   UseFilters,
-  UseGuards,
 } from '@nestjs/common'
 import { AuthService } from './auth.service'
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
+import { ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
-import { JwtAuthGuard } from './guards/auth.guard'
 import { UserService } from '../user/user.service'
 import { AuthDto } from './dto/auth.dto'
 import { I18nService } from 'nestjs-i18n'
