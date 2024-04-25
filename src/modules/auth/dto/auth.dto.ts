@@ -14,7 +14,7 @@ export class AuthDto {
 export class CreateAuthDto {
   @IsNumber()
   @ApiProperty()
-  user_id: number
+  user_uuid: string
 
   @IsString()
   @ApiProperty()

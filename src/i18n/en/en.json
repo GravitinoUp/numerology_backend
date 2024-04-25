@@ -1,7 +1,0 @@
-{
-  "error": {
-    "user_deactivated": "User deactivated!",
-    "user_not_found": "User not found!",
-    "wrong_credentials": "Incorrent phone or password!"
-  }
-}

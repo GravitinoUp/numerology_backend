@@ -8,6 +8,8 @@ import {
   UpdateDateColumn,
   OneToMany,
   PrimaryColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm'
 
 @Entity({ name: 'Users' })
@@ -18,11 +20,15 @@ export class User {
   @Column()
   person_uuid: string
 
+  @ManyToOne(() => Person, (person) => person.person_uuid)
+  @JoinColumn({ name: 'person_uuid', referencedColumnName: 'person_uuid' })
   person: Person
 
   @Column()
   role_id: number
 
+  @ManyToOne(() => Role, (role) => role.role_id)
+  @JoinColumn({ name: 'role_id', referencedColumnName: 'role_id' })
   role: Role
 
   @Column({ default: true })
