@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config'
 import { AuthResponse, StatusAuthResponseResponse } from './response'
 import { InjectRepository } from '@nestjs/typeorm'
 import { UserService } from '../user/user.service'
-import { DataSource, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 import { I18nService } from 'nestjs-i18n'
 import { UserResponse } from '../user/response'
 
@@ -17,7 +17,6 @@ export class AuthService {
     @InjectRepository(Auth) private authRepository: Repository<Auth>,
     private readonly usersService: UserService,
     private readonly configService: ConfigService,
-    private dataSource: DataSource,
     private readonly i18n: I18nService,
   ) {}
 
@@ -89,7 +88,9 @@ export class AuthService {
       throw new HttpException(await this.i18n.t('errors.invalid_jwt'), HttpStatus.FORBIDDEN)
     }
 
-    const user = await this.usersService.findByUuid(refreshToken.user_uuid)
+    const user = await this.usersService.findByUuid(refreshToken.user_uuid, false)
+    console.log(user)
+
     if (!user) {
       throw new HttpException(await this.i18n.t('errors.user_not_found'), HttpStatus.NOT_FOUND)
     }

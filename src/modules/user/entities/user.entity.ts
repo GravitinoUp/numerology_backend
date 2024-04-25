@@ -1,4 +1,5 @@
 import { Auth } from 'src/modules/auth/entities/auth.entity'
+import { AuthCode } from 'src/modules/auth_code/entities/auth_code.entity'
 import { Person } from 'src/modules/person/entities/person.entity'
 import { Role } from 'src/modules/role/entities/role.entity'
 import {
@@ -51,4 +52,7 @@ export class User {
 
   @OneToMany(() => Auth, (auth) => auth.user, { cascade: true, eager: true })
   auths: Auth[]
+
+  @OneToMany(() => AuthCode, (code) => code.user, { cascade: true, eager: true })
+  auth_codes: AuthCode[]
 }

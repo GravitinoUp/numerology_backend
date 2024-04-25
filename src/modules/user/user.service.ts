@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { User } from './entities/user.entity'
 import { StatusUserResponse, UserResponse } from './response'
-import { CreateUserDto } from './dto'
+import { CreateUserDto, UpdateUserDto } from './dto'
 import { CreatePersonDto } from '../person/dto'
 import { Person } from '../person/entities/person.entity'
 import * as bcrypt from 'bcrypt'
@@ -34,16 +34,26 @@ export class UserService {
       const personUuid = newPerson.identifiers[0].person_uuid
 
       user.password = await bcrypt.hash(user.password.toString(), 10)
-      await queryRunner.manager.insert(User, {
-        user_uuid: personUuid,
-        ...user,
-        person_uuid: personUuid,
-        role_id: Roles.USER,
-      })
+      const newUser = await queryRunner.manager
+        .getRepository(User)
+        .createQueryBuilder()
+        .useTransaction(true)
+        .insert()
+        .values({
+          user_uuid: personUuid,
+          ...user,
+          person_uuid: personUuid,
+          role_id: Roles.USER,
+        })
+        .returning('*')
+        .execute()
+
+      const result = newUser.raw[0]
+      if (result) delete result['password']
 
       await queryRunner.commitTransaction()
 
-      return { status: true }
+      return { status: true, data: result }
     } catch (error) {
       console.log(error)
       await queryRunner.rollbackTransaction()
@@ -53,20 +63,47 @@ export class UserService {
     }
   }
 
-  async findByUuid(user_uuid: string): Promise<UserResponse> {
+  async findByUuid(user_uuid: string, includeJoins: boolean = true): Promise<UserResponse> {
     try {
-      const user = await this.usersRepository
-        .createQueryBuilder()
-        .select()
-        .where('User.user_uuid = :user_uuid', { user_uuid })
-        .getOne()
+      let query = this.usersRepository.createQueryBuilder('user').select()
+      if (includeJoins) {
+        query = query
+          .leftJoinAndSelect('user.role', 'role')
+          .leftJoinAndSelect('user.person', 'person')
+      }
+      query = query.where('user.user_uuid = :user_uuid', { user_uuid })
 
+      const user = await query.getOne()
       delete user['password']
 
       return user
     } catch (error) {
       console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 
+  async isUserExists({
+    phone,
+    email,
+    user_uuid,
+  }: {
+    phone?: string
+    email?: string
+    user_uuid?: string
+  }): Promise<boolean> {
+    try {
+      const isUserExists = await this.usersRepository
+        .createQueryBuilder()
+        .select(['User.user_uuid', 'User.email', 'User.phone'])
+        .where('User.phone = :phone', { phone })
+        .orWhere('User.email = :email', { email })
+        .orWhere('User.user_uuid = :user_uuid', { user_uuid })
+        .getExists()
+
+      return isUserExists
+    } catch (error) {
+      console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
@@ -89,7 +126,7 @@ export class UserService {
 
   async canUserActivate(user_uuid: string): Promise<boolean> {
     try {
-      const user = await this.findByUuid(user_uuid)
+      const user = await this.findByUuid(user_uuid, false)
 
       if (user.is_active) {
         return true
@@ -99,6 +136,56 @@ export class UserService {
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? 500)
+    }
+  }
+
+  async update(user: UpdateUserDto, user_uuid: string): Promise<StatusUserResponse> {
+    const queryRunner = this.dataSource.createQueryRunner()
+    await queryRunner.connect()
+    await queryRunner.startTransaction()
+    try {
+      const updatePerson = await queryRunner.manager
+        .getRepository(Person)
+        .createQueryBuilder()
+        .useTransaction(true)
+        .update()
+        .set({ ...user })
+        .where('person_uuid = :person_uuid', { person_uuid: user_uuid })
+        .execute()
+
+      if (updatePerson.affected != 0) {
+        await queryRunner.commitTransaction()
+        return { status: true }
+      } else {
+        await queryRunner.rollbackTransaction()
+        return { status: false }
+      }
+    } catch (error) {
+      console.log(error)
+      await queryRunner.rollbackTransaction()
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    } finally {
+      await queryRunner.release()
+    }
+  }
+
+  async delete(user_uuid: string): Promise<StatusUserResponse> {
+    try {
+      const deleteUser = await this.usersRepository
+        .createQueryBuilder()
+        .update()
+        .set({ is_active: false })
+        .where('user_uuid = :user_uuid', { user_uuid })
+        .execute()
+
+      if (deleteUser.affected != 0) {
+        return { status: true }
+      } else {
+        return { status: false }
+      }
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 }

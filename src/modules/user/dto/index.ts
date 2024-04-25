@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString, IsUUID, IsOptional, IsInt } from 'class-validator'
+import { IsString, IsOptional, IsInt, Min, Max } from 'class-validator'
 
 export class CreateUserDto {
   @IsString()
@@ -16,14 +16,20 @@ export class CreateUserDto {
   patronymic?: string
 
   @IsInt()
+  @Min(1)
+  @Max(31)
   @ApiProperty()
   birthday_day: number
 
   @IsInt()
+  @Min(1)
+  @Max(12)
   @ApiProperty()
   birthday_month: number
 
   @IsInt()
+  @Min(1)
+  @Max(9999)
   @ApiProperty()
   birthday_year: number
 
@@ -41,15 +47,13 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto {
-  @IsUUID()
-  @ApiProperty()
-  user_uuid: string
-
   @IsString()
+  @IsOptional()
   @ApiProperty({ required: false })
   last_name?: string
 
   @IsString()
+  @IsOptional()
   @ApiProperty({ required: false })
   first_name?: string
 
@@ -59,18 +63,17 @@ export class UpdateUserDto {
   patronymic?: string
 
   @IsInt()
+  @IsOptional()
   @ApiProperty({ required: false })
   birthday_day?: number
 
   @IsInt()
+  @IsOptional()
   @ApiProperty({ required: false })
   birthday_month?: number
 
   @IsInt()
+  @IsOptional()
   @ApiProperty({ required: false })
   birthday_year?: number
-
-  @IsString()
-  @ApiProperty({ required: true })
-  password?: string
 }

@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
+import { MigrationInterface, QueryRunner, Table, TableCheck, TableForeignKey } from 'typeorm'
 
 export class CreateUser1713957332099 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -51,6 +51,21 @@ export class CreateUser1713957332099 implements MigrationInterface {
       }),
       true,
     )
+
+    await queryRunner.createCheckConstraints('People', [
+      new TableCheck({
+        columnNames: ['birthday_day'],
+        expression: 'birthday_day > 0 AND birthday_day <= 31',
+      }),
+      new TableCheck({
+        columnNames: ['birthday_month'],
+        expression: 'birthday_month > 0 AND birthday_month <= 12',
+      }),
+      new TableCheck({
+        columnNames: ['birthday_year'],
+        expression: 'birthday_year > 0 AND birthday_year <= 9999',
+      }),
+    ])
 
     await queryRunner.createTable(
       new Table({
@@ -109,10 +124,12 @@ export class CreateUser1713957332099 implements MigrationInterface {
           {
             name: 'email',
             type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'phone',
             type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'password',
