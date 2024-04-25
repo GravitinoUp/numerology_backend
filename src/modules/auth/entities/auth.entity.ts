@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm'
 
 @Entity({ name: 'Auths' })
@@ -16,10 +17,8 @@ export class Auth {
   @Column()
   user_uuid: string
 
-  @ManyToOne(() => User, (user) => user.user_uuid, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
+  @ManyToOne(() => User, (user) => user.user_uuid)
+  @JoinColumn({ name: 'user_uuid', referencedColumnName: 'user_uuid' })
   user: User
 
   @Column()

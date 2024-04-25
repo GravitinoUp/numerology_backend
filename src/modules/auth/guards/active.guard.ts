@@ -19,15 +19,15 @@ export class ActiveGuard implements CanActivate {
     const { user } = context.switchToHttp().getRequest()
 
     if (!user) {
-      throw new UnauthorizedException(await this.i18n.t('error.user_deactivated'))
+      throw new UnauthorizedException(await this.i18n.t('errors.user_deactivated'))
     }
 
-    const canActivate = true //await this.userService.canUserActivate(user.user_id) TODO
+    const canActivate = await this.userService.canUserActivate(user.user_uuid)
 
     if (canActivate) {
       return canActivate
     } else {
-      throw new ForbiddenException(await this.i18n.t('error.user_deactivated'))
+      throw new ForbiddenException(await this.i18n.t('errors.user_deactivated'))
     }
   }
 }

@@ -1,14 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { AuthDto, CreateAuthDto } from './dto/auth.dto'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Auth } from './entities/auth.entity'
-import { ConfigService } from '@nestjs/config'
-import { sign, verify } from 'crypto'
-import { UserService } from '../user/user.service'
-import { Repository } from 'typeorm'
 import * as bcrypt from 'bcrypt'
+import { AuthDto, CreateAuthDto } from './dto/auth.dto'
+import { Auth } from './entities/auth.entity'
+import { sign, verify } from 'jsonwebtoken'
+import { ConfigService } from '@nestjs/config'
+import { AuthResponse, StatusAuthResponseResponse } from './response'
+import { InjectRepository } from '@nestjs/typeorm'
+import { UserService } from '../user/user.service'
+import { DataSource, Repository } from 'typeorm'
 import { I18nService } from 'nestjs-i18n'
-import { AuthResponse } from './response'
+import { UserResponse } from '../user/response'
 
 @Injectable()
 export class AuthService {
@@ -16,113 +17,133 @@ export class AuthService {
     @InjectRepository(Auth) private authRepository: Repository<Auth>,
     private readonly usersService: UserService,
     private readonly configService: ConfigService,
+    private dataSource: DataSource,
     private readonly i18n: I18nService,
   ) {}
 
-  // async create(createAuthDto: CreateAuthDto) {
-  //   try {
-  //     const newAuth = await this.authRepository.create(createAuthDto)
+  async create(createAuthDto: CreateAuthDto): Promise<Auth> {
+    try {
+      const newAuth = await this.authRepository
+        .createQueryBuilder()
+        .insert()
+        .values({ ...createAuthDto })
+        .returning('*')
+        .execute()
 
-  //     return newAuth
-  //   } catch (error) {
-  //     throw new HttpException(error.message, error.status ?? 500)
-  //   }
-  // }
+      const result = newAuth.raw[0]
 
-  // async login(auth: AuthDto, values: { userAgent: string; ipAddress: string }) {
-  //   const loginData = await this.usersService.findByPhone(auth.phone)
+      return result
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? 500)
+    }
+  }
 
-  //   if (await bcrypt.compare(auth.password, loginData.password)) {
-  //     delete loginData['password']
-  //     return this.newRefreshAndAccessToken(loginData, values)
-  //   } else {
-  //     throw new HttpException(await this.i18n.t('error.wrong_credentials'), HttpStatus.FORBIDDEN)
-  //   }
-  // }
+  async login(auth: AuthDto, values: { userAgent: string; ipAddress: string }) {
+    try {
+      const loginData = await this.usersService.authByPhone(auth.phone)
 
-  // private async newRefreshAndAccessToken(
-  //   loginData: any,
-  //   values: { userAgent: string; ipAddress: string },
-  // ): Promise<AuthResponse> {
-  //   const authObject = new CreateAuthDto()
-  //   authObject.user_id = loginData.user_id
-  //   authObject.user_agent = values.userAgent
-  //   authObject.ip_address = values.ipAddress
+      if (await bcrypt.compare(auth.password, loginData.password)) {
+        delete loginData['password']
 
-  //   const auth = await this.create(authObject)
+        return this.newRefreshAndAccessToken(loginData, values)
+      } else {
+        throw new HttpException(await this.i18n.t('errors.wrong_credentials'), HttpStatus.FORBIDDEN)
+      }
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 
-  //   const authJson = {
-  //     refreshToken: auth.sign(),
-  //     accessToken: sign(
-  //       {
-  //         ...loginData,
-  //       },
-  //       this.configService.get('access_secret'),
-  //       {
-  //         expiresIn: '12h',
-  //       },
-  //     ),
-  //   }
+  private async newRefreshAndAccessToken(
+    loginData: UserResponse,
+    values: { userAgent: string; ipAddress: string },
+  ): Promise<AuthResponse> {
+    const authObject = new CreateAuthDto()
+    authObject.user_uuid = loginData.user_uuid
+    authObject.user_agent = values.userAgent
+    authObject.ip_address = values.ipAddress
 
-  //   return authJson
-  // }
+    const auth: Auth = await this.create(authObject)
 
-  // async refresh(refreshStr: string): Promise<string | undefined> {
-  //   const refreshToken = await this.retrieveRefreshToken(refreshStr)
-  //   if (!refreshToken) {
-  //     throw new HttpException(AppError.INVALID_JWT, HttpStatus.FORBIDDEN)
-  //   }
+    const authJson = {
+      refreshToken: sign(auth, this.configService.get('refresh_secret')),
+      accessToken: sign(
+        {
+          ...loginData,
+        },
+        this.configService.get('access_secret'),
+        {
+          expiresIn: '12h',
+        },
+      ),
+    }
 
-  //   const user = await this.usersService.findById(refreshToken.user_id)
+    return authJson
+  }
 
-  //   if (!user) {
-  //     throw new HttpException(AppError.USER_NOT_FOUND, HttpStatus.NOT_FOUND)
-  //   }
+  async refresh(refreshStr: string): Promise<string | undefined> {
+    const refreshToken = await this.retrieveRefreshToken(refreshStr)
+    if (!refreshToken) {
+      throw new HttpException(await this.i18n.t('errors.invalid_jwt'), HttpStatus.FORBIDDEN)
+    }
 
-  //   const loginData = await this.usersService.findByEmail(user.email)
-  //   delete loginData['password']
+    const user = await this.usersService.findByUuid(refreshToken.user_uuid)
+    if (!user) {
+      throw new HttpException(await this.i18n.t('errors.user_not_found'), HttpStatus.NOT_FOUND)
+    }
 
-  //   const accessToken = {
-  //     ...loginData,
-  //   }
+    const loginData = await this.usersService.authByPhone(user.phone)
+    delete loginData['password']
 
-  //   return sign(accessToken, this.configService.get('access_secret'), {
-  //     expiresIn: '12h',
-  //   })
-  // }
+    const accessToken = {
+      ...loginData,
+    }
 
-  // private async retrieveRefreshToken(refreshStr: string): Promise<Auth | undefined> {
-  //   try {
-  //     const decoded = verify(refreshStr, this.configService.get('refresh_token'))
-  //     if (typeof decoded === 'string') {
-  //       return undefined
-  //     }
+    return sign(accessToken, this.configService.get('access_secret'), {
+      expiresIn: '12h',
+    })
+  }
 
-  //     const auth_id = decoded.dataValues.auth_id
-  //     return await this.authRepository.findOne({ where: { auth_id } })
-  //   } catch (error) {
-  //     throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
-  //   }
-  // }
+  private async retrieveRefreshToken(refreshStr: string): Promise<Auth | undefined> {
+    try {
+      const decoded = verify(refreshStr, this.configService.get('refresh_secret'))
+      if (typeof decoded === 'string') {
+        return undefined
+      }
 
-  // async logout(refreshStr): Promise<void> {
-  //   const refreshToken = await this.retrieveRefreshToken(refreshStr)
+      const auth_uuid = decoded.auth_uuid
+      return await this.authRepository.findOne({ where: { auth_uuid } })
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 
-  //   if (!refreshToken) {
-  //     return
-  //   }
+  async logout(refreshStr): Promise<StatusAuthResponseResponse> {
+    const refreshToken = await this.retrieveRefreshToken(refreshStr)
 
-  //   const auth_id = refreshToken.auth_id
+    if (!refreshToken) {
+      return { status: false }
+    }
 
-  //   const foundAuth = await this.authRepository.findOne({ where: { auth_id } })
-  //   if (!foundAuth) {
-  //     throw new HttpException(AppError.INVALID_JWT, HttpStatus.FORBIDDEN)
-  //   }
+    const auth_uuid = refreshToken.auth_uuid
 
-  //   await this.authRepository.destroy({ where: { auth_id } })
-  // }
+    const foundAuth = await this.authRepository
+      .createQueryBuilder()
+      .select('Auth.auth_uuid')
+      .where('auth_uuid = :auth_uuid', { auth_uuid })
+      .getOne()
+    if (!foundAuth) {
+      throw new HttpException(await this.i18n.t('errors.invalid_jwt'), HttpStatus.FORBIDDEN)
+    } else {
+      await this.authRepository
+        .createQueryBuilder()
+        .delete()
+        .where('auth_uuid = :auth_uuid', { auth_uuid })
+        .execute()
 
-  // async logoutAll(user_id: string) {
-  //   await this.authRepository.destroy({ where: { user_id } })
-  // }
+      return { status: true }
+    }
+  }
 }

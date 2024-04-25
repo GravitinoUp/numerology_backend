@@ -1,9 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseFilters,
+  UseGuards,
+} from '@nestjs/common'
 import { RoleService } from './role.service'
 import { CreateRoleDto, UpdateRoleDto } from './dto'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { I18nService } from 'nestjs-i18n'
+import { ActiveGuard } from '../auth/guards/active.guard'
+import { JwtAuthGuard } from '../auth/guards/auth.guard'
 
 @ApiBearerAuth()
 @ApiTags('Roles')
@@ -15,12 +27,7 @@ export class RoleController {
     private readonly i18n: I18nService,
   ) {}
 
-  // @UseGuards(JwtAuthGuard, ActiveGuard)
-  // @ApiOperation({ summary: AppStrings.ROLE_CREATE_OPERATION })
-  // @ApiCreatedResponse({
-  //   description: AppStrings.ROLE_CREATED_RESPONSE,
-  //   type: StatusRoleResponse,
-  // })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
   @Post()
   create(@Body() createRoleDto: CreateRoleDto) {
     return this.roleService.create(createRoleDto)

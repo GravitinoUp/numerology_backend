@@ -46,7 +46,6 @@ export class UserService {
       return { status: true }
     } catch (error) {
       console.log(error)
-
       await queryRunner.rollbackTransaction()
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     } finally {
@@ -54,13 +53,52 @@ export class UserService {
     }
   }
 
-  async findByPhone(phone: string): Promise<UserResponse> {
+  async findByUuid(user_uuid: string): Promise<UserResponse> {
     try {
-      const user = await this.usersRepository.findOneBy({ phone })
+      const user = await this.usersRepository
+        .createQueryBuilder()
+        .select()
+        .where('User.user_uuid = :user_uuid', { user_uuid })
+        .getOne()
+
+      delete user['password']
 
       return user
     } catch (error) {
+      console.log(error)
+
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async authByPhone(phone: string): Promise<UserResponse> {
+    try {
+      const user = await this.usersRepository
+        .createQueryBuilder()
+        .select(['User.user_uuid', 'User.email', 'User.phone', 'User.is_active', 'User.password'])
+        .where('User.phone = :phone', { phone })
+        .getOne()
+
+      return user
+    } catch (error) {
+      console.log(error)
+
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async canUserActivate(user_uuid: string): Promise<boolean> {
+    try {
+      const user = await this.findByUuid(user_uuid)
+
+      if (user.is_active) {
+        return true
+      } else {
+        return false
+      }
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? 500)
     }
   }
 }

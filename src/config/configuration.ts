@@ -1,5 +1,5 @@
 export default () => ({
-  refresh_token: process.env.REFRESH_SECRET,
+  refresh_secret: process.env.REFRESH_SECRET,
   access_secret: process.env.ACCESS_SECRET,
   port: process.env.PORT,
   dialect: process.env.DIALECT,
