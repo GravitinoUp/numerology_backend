@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Query, UseFilters } from '@nestjs/common'
+import { Body, Controller, HttpStatus, Post, UseFilters } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { AuthCodeService } from './auth_code.service'
