@@ -1,6 +1,5 @@
 import Model from 'src/modules/app/entities/model'
-import { User } from 'src/modules/user/entities/user.entity'
-import { Entity, Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity({ name: 'AuthCodes' })
 export class AuthCode extends Model {
@@ -11,9 +10,8 @@ export class AuthCode extends Model {
   auth_code: number
 
   @Column()
-  user_uuid: string
+  phone?: string
 
-  @ManyToOne(() => User, (user) => user.user_uuid)
-  @JoinColumn({ name: 'user_uuid', referencedColumnName: 'user_uuid' })
-  user: User
+  @Column()
+  email?: string
 }

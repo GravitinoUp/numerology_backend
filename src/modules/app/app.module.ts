@@ -10,6 +10,8 @@ import { AuthModule } from '../auth/auth.module'
 import { PersonModule } from '../person/person.module'
 import { RoleModule } from '../role/role.module'
 import { UserModule } from '../user/user.module'
+import { ScheduleModule } from '@nestjs/schedule'
+import { AuthCodeModule } from '../auth_code/auth_code.module'
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { UserModule } from '../user/user.module'
       isGlobal: true,
       load: [configuration],
     }),
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -44,6 +47,7 @@ import { UserModule } from '../user/user.module'
       }),
     }),
     AuthModule,
+    AuthCodeModule,
     PersonModule,
     RoleModule,
     UserModule,

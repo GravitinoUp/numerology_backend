@@ -1,26 +1,17 @@
+import { ApiProperty } from '@nestjs/swagger'
+import Model from 'src/modules/app/entities/model'
 import { User } from 'src/modules/user/entities/user.entity'
-import {
-  Entity,
-  Column,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  PrimaryColumn,
-} from 'typeorm'
+import { Entity, Column, OneToMany, PrimaryColumn } from 'typeorm'
 
 @Entity({ name: 'Roles' })
-export class Role {
+export class Role extends Model {
   @PrimaryColumn()
+  @ApiProperty()
   role_id: number
 
   @Column()
+  @ApiProperty()
   role_name: string
-
-  @CreateDateColumn()
-  created_at: string
-
-  @UpdateDateColumn()
-  updated_at: string
 
   @OneToMany(() => User, (user) => user.role, { cascade: true, eager: true })
   users: User[]

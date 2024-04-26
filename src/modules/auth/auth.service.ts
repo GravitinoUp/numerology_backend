@@ -4,7 +4,7 @@ import { AuthDto, CreateAuthDto } from './dto/auth.dto'
 import { Auth } from './entities/auth.entity'
 import { sign, verify } from 'jsonwebtoken'
 import { ConfigService } from '@nestjs/config'
-import { AuthResponse, StatusAuthResponseResponse } from './response'
+import { AuthResponse, StatusAuthResponse } from './response'
 import { InjectRepository } from '@nestjs/typeorm'
 import { UserService } from '../user/user.service'
 import { Repository } from 'typeorm'
@@ -121,7 +121,7 @@ export class AuthService {
     }
   }
 
-  async logout(refreshStr): Promise<StatusAuthResponseResponse> {
+  async logout(refreshStr): Promise<StatusAuthResponse> {
     const refreshToken = await this.retrieveRefreshToken(refreshStr)
 
     if (!refreshToken) {

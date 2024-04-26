@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
+import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
 export class CreateAuthCodes1714044760201 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -18,8 +18,14 @@ export class CreateAuthCodes1714044760201 implements MigrationInterface {
             type: 'int',
           },
           {
-            name: 'user_uuid',
-            type: 'uuid',
+            name: 'phone',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'email',
+            type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'created_at',
@@ -34,17 +40,6 @@ export class CreateAuthCodes1714044760201 implements MigrationInterface {
         ],
       }),
       true,
-    )
-
-    await queryRunner.createForeignKey(
-      'AuthCodes',
-      new TableForeignKey({
-        columnNames: ['user_uuid'],
-        referencedColumnNames: ['user_uuid'],
-        referencedTableName: 'Users',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      }),
     )
   }
 

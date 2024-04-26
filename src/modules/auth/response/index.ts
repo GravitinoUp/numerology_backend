@@ -11,7 +11,7 @@ export class AuthResponse {
   accessToken: string
 }
 
-export class StatusAuthResponseResponse {
+export class StatusAuthResponse {
   @IsBoolean()
   @ApiProperty()
   status: boolean

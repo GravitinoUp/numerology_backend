@@ -1,14 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsInt, IsPhoneNumber, IsUUID } from 'class-validator'
+import { IsEmail, IsInt, IsOptional, IsPhoneNumber } from 'class-validator'
 
 export class SendPhoneAuthCodeDto {
-  @IsInt()
-  @ApiProperty()
-  auth_code: number
-
   @IsPhoneNumber()
-  @ApiProperty()
+  @ApiProperty({ default: '+79000000000' })
   phone: string
+}
+
+export class SendEmailAuthCodeDto {
+  @IsEmail()
+  @ApiProperty({ default: 'user1@mail.com' })
+  email: string
 }
 
 export class CreateAuthCodeDto {
@@ -16,7 +18,13 @@ export class CreateAuthCodeDto {
   @ApiProperty()
   auth_code: number
 
-  @IsUUID()
+  @IsPhoneNumber()
+  @IsOptional()
   @ApiProperty()
-  user_uuid: string
+  phone?: string
+
+  @IsEmail()
+  @IsOptional()
+  @ApiProperty()
+  email?: string
 }

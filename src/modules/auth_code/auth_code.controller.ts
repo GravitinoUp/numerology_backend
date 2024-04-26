@@ -1,11 +1,43 @@
-import { Controller, UseFilters } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { Body, Controller, HttpStatus, Post, Query, UseFilters } from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { AuthCodeService } from './auth_code.service'
+import { CreateAuthCodeDto, SendEmailAuthCodeDto, SendPhoneAuthCodeDto } from './dto'
+import { StatusAuthCodeResponse } from './response'
+import { AppStrings } from 'src/common/constants/strings'
 
 @ApiTags('Auth Codes')
 @Controller('auth-code')
 @UseFilters(AllExceptionsFilter)
 export class AuthCodeController {
   constructor(private readonly authCodeService: AuthCodeService) {}
+
+  @ApiOperation({ summary: AppStrings.AUTH_CODE_PHONE_SEND_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: AppStrings.AUTH_CODE_SEND_RESPONSE,
+    type: StatusAuthCodeResponse,
+  })
+  @Post('phone')
+  async sendPhoneCode(@Body() sendPhoneAuthCodeDto: SendPhoneAuthCodeDto) {
+    const result = await this.authCodeService.sendPhoneCode(sendPhoneAuthCodeDto)
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.AUTH_CODE_EMAIL_SEND_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: AppStrings.AUTH_CODE_SEND_RESPONSE,
+    type: StatusAuthCodeResponse,
+  })
+  @Post('email')
+  async sendEmailCode(@Body() sendEmailAuthCodeDto: SendEmailAuthCodeDto) {
+    const result = await this.authCodeService.sendEmailCode(sendEmailAuthCodeDto)
+    return result
+  }
+
+  @Post('activate')
+  async activateCode(@Body() code: CreateAuthCodeDto) {
+    return await this.authCodeService.activateCode(code)
+  }
 }
