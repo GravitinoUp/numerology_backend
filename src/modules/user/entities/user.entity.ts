@@ -33,9 +33,9 @@ export class User extends Model {
   @ApiProperty()
   is_active: boolean
 
-  @Column()
-  @ApiProperty()
-  email: string
+  @Column({ nullable: true })
+  @ApiProperty({ required: false })
+  email?: string
 
   @Column()
   @ApiProperty()

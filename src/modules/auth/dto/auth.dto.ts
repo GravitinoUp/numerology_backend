@@ -3,7 +3,7 @@ import { IsNumber, IsString } from 'class-validator'
 
 export class AuthDto {
   @IsString()
-  @ApiProperty({ default: '79000000000' })
+  @ApiProperty({ default: '+79000000000' })
   phone: string
 
   @IsString()

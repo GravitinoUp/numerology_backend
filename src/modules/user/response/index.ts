@@ -19,8 +19,9 @@ export class UserResponse {
   is_active: boolean
 
   @IsString()
-  @ApiProperty()
-  email: string
+  @IsOptional()
+  @ApiProperty({ required: false })
+  email?: string
 
   @IsString()
   @ApiProperty()

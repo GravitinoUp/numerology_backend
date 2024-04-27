@@ -74,7 +74,7 @@ export class UserController {
     type: StatusUserResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
-  @Patch('current')
+  @Patch('my')
   async updateCurrent(@Body() user: UpdateUserDto, @Req() request) {
     const isUserExists = await this.userService.isUserExists({ user_uuid: request.user.user_uuid })
     if (!isUserExists) {
@@ -92,7 +92,7 @@ export class UserController {
     type: StatusUserResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
-  @Delete('current')
+  @Delete('my')
   async deleteCurrent(@Req() request) {
     const result = await this.userService.delete(request.user.user_uuid)
     return result

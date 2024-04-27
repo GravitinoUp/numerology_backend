@@ -1,7 +1,9 @@
 {
   "user_deactivated": "User deactivated!",
-  "user_not_found": "User not found!",
   "wrong_credentials": "Incorrent phone or password!",
   "invalid_jwt": "Invalid auth token!",
-  "user_exists": "A user with such an E-Mail or phone number already exists!"
+  "user_exists": "A user with such an E-Mail or phone number already exists!",
+  "user_not_found": "User not found!",
+  "language_not_found": "Language not found!",
+  "onboard_not_found": "Onboard not found!"
 }

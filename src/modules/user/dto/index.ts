@@ -18,24 +18,25 @@ export class CreateUserDto {
   @IsInt()
   @Min(1)
   @Max(31)
-  @ApiProperty()
+  @ApiProperty({ default: 1 })
   birthday_day: number
 
   @IsInt()
   @Min(1)
   @Max(12)
-  @ApiProperty()
+  @ApiProperty({ default: 1 })
   birthday_month: number
 
   @IsInt()
   @Min(1)
   @Max(9999)
-  @ApiProperty()
+  @ApiProperty({ default: 2024 })
   birthday_year: number
 
   @IsString()
+  @IsOptional()
   @ApiProperty()
-  email: string
+  email?: string
 
   @IsString()
   @ApiProperty()
