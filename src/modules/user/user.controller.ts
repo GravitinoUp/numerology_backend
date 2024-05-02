@@ -23,6 +23,7 @@ import { ActiveGuard } from '../auth/guards/active.guard'
 import { User } from './entities/user.entity'
 import { AuthCodeService } from '../auth_code/auth_code.service'
 import { CreateAuthCodeDto } from '../auth_code/dto'
+import { Throttle } from '@nestjs/throttler'
 
 @ApiBearerAuth()
 @ApiTags('Users')
@@ -41,6 +42,7 @@ export class UserController {
     description: AppStrings.USERS_CREATE_RESPONSE,
     type: StatusUserResponse,
   })
+  @Throttle({ default: { limit: 1, ttl: 1000 } })
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const isUserExists = await this.userService.isUserExists({

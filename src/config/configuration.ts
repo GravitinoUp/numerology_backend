@@ -15,5 +15,7 @@ export default () => ({
   redis_host: process.env.REDIS_HOST,
   redis_port: process.env.REDIS_PORT,
   cache_ttl: process.env.CACHE_TTL,
+  throttle_ttl: process.env.THROTTLE_TTL,
+  throttle_limit: process.env.THROTTLE_LIMIT,
   disable_ssl: process.env.DISABLE_SSL,
 })

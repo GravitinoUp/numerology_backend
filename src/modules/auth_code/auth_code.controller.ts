@@ -2,9 +2,10 @@ import { Body, Controller, HttpStatus, Post, UseFilters } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { AuthCodeService } from './auth_code.service'
-import { CreateAuthCodeDto, SendEmailAuthCodeDto, SendPhoneAuthCodeDto } from './dto'
+import { SendEmailAuthCodeDto, SendPhoneAuthCodeDto } from './dto'
 import { StatusAuthCodeResponse } from './response'
 import { AppStrings } from 'src/common/constants/strings'
+import { Throttle } from '@nestjs/throttler'
 
 @ApiTags('Auth Codes')
 @Controller('auth-code')
@@ -18,6 +19,7 @@ export class AuthCodeController {
     description: AppStrings.AUTH_CODE_SEND_RESPONSE,
     type: StatusAuthCodeResponse,
   })
+  @Throttle({ default: { limit: 1, ttl: 30000 } })
   @Post('phone')
   async sendPhoneCode(@Body() sendPhoneAuthCodeDto: SendPhoneAuthCodeDto) {
     const result = await this.authCodeService.sendPhoneCode(sendPhoneAuthCodeDto)
@@ -30,14 +32,16 @@ export class AuthCodeController {
     description: AppStrings.AUTH_CODE_SEND_RESPONSE,
     type: StatusAuthCodeResponse,
   })
+  @Throttle({ default: { limit: 1, ttl: 30000 } })
   @Post('email')
   async sendEmailCode(@Body() sendEmailAuthCodeDto: SendEmailAuthCodeDto) {
     const result = await this.authCodeService.sendEmailCode(sendEmailAuthCodeDto)
     return result
   }
 
-  @Post('activate')
-  async activateCode(@Body() code: CreateAuthCodeDto) {
-    return await this.authCodeService.activateCode(code)
-  }
+  // @Throttle({ default: { limit: 2, ttl: 1000 } })
+  // @Post('activate')
+  // async activateCode(@Body() code: CreateAuthCodeDto) {
+  //   return await this.authCodeService.activateCode(code)
+  // }
 }

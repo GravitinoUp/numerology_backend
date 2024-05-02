@@ -24,7 +24,7 @@ export class AuthCodeService {
         .createQueryBuilder()
         .delete()
         .where('created_at <= :date', {
-          date: moment().subtract(5, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
+          date: moment().subtract(1, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
         })
         .execute()
 
@@ -36,7 +36,7 @@ export class AuthCodeService {
 
   async generateCode(phone?: string, email?: string, attempt: number = 1): Promise<number> {
     try {
-      const code = getRandomInt(1000, 10000)
+      const code = getRandomInt(100000, 1000000)
 
       const codeExists = await this.authCodeRepository
         .createQueryBuilder()
@@ -107,7 +107,7 @@ export class AuthCodeService {
           email: code.email,
         })
         .andWhere('created_at > :date', {
-          date: moment().subtract(5, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
+          date: moment().subtract(1, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
         })
         .getExists()
 
@@ -143,9 +143,6 @@ export class AuthCodeService {
           phone: code.phone,
           email: code.email,
         })
-        // .andWhere('created_at > :date', {
-        //   date: moment().subtract(5, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
-        // })
         .execute()
 
       return result
