@@ -45,6 +45,16 @@ export class CreateUserDto {
   @IsString()
   @ApiProperty()
   password: string
+
+  @IsInt()
+  @ApiProperty()
+  code: number
+}
+
+export class CheckUserExistsDto {
+  @IsString()
+  @ApiProperty()
+  phone: string
 }
 
 export class UpdateUserDto {

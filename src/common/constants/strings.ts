@@ -23,6 +23,8 @@ export const AppStrings = {
 
   USERS_CREATE_OPERATION: 'Регистрация пользователя',
   USERS_CREATE_RESPONSE: 'Пользователь успешно зарегистрирован',
+  USERS_CHECK_EXISTS_OPERATION: 'Проверка существования пользователя',
+  USERS_CHECK_EXISTS_RESPONSE: 'Пользователь (не)зарегистрирован',
   USERS_GET_CURRENT_OPERATION: 'Получение данных текущего пользователя',
   USERS_GET_CURRENT_RESPONSE: 'Данные успешно получены',
   USERS_UPDATE_CURRENT_OPERATION: 'Изменение данных текущего пользователя',

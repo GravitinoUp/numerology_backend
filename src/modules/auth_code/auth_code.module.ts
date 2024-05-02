@@ -8,5 +8,6 @@ import { AuthCode } from './entities/auth_code.entity'
   imports: [TypeOrmModule.forFeature([AuthCode])],
   controllers: [AuthCodeController],
   providers: [AuthCodeService],
+  exports: [AuthCodeService],
 })
 export class AuthCodeModule {}

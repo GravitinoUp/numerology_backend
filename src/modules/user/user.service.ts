@@ -8,16 +8,19 @@ import { CreatePersonDto } from '../person/dto'
 import { Person } from '../person/entities/person.entity'
 import * as bcrypt from 'bcrypt'
 import { Roles } from 'src/common/constants/constants'
+import { CreateAuthCodeDto } from '../auth_code/dto'
+import { AuthCodeService } from '../auth_code/auth_code.service'
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private readonly authCodeService: AuthCodeService,
     private dataSource: DataSource,
   ) {}
 
-  async create(user: CreateUserDto): Promise<StatusUserResponse> {
+  async create(user: CreateUserDto, code: CreateAuthCodeDto): Promise<StatusUserResponse> {
     const queryRunner = this.dataSource.createQueryRunner()
     await queryRunner.connect()
     await queryRunner.startTransaction()
@@ -49,11 +52,17 @@ export class UserService {
         .execute()
 
       const result = newUser.raw[0]
-      if (result) delete result['password']
+      if (result) {
+        delete result['password']
 
-      await queryRunner.commitTransaction()
+        await this.authCodeService.deleteAuthCode(code, queryRunner, true)
 
-      return { status: true, data: result }
+        await queryRunner.commitTransaction()
+        return { status: true, data: result }
+      } else {
+        await queryRunner.rollbackTransaction()
+        return { status: false }
+      }
     } catch (error) {
       console.log(error)
       await queryRunner.rollbackTransaction()

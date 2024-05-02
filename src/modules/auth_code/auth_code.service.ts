@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { AuthCode } from './entities/auth_code.entity'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository, DataSource } from 'typeorm'
+import { Repository, DataSource, DeleteResult, QueryRunner } from 'typeorm'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import * as moment from 'moment'
 import getRandomInt from 'src/common/utils/get_random_int'
@@ -96,7 +96,7 @@ export class AuthCodeService {
     }
   }
 
-  async activateCode(code: CreateAuthCodeDto): Promise<boolean> {
+  async activateCode(code: CreateAuthCodeDto, deleteCode: boolean = true): Promise<boolean> {
     try {
       const codeExists = await this.authCodeRepository
         .createQueryBuilder()
@@ -112,18 +112,9 @@ export class AuthCodeService {
         .getExists()
 
       if (codeExists) {
-        await this.authCodeRepository
-          .createQueryBuilder()
-          .delete()
-          .where('auth_code = :code AND (phone = :phone OR email = :email)', {
-            code: code.auth_code,
-            phone: code.phone,
-            email: code.email,
-          })
-          .andWhere('created_at > :date', {
-            date: moment().subtract(5, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
-          })
-          .execute()
+        if (deleteCode) {
+          await this.deleteAuthCode(code)
+        }
 
         return true
       } else {
@@ -131,6 +122,37 @@ export class AuthCodeService {
       }
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async deleteAuthCode(
+    code: CreateAuthCodeDto,
+    qRunner?: QueryRunner,
+    useTransaction: boolean = false,
+  ): Promise<DeleteResult> {
+    const queryRunner = qRunner ?? this.dataSource.createQueryRunner()
+    await queryRunner.connect()
+    try {
+      const result = await queryRunner.manager
+        .getRepository(AuthCode)
+        .createQueryBuilder()
+        .delete()
+        .useTransaction(useTransaction)
+        .where('auth_code = :code AND (phone = :phone OR email = :email)', {
+          code: code.auth_code,
+          phone: code.phone,
+          email: code.email,
+        })
+        // .andWhere('created_at > :date', {
+        //   date: moment().subtract(5, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
+        // })
+        .execute()
+
+      return result
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    } finally {
+      if (!qRunner) await queryRunner.release()
     }
   }
 }

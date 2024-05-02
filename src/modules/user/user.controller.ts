@@ -12,7 +12,7 @@ import {
   Delete,
 } from '@nestjs/common'
 import { UserService } from './user.service'
-import { CreateUserDto, UpdateUserDto } from './dto'
+import { CheckUserExistsDto, CreateUserDto, UpdateUserDto } from './dto'
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { I18nService } from 'nestjs-i18n'
@@ -21,6 +21,8 @@ import { AppStrings } from 'src/common/constants/strings'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { User } from './entities/user.entity'
+import { AuthCodeService } from '../auth_code/auth_code.service'
+import { CreateAuthCodeDto } from '../auth_code/dto'
 
 @ApiBearerAuth()
 @ApiTags('Users')
@@ -29,6 +31,7 @@ import { User } from './entities/user.entity'
 export class UserController {
   constructor(
     private readonly userService: UserService,
+    private readonly authCodeService: AuthCodeService,
     private readonly i18n: I18nService,
   ) {}
 
@@ -49,8 +52,33 @@ export class UserController {
       throw new HttpException(await this.i18n.t('errors.user_exists'), HttpStatus.CONFLICT)
     }
 
-    const result = await this.userService.create(createUserDto)
-    return result
+    const authCodeDto = new CreateAuthCodeDto()
+    authCodeDto.auth_code = createUserDto.code
+    authCodeDto.email = createUserDto.email
+    authCodeDto.phone = createUserDto.phone
+
+    const codeExists = await this.authCodeService.activateCode(authCodeDto, false)
+    if (codeExists) {
+      const result = await this.userService.create(createUserDto, authCodeDto)
+      return result
+    } else {
+      throw new HttpException(await this.i18n.t('errors.invalid_code'), HttpStatus.BAD_REQUEST)
+    }
+  }
+
+  @ApiOperation({ summary: AppStrings.USERS_CHECK_EXISTS_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: AppStrings.USERS_CHECK_EXISTS_RESPONSE,
+    type: StatusUserResponse,
+  })
+  @Post('check-exists')
+  async checkExists(@Body() userData: CheckUserExistsDto): Promise<StatusUserResponse> {
+    const isUserExists = await this.userService.isUserExists({
+      phone: userData.phone,
+    })
+
+    return { status: isUserExists }
   }
 
   @ApiOperation({ summary: AppStrings.USERS_GET_CURRENT_OPERATION })
