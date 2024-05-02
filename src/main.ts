@@ -44,7 +44,7 @@ async function bootstrap() {
       tagsSorter: 'alpha',
       persistAuthorization: true,
     },
-    customSiteTitle: 'GRAVITINO ASU API',
+    customSiteTitle: 'NUMEROLOGY API',
   })
 
   app.useGlobalPipes(new ValidationPipe())

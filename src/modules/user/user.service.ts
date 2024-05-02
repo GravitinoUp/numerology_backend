@@ -3,13 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { User } from './entities/user.entity'
 import { StatusUserResponse, UserResponse } from './response'
-import { CreateUserDto, UpdateUserDto } from './dto'
+import { CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto'
 import { CreatePersonDto } from '../person/dto'
 import { Person } from '../person/entities/person.entity'
 import * as bcrypt from 'bcrypt'
 import { Roles } from 'src/common/constants/constants'
 import { CreateAuthCodeDto } from '../auth_code/dto'
 import { AuthCodeService } from '../auth_code/auth_code.service'
+import { I18nService } from 'nestjs-i18n'
 
 @Injectable()
 export class UserService {
@@ -17,6 +18,7 @@ export class UserService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private readonly authCodeService: AuthCodeService,
+    private readonly i18n: I18nService,
     private dataSource: DataSource,
   ) {}
 
@@ -175,6 +177,43 @@ export class UserService {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     } finally {
       await queryRunner.release()
+    }
+  }
+
+  async updatePassword(
+    updateUserPasswordDto: UpdateUserPasswordDto,
+    user_uuid: string,
+  ): Promise<StatusUserResponse> {
+    try {
+      const user = await this.usersRepository
+        .createQueryBuilder('user')
+        .select(['user.password'])
+        .where('user.user_uuid = :user_uuid', { user_uuid })
+        .getOne()
+
+      if (await bcrypt.compare(updateUserPasswordDto.old_password, user.password)) {
+        const newPassword = await bcrypt.hash(updateUserPasswordDto.password.toString(), 10)
+        const updateUserPassword = await this.usersRepository
+          .createQueryBuilder()
+          .update()
+          .set({ password: newPassword })
+          .where('user_uuid = :user_uuid', { user_uuid })
+          .execute()
+
+        if (updateUserPassword.affected > 0) {
+          return { status: true }
+        } else {
+          return { status: false }
+        }
+      } else {
+        throw new HttpException(
+          await this.i18n.t('errors.password_mismatch'),
+          HttpStatus.BAD_REQUEST,
+        )
+      }
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 

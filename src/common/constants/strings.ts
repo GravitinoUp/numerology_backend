@@ -29,6 +29,10 @@ export const AppStrings = {
   USERS_GET_CURRENT_RESPONSE: 'Данные успешно получены',
   USERS_UPDATE_CURRENT_OPERATION: 'Изменение данных текущего пользователя',
   USERS_UPDATE_CURRENT_RESPONSE: 'Данные успешно изменены',
+  USERS_UPDATE_PASSWORD_OPERATION: 'Изменение пароля текущего пользователя',
+  USERS_UPDATE_PASSWORD_RESPONSE: 'Пароль успешно изменен',
+  USERS_RESET_PASSWORD_OPERATION: 'Сброс пароля текущего пользователя',
+  USERS_RESET_PASSWORD_RESPONSE: 'Пароль успешно изменен',
   USERS_DELETE_CURRENT_OPERATION: 'Удаление текущего пользователя',
   USERS_DELETE_CURRENT_RESPONSE: 'Пользователь успешно удален',
 }

@@ -88,3 +88,13 @@ export class UpdateUserDto {
   @ApiProperty({ required: false })
   birthday_year?: number
 }
+
+export class UpdateUserPasswordDto {
+  @IsString()
+  @ApiProperty()
+  old_password: string
+
+  @IsString()
+  @ApiProperty()
+  password: string
+}

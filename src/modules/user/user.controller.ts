@@ -12,7 +12,7 @@ import {
   Delete,
 } from '@nestjs/common'
 import { UserService } from './user.service'
-import { CheckUserExistsDto, CreateUserDto, UpdateUserDto } from './dto'
+import { CheckUserExistsDto, CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto'
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { I18nService } from 'nestjs-i18n'
@@ -112,6 +112,22 @@ export class UserController {
     }
 
     const result = await this.userService.update(user, request.user.user_uuid)
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.USERS_UPDATE_PASSWORD_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.USERS_UPDATE_PASSWORD_RESPONSE,
+    type: StatusUserResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Patch('password')
+  async updatePassword(@Body() updateUserPasswordDto: UpdateUserPasswordDto, @Req() request) {
+    const result = await this.userService.updatePassword(
+      updateUserPasswordDto,
+      request.user.user_uuid,
+    )
     return result
   }
 

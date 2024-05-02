@@ -17,7 +17,7 @@ export class AuthCodeService {
     private dataSource: DataSource,
   ) {}
 
-  @Cron(CronExpression.EVERY_HOUR) // Каждый час
+  @Cron(CronExpression.EVERY_30_MINUTES)
   async handleCron() {
     try {
       await this.authCodeRepository
@@ -36,7 +36,7 @@ export class AuthCodeService {
 
   async generateCode(phone?: string, email?: string, attempt: number = 1): Promise<number> {
     try {
-      const code = getRandomInt(100000, 1000000)
+      const code = getRandomInt(100000, 999999)
 
       const codeExists = await this.authCodeRepository
         .createQueryBuilder()
