@@ -8,6 +8,7 @@ import getRandomInt from 'src/common/utils/get_random_int'
 import { StatusAuthCodeResponse } from './response'
 import { CreateAuthCodeDto, SendEmailAuthCodeDto, SendPhoneAuthCodeDto } from './dto'
 import { AppErrors } from 'src/common/constants/errors'
+import { codeTTL } from 'src/common/constants/constants'
 
 @Injectable()
 export class AuthCodeService {
@@ -24,7 +25,7 @@ export class AuthCodeService {
         .createQueryBuilder()
         .delete()
         .where('created_at <= :date', {
-          date: moment().subtract(1, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
+          date: moment().subtract(codeTTL, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
         })
         .execute()
 
@@ -107,7 +108,7 @@ export class AuthCodeService {
           email: code.email,
         })
         .andWhere('created_at > :date', {
-          date: moment().subtract(1, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
+          date: moment().subtract(codeTTL, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
         })
         .getExists()
 

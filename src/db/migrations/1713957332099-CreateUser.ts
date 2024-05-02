@@ -24,6 +24,7 @@ export class CreateUser1713957332099 implements MigrationInterface {
           {
             name: 'patronymic',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'birthday_day',

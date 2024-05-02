@@ -2,7 +2,7 @@ import { Body, Controller, HttpStatus, Post, UseFilters } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { AuthCodeService } from './auth_code.service'
-import { SendEmailAuthCodeDto, SendPhoneAuthCodeDto } from './dto'
+import { CreateAuthCodeDto, SendEmailAuthCodeDto, SendPhoneAuthCodeDto } from './dto'
 import { StatusAuthCodeResponse } from './response'
 import { AppStrings } from 'src/common/constants/strings'
 import { Throttle } from '@nestjs/throttler'
@@ -39,9 +39,9 @@ export class AuthCodeController {
     return result
   }
 
-  // @Throttle({ default: { limit: 2, ttl: 1000 } })
-  // @Post('activate')
-  // async activateCode(@Body() code: CreateAuthCodeDto) {
-  //   return await this.authCodeService.activateCode(code)
-  // }
+  @Throttle({ default: { limit: 1, ttl: 5000 } })
+  @Post('check')
+  async checkCode(@Body() code: CreateAuthCodeDto) {
+    return await this.authCodeService.activateCode(code, false)
+  }
 }
