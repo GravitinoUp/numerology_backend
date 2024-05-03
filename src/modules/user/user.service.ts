@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { User } from './entities/user.entity'
 import { StatusUserResponse, UserResponse } from './response'
-import { CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto'
+import { CreateUserDto, ResetUserPasswordDto, UpdateUserDto, UpdateUserPasswordDto } from './dto'
 import { CreatePersonDto } from '../person/dto'
 import { Person } from '../person/entities/person.entity'
 import * as bcrypt from 'bcrypt'
@@ -210,6 +210,53 @@ export class UserService {
           await this.i18n.t('errors.password_mismatch'),
           HttpStatus.BAD_REQUEST,
         )
+      }
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async resetPassword(resetUserPasswordDto: ResetUserPasswordDto): Promise<StatusUserResponse> {
+    try {
+      const code = await this.authCodeService.findCode(resetUserPasswordDto.code)
+
+      console.log(code)
+
+      if (code) {
+        const user = await this.usersRepository
+          .createQueryBuilder('user')
+          .select(['user.user_uuid', 'user.phone'])
+          .where('user.phone = :phone OR user.email = :email', {
+            phone: code.phone,
+            email: code.email,
+          })
+          .getOne()
+
+        console.log(user)
+
+        const newPassword = await bcrypt.hash(resetUserPasswordDto.password.toString(), 10)
+        const updateUserPassword = await this.usersRepository
+          .createQueryBuilder()
+          .update()
+          .set({ password: newPassword })
+          .where('user_uuid = :user_uuid', { user_uuid: user.user_uuid })
+          .execute()
+
+        const codeDto = new CreateAuthCodeDto()
+        codeDto.auth_code = code.auth_code
+        codeDto.email = code.email
+        codeDto.phone = code.phone
+
+        await this.authCodeService.deleteAuthCode(codeDto)
+
+        if (updateUserPassword.affected > 0) {
+          return { status: true }
+        } else {
+          return { status: false }
+        }
+      } else {
+        throw new HttpException(await this.i18n.t('errors.invalid_code'), HttpStatus.BAD_REQUEST)
       }
     } catch (error) {
       console.log(error)

@@ -5,7 +5,7 @@ import { Repository, DataSource, DeleteResult, QueryRunner } from 'typeorm'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import * as moment from 'moment'
 import getRandomInt from 'src/common/utils/get_random_int'
-import { StatusAuthCodeResponse } from './response'
+import { AuthCodeResponse, StatusAuthCodeResponse } from './response'
 import { CreateAuthCodeDto, SendEmailAuthCodeDto, SendPhoneAuthCodeDto } from './dto'
 import { AppErrors } from 'src/common/constants/errors'
 import { codeTTL } from 'src/common/constants/constants'
@@ -92,6 +92,25 @@ export class AuthCodeService {
       // SEND CODE TODO
 
       return { status: true }
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async findCode(code: number): Promise<AuthCodeResponse> {
+    try {
+      const foundCode = await this.authCodeRepository
+        .createQueryBuilder('ac')
+        .select(['ac.auth_code', 'ac.phone', 'ac.email'])
+        .where('ac.auth_code = :code', {
+          code,
+        })
+        .andWhere('ac.created_at > :date', {
+          date: moment().subtract(codeTTL, 'minutes').format('DD.MM.yyyy HH:mm:ss'),
+        })
+        .getOne()
+
+      return foundCode
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }

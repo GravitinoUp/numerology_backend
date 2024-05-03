@@ -12,7 +12,13 @@ import {
   Delete,
 } from '@nestjs/common'
 import { UserService } from './user.service'
-import { CheckUserExistsDto, CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto'
+import {
+  CheckUserExistsDto,
+  CreateUserDto,
+  ResetUserPasswordDto,
+  UpdateUserDto,
+  UpdateUserPasswordDto,
+} from './dto'
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { I18nService } from 'nestjs-i18n'
@@ -128,6 +134,19 @@ export class UserController {
       updateUserPasswordDto,
       request.user.user_uuid,
     )
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.USERS_RESET_PASSWORD_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.USERS_RESET_PASSWORD_RESPONSE,
+    type: StatusUserResponse,
+  })
+  @Throttle({ default: { limit: 1, ttl: 30000 } })
+  @Patch('password/reset')
+  async resetPassword(@Body() resetUserPasswordDto: ResetUserPasswordDto) {
+    const result = await this.userService.resetPassword(resetUserPasswordDto)
     return result
   }
 

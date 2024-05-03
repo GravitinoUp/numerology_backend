@@ -98,3 +98,13 @@ export class UpdateUserPasswordDto {
   @ApiProperty()
   password: string
 }
+
+export class ResetUserPasswordDto {
+  @IsInt()
+  @ApiProperty()
+  code: number
+
+  @IsString()
+  @ApiProperty()
+  password: string
+}
