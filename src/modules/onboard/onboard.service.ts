@@ -32,7 +32,7 @@ export class OnboardService {
   async findAll(language_code: string): Promise<OnboardResponse[]> {
     try {
       const onboards = await this.onboardRepository
-        .createQueryBuilder('onboard')
+        .createQueryBuilder()
         .select()
         .where('language_code = :language_code', { language_code })
         .getMany()
@@ -47,7 +47,7 @@ export class OnboardService {
   async isExists(onboard_id: number): Promise<boolean> {
     try {
       const isLanguageExists = await this.onboardRepository
-        .createQueryBuilder('user')
+        .createQueryBuilder()
         .select()
         .where('onboard_id =:onboard_id', { onboard_id })
         .getExists()

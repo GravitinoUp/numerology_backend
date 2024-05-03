@@ -8,7 +8,7 @@ import {
   Param,
   Patch,
   Post,
-  Request,
+  Req,
   UseFilters,
   UseGuards,
 } from '@nestjs/common'
@@ -53,8 +53,10 @@ export class OnboardController {
     isArray: true,
   })
   @Get('all')
-  async findAll(@Request() request) {
-    const result = await this.onboardService.findAll(request.i18nLang) // TODO
+  async findAll(@Req() request) {
+    console.log(request.i18nLang)
+
+    const result = await this.onboardService.findAll(request.i18nLang)
 
     return result
   }

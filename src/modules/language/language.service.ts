@@ -31,7 +31,7 @@ export class LanguageService {
 
   async findAll(): Promise<LanguageResponse[]> {
     try {
-      const languages = await this.languageRepository.createQueryBuilder('user').select().getMany()
+      const languages = await this.languageRepository.createQueryBuilder().select().getMany()
 
       return languages
     } catch (error) {
@@ -43,7 +43,7 @@ export class LanguageService {
   async isLanguageExists(language_code: string): Promise<boolean> {
     try {
       const isLanguageExists = await this.languageRepository
-        .createQueryBuilder('user')
+        .createQueryBuilder()
         .select()
         .where('language_code =:language_code', { language_code })
         .getExists()

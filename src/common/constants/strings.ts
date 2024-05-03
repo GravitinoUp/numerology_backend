@@ -21,6 +21,18 @@ export const AppStrings = {
   ONBOARD_DELETE_OPERATION: 'Удаление приветственного экрана',
   ONBOARD_DELETE_RESPONSE: 'Приветственный экран успешно удален',
 
+  PAGE_CREATE_OPERATION: 'Создание новой страницы',
+  PAGE_CREATE_RESPONSE: 'Страница успешно создана',
+  PAGE_GET_ALL_OPERATION: 'Получение списка всех страниц',
+  PAGE_GET_ALL_RESPONSE: 'Страницы успешно получены',
+  PAGE_UPDATE_OPERATION: 'Изменение страницы',
+  PAGE_UPDATE_RESPONSE: 'Страница успешно изменен',
+  PAGE_DELETE_OPERATION: 'Удаление страницы',
+  PAGE_DELETE_RESPONSE: 'Страница успешно удален',
+
+  PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
+  PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',
+
   USERS_CREATE_OPERATION: 'Регистрация пользователя',
   USERS_CREATE_RESPONSE: 'Пользователь успешно зарегистрирован',
   USERS_CHECK_EXISTS_OPERATION: 'Проверка существования пользователя',

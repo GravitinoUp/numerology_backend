@@ -17,6 +17,8 @@ import { OnboardModule } from '../onboard/onboard.module'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
 import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
+import { PageTypeModule } from '../page_type/page_type.module'
+import { PageModule } from '../page/page.module'
 
 @Module({
   imports: [
@@ -72,6 +74,8 @@ import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
     AuthCodeModule,
     LanguageModule,
     OnboardModule,
+    PageModule,
+    PageTypeModule,
     PersonModule,
     RoleModule,
     UserModule,
