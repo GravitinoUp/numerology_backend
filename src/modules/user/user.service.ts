@@ -233,8 +233,6 @@ export class UserService {
           })
           .getOne()
 
-        console.log(user)
-
         const newPassword = await bcrypt.hash(resetUserPasswordDto.password.toString(), 10)
         const updateUserPassword = await this.usersRepository
           .createQueryBuilder()

@@ -25,4 +25,20 @@ export class PageService {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
+
+  async findByKey(key: string, type_id: number, language_code: string): Promise<PageResponse> {
+    try {
+      const page = await this.pageRepository
+        .createQueryBuilder('page')
+        .select()
+        .where(':key = ANY(page.page_keys)', { key })
+        .andWhere('page.language_code = :language_code', { language_code })
+        .getOne()
+
+      return page
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 }

@@ -1,8 +1,12 @@
-import { Controller, UseFilters } from '@nestjs/common'
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import { Controller, Get, HttpStatus, Req, UseFilters, UseGuards } from '@nestjs/common'
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { I18nService } from 'nestjs-i18n'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { NumberService } from './number.service'
+import { AppStrings } from 'src/common/constants/strings'
+import { PageResponse } from '../page/response'
+import { ActiveGuard } from '../auth/guards/active.guard'
+import { JwtAuthGuard } from '../auth/guards/auth.guard'
 
 @ApiBearerAuth()
 @ApiTags('Numbers')
@@ -13,4 +17,17 @@ export class NumberController {
     private readonly numberService: NumberService,
     private readonly i18n: I18nService,
   ) {}
+
+  @ApiOperation({ summary: AppStrings.FATE_CARD_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.FATE_CARD_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('fate-card')
+  async getFateCard(@Req() request) {
+    const result = await this.numberService.getFateCard(request.user.user_uuid, request.i18nLang)
+    return result
+  }
 }

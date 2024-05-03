@@ -4,3 +4,7 @@ export const Roles = {
 }
 
 export const codeTTL = 2 // Минуты
+
+export const PageTypesEnum = {
+  FATE_CARDS: 2,
+}

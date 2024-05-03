@@ -30,6 +30,9 @@ export const AppStrings = {
   PAGE_DELETE_OPERATION: 'Удаление страницы',
   PAGE_DELETE_RESPONSE: 'Страница успешно удален',
 
+  FATE_CARD_GET_OPERATION: 'Получение карты судьбы пользовталея',
+  FATE_CARD_GET_RESPONSE: 'Карта судьбы успешно получена',
+
   PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',
 

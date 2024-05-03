@@ -89,8 +89,6 @@ export class AuthService {
     }
 
     const user = await this.usersService.findByUuid(refreshToken.user_uuid, false)
-    console.log(user)
-
     if (!user) {
       throw new HttpException(await this.i18n.t('errors.user_not_found'), HttpStatus.NOT_FOUND)
     }
