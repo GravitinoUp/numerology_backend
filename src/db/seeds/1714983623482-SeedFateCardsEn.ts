@@ -1,7 +1,7 @@
 import { Page } from 'src/modules/page/entities/page.entity'
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class SeedFateCards1714982059926 implements MigrationInterface {
+export class SeedFateCardsEn1714983623482 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.insert(Page, [
       {
