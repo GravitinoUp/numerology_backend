@@ -7,7 +7,10 @@ export const codeTTL = 2 // Минуты
 
 export const PageTypesEnum = {
   FATE_CARDS: 2,
+  PLANETS: 4,
   PROFESSIONS: 5,
+  WEAK_TRAITS: 6,
+  PARENTS: 7,
   NUMBER_OF_FATE: 8,
   CHRONIC_DISEASES: 9,
   METAPHYSICAL_CAUSES_OF_DISEASES: 10,

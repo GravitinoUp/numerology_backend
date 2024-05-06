@@ -63,7 +63,7 @@ export class NumberService {
 
       const yearArcane = this.getYearArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
-      const tkk = Math.abs(monthArcane - yearArcane) //ТРЕТИЙ КАРМИЧЕСКИЙ УЗЕЛ
+      const tkk = this.getArcane(Math.abs(monthArcane - yearArcane)) //ТРЕТИЙ КАРМИЧЕСКИЙ УЗЕЛ
 
       const page = await this.pageService.findOneByKey(
         tkk.toString(),
@@ -78,6 +78,7 @@ export class NumberService {
   }
 
   async getProfessions(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+    // TODO PLANETS
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -104,6 +105,61 @@ export class NumberService {
     }
   }
 
+  async getNegativeTraits(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+    // TODO PLANETS
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+
+      const yearArcane = this.getYearArcane(userData.birthday_year.toString())
+      const monthArcane = userData.birthday_month
+      const dayArcane = this.getArcane(userData.birthday_day)
+
+      const nt1 = this.getArcane(Math.abs(dayArcane - monthArcane)).toString()
+      const nt2 = this.getArcane(Math.abs(dayArcane - yearArcane)).toString()
+      const nt3 = this.getArcane(monthArcane - yearArcane).toString()
+
+      const pages = await this.pageService.findAllByKeys(
+        [nt1, nt2, nt3],
+        PageTypesEnum.WEAK_TRAITS,
+        language_code,
+      )
+
+      return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  // async getPlanets(user_uuid: string, language_code: string) {
+  //   try {
+  //     const userData = await this.personService.getPersonData(user_uuid)
+  //     const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
+
+  //     const lifePathNumber = this.getSumLte9(userBirthday)
+  //     const soulNumber = this.getSoulNumber(userData.first_name)
+  //   } catch (error) {
+  //     throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+  //   }
+  // }
+
+  async getParents(user_uuid: string, language_code: string): Promise<PageResponse> {
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+
+      const lastNameArcane = this.getArcane(this.getNameNumber(userData.last_name, false))
+
+      const page = await this.pageService.findOneByKey(
+        lastNameArcane.toString(),
+        PageTypesEnum.PARENTS,
+        language_code,
+      )
+
+      return page
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
   getSumLte9(value: string): number {
     let result = 0
     for (const number of value) {
@@ -122,21 +178,28 @@ export class NumberService {
     return result
   }
 
-  getSoulNumber(firstName: string): number {
-    const nameLetters = firstName
-      .split('')
-      .filter(
+  getNameNumber(name: string, onlyVowel: boolean = true): number {
+    let nameLetters = name.split('')
+
+    if (onlyVowel) {
+      nameLetters = nameLetters.filter(
         (letter) =>
           RuVowelLetters.includes(letter.toLowerCase()) ||
           EnVowelLetters.includes(letter.toLowerCase()),
       )
+    }
 
     let result = 0
     for (const letter of nameLetters) {
       result += this.getLetterNumber(letter)
     }
 
-    const soulNumber = this.getSumLte9(result.toString())
+    return result
+  }
+
+  getSoulNumber(firstName: string): number {
+    const nameNumber = this.getNameNumber(firstName)
+    const soulNumber = this.getSumLte9(nameNumber.toString())
 
     return soulNumber
   }
@@ -174,6 +237,8 @@ export class NumberService {
     while (arcane > 22) {
       arcane -= 22
     }
+
+    if (arcane == 0) arcane = 22
 
     return arcane
   }

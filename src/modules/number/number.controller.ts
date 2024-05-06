@@ -72,4 +72,17 @@ export class NumberController {
     const result = await this.numberService.getProfessions(request.user.user_uuid, request.i18nLang)
     return result
   }
+
+  @ApiOperation({ summary: AppStrings.CHRONIC_DISEASE_GET_OPERATION }) // TODO TEXT
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.CHRONIC_DISEASE_GET_RESPONSE, // TODO TEXT
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('parents')
+  async getParents(@Req() request) {
+    const result = await this.numberService.getParents(request.user.user_uuid, request.i18nLang)
+    return result
+  }
 }
