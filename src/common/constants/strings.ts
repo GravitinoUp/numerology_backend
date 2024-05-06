@@ -36,6 +36,12 @@ export const AppStrings = {
   FATE_NUMBER_GET_RESPONSE: 'Число судьбы успешно получено',
   CHRONIC_DISEASE_GET_OPERATION: 'Получение хронического заболевания пользователя пользователя',
   CHRONIC_DISEASE_GET_RESPONSE: 'Хроническое заболевание успешно получено',
+  PROFESSIONS_GET_OPERATION: 'Получение профессий пользователя пользователя',
+  PROFESSIONS_GET_RESPONSE: 'Профессии успешно получены',
+  PLANETS_GET_OPERATION: 'Получение планет пользователя пользователя',
+  PLANETS_GET_RESPONSE: 'Планеты успешно получены',
+  PARENTS_GET_OPERATION: 'Получение предков пользователя пользователя',
+  PARENTS_GET_RESPONSE: 'Предки успешно получены',
 
   PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',

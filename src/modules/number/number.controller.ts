@@ -60,10 +60,10 @@ export class NumberController {
     return result
   }
 
-  @ApiOperation({ summary: AppStrings.CHRONIC_DISEASE_GET_OPERATION }) // TODO TEXT
+  @ApiOperation({ summary: AppStrings.PROFESSIONS_GET_OPERATION })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: AppStrings.CHRONIC_DISEASE_GET_RESPONSE, // TODO TEXT
+    description: AppStrings.PROFESSIONS_GET_RESPONSE,
     type: PageResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -73,10 +73,23 @@ export class NumberController {
     return result
   }
 
-  @ApiOperation({ summary: AppStrings.CHRONIC_DISEASE_GET_OPERATION }) // TODO TEXT
+  @ApiOperation({ summary: AppStrings.PLANETS_GET_OPERATION })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: AppStrings.CHRONIC_DISEASE_GET_RESPONSE, // TODO TEXT
+    description: AppStrings.PLANETS_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('planets')
+  async getPlanets(@Req() request) {
+    const result = await this.numberService.getPlanets(request.user.user_uuid, request.i18nLang)
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.PARENTS_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.PARENTS_GET_RESPONSE,
     type: PageResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)

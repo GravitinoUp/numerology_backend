@@ -130,17 +130,25 @@ export class NumberService {
     }
   }
 
-  // async getPlanets(user_uuid: string, language_code: string) {
-  //   try {
-  //     const userData = await this.personService.getPersonData(user_uuid)
-  //     const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
+  async getPlanets(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+      const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
-  //     const lifePathNumber = this.getSumLte9(userBirthday)
-  //     const soulNumber = this.getSoulNumber(userData.first_name)
-  //   } catch (error) {
-  //     throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
-  //   }
-  // }
+      const lifePathNumber = this.getSumLte9(userBirthday).toString()
+      const soulNumber = this.getSoulNumber(userData.first_name).toString()
+
+      const pages = await this.pageService.findAllByKeys(
+        [lifePathNumber, soulNumber],
+        PageTypesEnum.PLANETS,
+        language_code,
+      )
+
+      return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 
   async getParents(user_uuid: string, language_code: string): Promise<PageResponse> {
     try {
