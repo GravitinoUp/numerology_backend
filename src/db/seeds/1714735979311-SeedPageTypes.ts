@@ -41,6 +41,27 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           en: 'Who were your ancestors',
         }),
       },
+      {
+        page_type_id: 8,
+        page_type_name: JSON.stringify({
+          ru: 'Число судьбы и психосоматика',
+          en: 'The number of fate and psychosomatics',
+        }),
+      },
+      {
+        page_type_id: 9,
+        page_type_name: JSON.stringify({
+          ru: 'Хронические заболевания',
+          en: 'Chronic diseases',
+        }),
+      },
+      {
+        page_type_id: 10,
+        page_type_name: JSON.stringify({
+          ru: 'Метафизические причины болезней',
+          en: 'Metaphysical causes of diseases',
+        }),
+      },
     ])
   }
 

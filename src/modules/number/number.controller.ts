@@ -30,4 +30,46 @@ export class NumberController {
     const result = await this.numberService.getFateCard(request.user.user_uuid, request.i18nLang)
     return result
   }
+
+  @ApiOperation({ summary: AppStrings.FATE_NUMBER_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.FATE_NUMBER_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('fate-number')
+  async getFateNumber(@Req() request) {
+    const result = await this.numberService.getFateNumber(request.user.user_uuid, request.i18nLang)
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.CHRONIC_DISEASE_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.CHRONIC_DISEASE_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('chronic-disease')
+  async getChronicDisease(@Req() request) {
+    const result = await this.numberService.getChronicDisease(
+      request.user.user_uuid,
+      request.i18nLang,
+    )
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.CHRONIC_DISEASE_GET_OPERATION }) // TODO TEXT
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.CHRONIC_DISEASE_GET_RESPONSE, // TODO TEXT
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('professions')
+  async getProfessions(@Req() request) {
+    const result = await this.numberService.getProfessions(request.user.user_uuid, request.i18nLang)
+    return result
+  }
 }
