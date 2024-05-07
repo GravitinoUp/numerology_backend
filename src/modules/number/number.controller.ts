@@ -118,16 +118,16 @@ export class NumberController {
     return result
   }
 
-  @ApiOperation({ summary: AppStrings.PARENTS_GET_OPERATION })
+  @ApiOperation({ summary: AppStrings.ANCESTORS_GET_OPERATION })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: AppStrings.PARENTS_GET_RESPONSE,
+    description: AppStrings.ANCESTORS_GET_RESPONSE,
     type: PageResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
-  @Get('parents')
-  async getParents(@Req() request) {
-    const result = await this.numberService.getParents(request.user.user_uuid, request.i18nLang)
+  @Get('ancestors')
+  async getAncestors(@Req() request) {
+    const result = await this.numberService.getAncestors(request.user.user_uuid, request.i18nLang)
     return result
   }
 }

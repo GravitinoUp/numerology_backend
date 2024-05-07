@@ -44,8 +44,8 @@ export const AppStrings = {
   NEGATIVE_TRAITS_GET_RESPONSE: 'Слабые качества успешно получены',
   PLANETS_GET_OPERATION: 'Получение планет пользователя',
   PLANETS_GET_RESPONSE: 'Планеты успешно получены',
-  PARENTS_GET_OPERATION: 'Получение предков пользователя',
-  PARENTS_GET_RESPONSE: 'Предки успешно получены',
+  ANCESTORS_GET_OPERATION: 'Получение предков пользователя',
+  ANCESTORS_GET_RESPONSE: 'Предки успешно получены',
 
   PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',

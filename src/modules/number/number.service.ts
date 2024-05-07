@@ -265,7 +265,7 @@ export class NumberService {
     }
   }
 
-  async getParents(user_uuid: string, language_code: string): Promise<PageResponse> {
+  async getAncestors(user_uuid: string, language_code: string): Promise<PageResponse> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
