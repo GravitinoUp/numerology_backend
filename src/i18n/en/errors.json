@@ -8,5 +8,7 @@
   "user_not_found": "User not found!",
   "language_not_found": "Language not found!",
   "onboard_not_found": "Onboard not found!",
-  "fate_card_not_found": "Fate card not found!"
+  "fate_card_not_found": "Fate card not found!",
+  "page_not_found": "Page not found!",
+  "data_not_found": "Data not found!"
 }

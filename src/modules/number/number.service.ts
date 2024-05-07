@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { PersonService } from '../person/person.service'
 import { PageService } from '../page/page.service'
 import { PageResponse } from '../page/response'
@@ -103,7 +103,13 @@ export class NumberService {
       const fateNumber = await this.getFateNumber(user_uuid, language_code, userData)
       const chronicDisease = await this.getChronicDisease(user_uuid, language_code, userData)
 
-      return [fateNumber, chronicDisease]
+      const pages = [fateNumber, chronicDisease]
+
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+
+      return pages
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
@@ -157,6 +163,10 @@ export class NumberService {
         }
       }
 
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+
       return pages
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -203,6 +213,10 @@ export class NumberService {
         }
       }
 
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+
       return pages
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -241,6 +255,10 @@ export class NumberService {
         }
       }
 
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+
       return pages
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -259,7 +277,11 @@ export class NumberService {
         language_code,
       )
 
-      return page
+      if (page) {
+        return page
+      } else {
+        throw new NotFoundException(await this.i18n.t('errors.page_not_found'))
+      }
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
