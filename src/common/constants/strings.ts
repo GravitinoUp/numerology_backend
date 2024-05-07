@@ -36,6 +36,8 @@ export const AppStrings = {
   FATE_NUMBER_GET_RESPONSE: 'Число судьбы успешно получено',
   CHRONIC_DISEASE_GET_OPERATION: 'Получение хронического заболевания пользователя',
   CHRONIC_DISEASE_GET_RESPONSE: 'Хроническое заболевание успешно получено',
+  HEALTH_NUMEROLOGY_GET_OPERATION: 'Получение нумерологии здоровья',
+  HEALTH_NUMEROLOGY_GET_RESPONSE: 'Числа успешно получены',
   PROFESSIONS_GET_OPERATION: 'Получение профессий пользователя',
   PROFESSIONS_GET_RESPONSE: 'Профессии успешно получены',
   NEGATIVE_TRAITS_GET_OPERATION: 'Получение слабых качеств пользователя',

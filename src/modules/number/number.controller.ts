@@ -1,6 +1,5 @@
 import { Controller, Get, HttpStatus, Req, UseFilters, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { I18nService } from 'nestjs-i18n'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { NumberService } from './number.service'
 import { AppStrings } from 'src/common/constants/strings'
@@ -13,10 +12,7 @@ import { JwtAuthGuard } from '../auth/guards/auth.guard'
 @Controller('number')
 @UseFilters(AllExceptionsFilter)
 export class NumberController {
-  constructor(
-    private readonly numberService: NumberService,
-    private readonly i18n: I18nService,
-  ) {}
+  constructor(private readonly numberService: NumberService) {}
 
   @ApiOperation({ summary: AppStrings.FATE_CARD_GET_OPERATION })
   @ApiResponse({
@@ -60,11 +56,29 @@ export class NumberController {
     return result
   }
 
+  @ApiOperation({ summary: AppStrings.HEALTH_NUMEROLOGY_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.HEALTH_NUMEROLOGY_GET_RESPONSE,
+    type: PageResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('health')
+  async getHealthNumberology(@Req() request) {
+    const result = await this.numberService.getChronicDisease(
+      request.user.user_uuid,
+      request.i18nLang,
+    )
+    return result
+  }
+
   @ApiOperation({ summary: AppStrings.PROFESSIONS_GET_OPERATION })
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.PROFESSIONS_GET_RESPONSE,
     type: PageResponse,
+    isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('professions')
@@ -78,6 +92,7 @@ export class NumberController {
     status: HttpStatus.OK,
     description: AppStrings.NEGATIVE_TRAITS_GET_RESPONSE,
     type: PageResponse,
+    isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('negative-traits')
@@ -94,6 +109,7 @@ export class NumberController {
     status: HttpStatus.OK,
     description: AppStrings.PLANETS_GET_RESPONSE,
     type: PageResponse,
+    isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('planets')

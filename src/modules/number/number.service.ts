@@ -10,6 +10,7 @@ import {
   RuVowelLetters,
 } from 'src/common/constants/constants'
 import { I18nService } from 'nestjs-i18n'
+import { Person } from '../person/entities/person.entity'
 
 @Injectable()
 export class NumberService {
@@ -38,9 +39,13 @@ export class NumberService {
     }
   }
 
-  async getFateNumber(user_uuid: string, language_code: string): Promise<PageResponse> {
+  async getFateNumber(
+    user_uuid: string,
+    language_code: string,
+    user_data?: Person,
+  ): Promise<PageResponse> {
     try {
-      const userData = await this.personService.getPersonData(user_uuid)
+      const userData = user_data ?? (await this.personService.getPersonData(user_uuid))
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
       const fateNumber = this.getSumLte9(userBirthday)
@@ -51,15 +56,24 @@ export class NumberService {
         language_code,
       )
 
-      return page
+      if (page) {
+        page.page_title = await this.i18n.t('titles.fate_number')
+        return page
+      } else {
+        Logger.error(`MISSING FATE NUMBER PAGE ${JSON.stringify(fateNumber)}`)
+      }
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
-  async getChronicDisease(user_uuid: string, language_code: string): Promise<PageResponse> {
+  async getChronicDisease(
+    user_uuid: string,
+    language_code: string,
+    user_data?: Person,
+  ): Promise<PageResponse> {
     try {
-      const userData = await this.personService.getPersonData(user_uuid)
+      const userData = user_data ?? (await this.personService.getPersonData(user_uuid))
 
       const yearArcane = this.getYearArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
@@ -71,7 +85,25 @@ export class NumberService {
         language_code,
       )
 
-      return page
+      if (page) {
+        page.page_title = await this.i18n.t('titles.chronic_disease')
+        return page
+      } else {
+        Logger.error(`MISSING DISEASE PAGE ${JSON.stringify(tkk)}`)
+      }
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getHealthNumerology(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+
+      const fateNumber = await this.getFateNumber(user_uuid, language_code, userData)
+      const chronicDisease = await this.getChronicDisease(user_uuid, language_code, userData)
+
+      return [fateNumber, chronicDisease]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
