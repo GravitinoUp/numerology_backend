@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import Model from 'src/modules/app/entities/model'
-import { Entity, Column, PrimaryColumn } from 'typeorm'
+import { Page } from 'src/modules/page/entities/page.entity'
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm'
 
 @Entity({ name: 'PageTypes' })
 export class PageType extends Model {
@@ -12,6 +13,10 @@ export class PageType extends Model {
   @ApiProperty()
   page_type_name: string
 
-  // @OneToMany(() => User, (user) => user.role, { cascade: true, eager: true })
-  // users: User[]
+  @Column({ type: 'json', default: { ru: '', en: '' } })
+  @ApiProperty()
+  page_type_description: string
+
+  @OneToMany(() => Page, (page) => page.page_type, { cascade: true, eager: true })
+  pages: Page[]
 }

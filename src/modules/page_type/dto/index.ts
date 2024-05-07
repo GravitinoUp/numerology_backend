@@ -16,4 +16,9 @@ export class UpdatePageTypeDto {
   @IsOptional()
   @ApiProperty({ required: false })
   page_type_name?: string
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  page_type_description?: string
 }

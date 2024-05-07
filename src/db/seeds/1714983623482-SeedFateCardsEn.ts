@@ -1,3 +1,4 @@
+import { PageTypesEnum } from 'src/common/constants/constants'
 import { Page } from 'src/modules/page/entities/page.entity'
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
@@ -669,6 +670,6 @@ export class SeedFateCardsEn1714983623482 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.clearTable('Pages')
+    await queryRunner.manager.delete(Page, { page_type_id: PageTypesEnum.FATE_CARDS })
   }
 }

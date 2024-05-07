@@ -73,6 +73,22 @@ export class NumberController {
     return result
   }
 
+  @ApiOperation({ summary: AppStrings.NEGATIVE_TRAITS_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.NEGATIVE_TRAITS_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('negative-traits')
+  async getNegaiveTraits(@Req() request) {
+    const result = await this.numberService.getNegativeTraits(
+      request.user.user_uuid,
+      request.i18nLang,
+    )
+    return result
+  }
+
   @ApiOperation({ summary: AppStrings.PLANETS_GET_OPERATION })
   @ApiResponse({
     status: HttpStatus.OK,

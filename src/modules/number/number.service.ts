@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { PersonService } from '../person/person.service'
 import { PageService } from '../page/page.service'
 import { PageResponse } from '../page/response'
@@ -87,17 +87,43 @@ export class NumberService {
       const monthArcane = userData.birthday_month
       const dayArcane = this.getArcane(userData.birthday_day)
 
-      const pg1 = this.getArcane(dayArcane + monthArcane + yearArcane).toString()
-      const pg2 = this.getArcane(dayArcane + 2 * monthArcane + yearArcane).toString()
-      const pg3 = this.getArcane(6 * dayArcane + 6 * monthArcane + 5 * yearArcane).toString()
-      const pg4 = this.getSumLte9(userBirthday).toString()
-      const pg5 = this.getSoulNumber(userData.first_name).toString()
+      const pg1 = {
+        number: this.getArcane(dayArcane + monthArcane + yearArcane).toString(),
+        title: `${this.i18n.t('titles.pg')} 1`,
+      }
+      const pg2 = {
+        number: this.getArcane(dayArcane + 2 * monthArcane + yearArcane).toString(),
+        title: `${this.i18n.t('titles.pg')} 2`,
+      }
+      const pg3 = {
+        number: this.getArcane(6 * dayArcane + 6 * monthArcane + 5 * yearArcane).toString(),
+        title: `${this.i18n.t('titles.pg')} 3`,
+      }
+      const pg4 = {
+        number: this.getSumLte9(userBirthday).toString(),
+        title: `${this.i18n.t('titles.pg')} 4`,
+      }
+      const pg5 = {
+        number: this.getSoulNumber(userData.first_name).toString(),
+        title: `${this.i18n.t('titles.pg')} 5`,
+      }
 
-      const pages = await this.pageService.findAllByKeys(
-        [pg1, pg2, pg3, pg4, pg5],
-        PageTypesEnum.PROFESSIONS,
-        language_code,
-      )
+      const keys = [pg1, pg2, pg3, pg4, pg5]
+      const pages = []
+      for (const pg of keys) {
+        const page = await this.pageService.findOneByKey(
+          pg.number.toString(),
+          PageTypesEnum.PROFESSIONS,
+          language_code,
+        )
+
+        if (page) {
+          page.page_title = pg.title
+          pages.push(page)
+        } else {
+          Logger.error(`MISSING PAGE ${JSON.stringify(pg)}`)
+        }
+      }
 
       return pages
     } catch (error) {
@@ -114,15 +140,36 @@ export class NumberService {
       const monthArcane = userData.birthday_month
       const dayArcane = this.getArcane(userData.birthday_day)
 
-      const nt1 = this.getArcane(Math.abs(dayArcane - monthArcane)).toString()
-      const nt2 = this.getArcane(Math.abs(dayArcane - yearArcane)).toString()
-      const nt3 = this.getArcane(monthArcane - yearArcane).toString()
+      const nt1 = {
+        number: this.getArcane(Math.abs(dayArcane - monthArcane)).toString(),
+        title: `${this.i18n.t('titles.negative_traits')} 1`,
+      }
+      const nt2 = {
+        number: this.getArcane(Math.abs(dayArcane - yearArcane)).toString(),
+        title: `${this.i18n.t('titles.negative_traits')} 2`,
+      }
+      const nt3 = {
+        number: this.getArcane(monthArcane - yearArcane).toString(),
+        title: `${this.i18n.t('titles.negative_traits')} 3`,
+      }
 
-      const pages = await this.pageService.findAllByKeys(
-        [nt1, nt2, nt3],
-        PageTypesEnum.WEAK_TRAITS,
-        language_code,
-      )
+      const keys = [nt1, nt2, nt3]
+
+      const pages = []
+      for (const key of keys) {
+        const page = await this.pageService.findOneByKey(
+          key.number.toString(),
+          PageTypesEnum.WEAK_TRAITS,
+          language_code,
+        )
+
+        if (page) {
+          page.page_title = key.title
+          pages.push(page)
+        } else {
+          Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
+        }
+      }
 
       return pages
     } catch (error) {
@@ -135,14 +182,32 @@ export class NumberService {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
-      const lifePathNumber = this.getSumLte9(userBirthday).toString()
-      const soulNumber = this.getSoulNumber(userData.first_name).toString()
+      const lifePathNumber = {
+        number: this.getSumLte9(userBirthday).toString(),
+        title: this.i18n.t('titles.life_path_number'),
+      }
+      const soulNumber = {
+        number: this.getSoulNumber(userData.first_name).toString(),
+        title: this.i18n.t('titles.soul_number'),
+      }
 
-      const pages = await this.pageService.findAllByKeys(
-        [lifePathNumber, soulNumber],
-        PageTypesEnum.PLANETS,
-        language_code,
-      )
+      const keys = [lifePathNumber, soulNumber]
+
+      const pages = []
+      for (const key of keys) {
+        const page = await this.pageService.findOneByKey(
+          key.number.toString(),
+          PageTypesEnum.PLANETS,
+          language_code,
+        )
+
+        if (page) {
+          page.page_title = key.title
+          pages.push(page)
+        } else {
+          Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
+        }
+      }
 
       return pages
     } catch (error) {

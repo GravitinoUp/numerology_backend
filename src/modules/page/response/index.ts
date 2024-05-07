@@ -37,6 +37,11 @@ export class PageResponse {
   page_content: string
 
   @IsString()
+  @IsOptional()
+  @ApiProperty()
+  page_title?: string
+
+  @IsString()
   @ApiProperty()
   language_code: string
 }

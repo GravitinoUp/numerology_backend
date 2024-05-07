@@ -18,6 +18,11 @@ export class CreatePages1714735168107 implements MigrationInterface {
             type: 'json',
           },
           {
+            name: 'page_type_description',
+            type: 'json',
+            default: `to_json('{\"ru\":\"\",\"en\":\"\"}'::text)`,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

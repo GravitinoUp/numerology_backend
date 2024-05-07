@@ -9,6 +9,10 @@ export class PageTypeResponse {
   @IsString()
   @ApiProperty()
   page_type_name: string
+
+  @IsString()
+  @ApiProperty()
+  page_type_description: string
 }
 
 export class StatusPageTypeResponse {
