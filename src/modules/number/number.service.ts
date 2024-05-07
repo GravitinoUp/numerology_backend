@@ -105,8 +105,8 @@ export class NumberService {
 
       const pages = [fateNumber, chronicDisease]
 
-      if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      if (!fateNumber && !chronicDisease) {
+        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
       }
 
       return pages

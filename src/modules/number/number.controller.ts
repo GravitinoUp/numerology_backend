@@ -66,7 +66,7 @@ export class NumberController {
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('health')
   async getHealthNumberology(@Req() request) {
-    const result = await this.numberService.getChronicDisease(
+    const result = await this.numberService.getHealthNumerology(
       request.user.user_uuid,
       request.i18nLang,
     )
