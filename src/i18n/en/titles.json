@@ -4,5 +4,8 @@
   "fate_number": "The number of fate",
   "life_path_number": "The number of the life path",
   "soul_number": "The number of the soul",
-  "chronic_disease": "Chronic disease"
+  "chronic_disease": "Chronic disease",
+  "day_totem": "Totem by birth date",
+  "year_totem": "Totem by year of birth",
+  "name_totem": "Name totem"
 }

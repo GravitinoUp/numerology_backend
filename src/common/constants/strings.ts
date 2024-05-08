@@ -46,6 +46,8 @@ export const AppStrings = {
   PLANETS_GET_RESPONSE: 'Планеты успешно получены',
   ANCESTORS_GET_OPERATION: 'Получение предков пользователя',
   ANCESTORS_GET_RESPONSE: 'Предки успешно получены',
+  TOTEMIC_ANIMALS_GET_OPERATION: 'Получение тотемных животных пользователя',
+  TOTEMIC_ANIMALS_GET_RESPONSE: 'Тотемные животные успешно получены',
 
   PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',

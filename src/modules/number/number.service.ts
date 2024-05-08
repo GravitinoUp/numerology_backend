@@ -287,25 +287,43 @@ export class NumberService {
     }
   }
 
-  async getTotemicAnimal(user_uuid: string, language_code: string): Promise<PageResponse> {
+  async getTotemicAnimals(user_uuid: string, language_code: string): Promise<PageResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
-      const key = `${('0' + userData.birthday_day).slice(-2)}.${('0' + userData.birthday_month).slice(-2)}`
 
-      const page = await this.pageService.findOneByKey(
-        key,
-        PageTypesEnum.TOTEMIC_ANIMAl,
-        language_code,
-      )
-
-      if (page) {
-        return page
-      } else {
-        throw new HttpException(
-          await this.i18n.t('errors.fate_card_not_found'),
-          HttpStatus.NOT_FOUND,
-        )
+      const dateKey = {
+        number: `${('0' + userData.birthday_day).slice(-2)}.${('0' + userData.birthday_month).slice(-2)}`,
+        title: this.i18n.t('titles.day_totem'),
       }
+      const yearKey = { number: userData.birthday_year, title: this.i18n.t('titles.year_totem') }
+      const nameKey = {
+        number: this.getSumLte9(this.getNameNumber(userData.first_name, false).toString()),
+        title: this.i18n.t('titles.name_totem'),
+      }
+
+      const keys = [dateKey, yearKey, nameKey]
+
+      const pages = []
+      for (const key of keys) {
+        const page = await this.pageService.findOneByKey(
+          key.number.toString(),
+          PageTypesEnum.TOTEMIC_ANIMAl,
+          language_code,
+        )
+
+        if (page) {
+          page.page_title = key.title
+          pages.push(page)
+        } else {
+          Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
+        }
+      }
+
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+
+      return pages
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }

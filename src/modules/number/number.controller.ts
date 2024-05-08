@@ -130,4 +130,20 @@ export class NumberController {
     const result = await this.numberService.getAncestors(request.user.user_uuid, request.i18nLang)
     return result
   }
+
+  @ApiOperation({ summary: AppStrings.TOTEMIC_ANIMALS_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.TOTEMIC_ANIMALS_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('totemic-animal')
+  async getTotemicAnimals(@Req() request) {
+    const result = await this.numberService.getTotemicAnimals(
+      request.user.user_uuid,
+      request.i18nLang,
+    )
+    return result
+  }
 }
