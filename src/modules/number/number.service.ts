@@ -329,6 +329,125 @@ export class NumberService {
     }
   }
 
+  async getDestinyProgram(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+      const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
+
+      const dayTask = {
+        number: this.getArcane(userData.birthday_day),
+        title: this.i18n.t('titles.day_task'),
+        type: PageTypesEnum.TASKS,
+      }
+      const monthTask = {
+        number: userData.birthday_month,
+        title: this.i18n.t('titles.month_task'),
+        type: PageTypesEnum.TASKS,
+      }
+      const yearTask = {
+        number: this.getYearArcane(userData.birthday_year.toString()),
+        title: this.i18n.t('titles.year_task'),
+        type: PageTypesEnum.TASKS,
+      }
+      const communityTask = {
+        number: this.getArcane(dayTask.number + monthTask.number + yearTask.number),
+        title: this.i18n.t('titles.community_task'),
+        type: PageTypesEnum.TASKS,
+      }
+      const nameKey = {
+        number: this.getArcane(this.getNameNumber(userData.first_name, false)),
+        title: this.i18n.t('titles.secret_of_name'),
+        type: PageTypesEnum.SECRET_OF_NAME,
+      }
+      const expressionNumberKey = {
+        number: this.getSumLte9(
+          this.getNameNumber(
+            `${userData.first_name}${userData.last_name}${userData.patronymic}`,
+            false,
+            true,
+          ).toString(),
+        ),
+        title: this.i18n.t('titles.expression_number'),
+        type: PageTypesEnum.EXPRESSION_NUMBER,
+      }
+      const lifePathNumber = {
+        number: this.getSumLte9(userBirthday),
+        title: this.i18n.t('titles.life_path_number'),
+        type: PageTypesEnum.LIFE_PATH_NUMBER,
+      }
+
+      const keys = [
+        dayTask,
+        monthTask,
+        yearTask,
+        communityTask,
+        nameKey,
+        expressionNumberKey,
+        lifePathNumber,
+      ]
+
+      const pages = []
+      for (const key of keys) {
+        const page = await this.pageService.findOneByKey(
+          key.number.toString(),
+          key.type,
+          language_code,
+        )
+
+        if (page) {
+          page.page_title = key.title
+          pages.push(page)
+        } else {
+          Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
+        }
+      }
+
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+
+      return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getLuckyNumbers(user_uuid: string): Promise<number[]> {
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+      const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
+
+      const dayTask = this.getArcane(userData.birthday_day)
+
+      const monthTask = userData.birthday_month
+      const yearTask = this.getYearArcane(userData.birthday_year.toString())
+      const communityTask = this.getArcane(dayTask + monthTask + yearTask)
+      const nameKey = this.getArcane(this.getNameNumber(userData.first_name, false))
+      const expressionNumberKey = this.getSumLte9(
+        this.getNameNumber(
+          `${userData.first_name}${userData.last_name}${userData.patronymic}`,
+          false,
+          true,
+        ).toString(),
+      )
+      const lifePathNumber = this.getSumLte9(userBirthday)
+
+      const keys = [
+        dayTask,
+        monthTask,
+        yearTask,
+        communityTask,
+        nameKey,
+        expressionNumberKey,
+        lifePathNumber,
+      ]
+
+      return keys
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
   getSumLte9(value: string): number {
     let result = 0
     for (const number of value) {
@@ -347,7 +466,7 @@ export class NumberService {
     return result
   }
 
-  getNameNumber(name: string, onlyVowel: boolean = true): number {
+  getNameNumber(name: string, onlyVowel: boolean = true, onlyConsonants: boolean = false): number {
     let nameLetters = name.split('')
 
     if (onlyVowel) {
@@ -355,6 +474,12 @@ export class NumberService {
         (letter) =>
           RuVowelLetters.includes(letter.toLowerCase()) ||
           EnVowelLetters.includes(letter.toLowerCase()),
+      )
+    } else if (onlyConsonants) {
+      nameLetters = nameLetters.filter(
+        (letter) =>
+          !RuVowelLetters.includes(letter.toLowerCase()) &&
+          !EnVowelLetters.includes(letter.toLowerCase()),
       )
     }
 

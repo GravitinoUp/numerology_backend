@@ -48,6 +48,10 @@ export const AppStrings = {
   ANCESTORS_GET_RESPONSE: 'Предки успешно получены',
   TOTEMIC_ANIMALS_GET_OPERATION: 'Получение тотемных животных пользователя',
   TOTEMIC_ANIMALS_GET_RESPONSE: 'Тотемные животные успешно получены',
+  DESTINY_PROGRAM_GET_OPERATION: 'Получение программы судьбы пользователя',
+  DESTINY_PROGRAM_GET_RESPONSE: 'Программа судьбы успешно получены',
+  LUCKY_NUMBERS_GET_OPERATION: 'Получение чисел удачи пользователя',
+  LUCKY_NUMBERS_GET_RESPONSE: 'Числа удачи успешно получены',
 
   PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',

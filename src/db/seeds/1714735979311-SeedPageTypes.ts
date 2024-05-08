@@ -69,6 +69,34 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           en: 'Totemic animal',
         }),
       },
+      {
+        page_type_id: 12,
+        page_type_name: JSON.stringify({
+          ru: 'Задачи для реализации',
+          en: 'Tasks for implementation',
+        }),
+      },
+      {
+        page_type_id: 13,
+        page_type_name: JSON.stringify({
+          ru: 'Тайна имени',
+          en: 'The secret of the name',
+        }),
+      },
+      {
+        page_type_id: 14,
+        page_type_name: JSON.stringify({
+          ru: 'Число выражения',
+          en: 'Число выражения',
+        }),
+      },
+      {
+        page_type_id: 15,
+        page_type_name: JSON.stringify({
+          ru: 'Число жизненного пути',
+          en: 'The number of the life path',
+        }),
+      },
     ])
   }
 

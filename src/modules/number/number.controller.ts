@@ -27,34 +27,34 @@ export class NumberController {
     return result
   }
 
-  @ApiOperation({ summary: AppStrings.FATE_NUMBER_GET_OPERATION })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: AppStrings.FATE_NUMBER_GET_RESPONSE,
-    type: PageResponse,
-  })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
-  @Get('fate-number')
-  async getFateNumber(@Req() request) {
-    const result = await this.numberService.getFateNumber(request.user.user_uuid, request.i18nLang)
-    return result
-  }
+  // @ApiOperation({ summary: AppStrings.FATE_NUMBER_GET_OPERATION })
+  // @ApiResponse({
+  //   status: HttpStatus.OK,
+  //   description: AppStrings.FATE_NUMBER_GET_RESPONSE,
+  //   type: PageResponse,
+  // })
+  // @UseGuards(JwtAuthGuard, ActiveGuard)
+  // @Get('fate-number')
+  // async getFateNumber(@Req() request) {
+  //   const result = await this.numberService.getFateNumber(request.user.user_uuid, request.i18nLang)
+  //   return result
+  // }
 
-  @ApiOperation({ summary: AppStrings.CHRONIC_DISEASE_GET_OPERATION })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: AppStrings.CHRONIC_DISEASE_GET_RESPONSE,
-    type: PageResponse,
-  })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
-  @Get('chronic-disease')
-  async getChronicDisease(@Req() request) {
-    const result = await this.numberService.getChronicDisease(
-      request.user.user_uuid,
-      request.i18nLang,
-    )
-    return result
-  }
+  // @ApiOperation({ summary: AppStrings.CHRONIC_DISEASE_GET_OPERATION })
+  // @ApiResponse({
+  //   status: HttpStatus.OK,
+  //   description: AppStrings.CHRONIC_DISEASE_GET_RESPONSE,
+  //   type: PageResponse,
+  // })
+  // @UseGuards(JwtAuthGuard, ActiveGuard)
+  // @Get('chronic-disease')
+  // async getChronicDisease(@Req() request) {
+  //   const result = await this.numberService.getChronicDisease(
+  //     request.user.user_uuid,
+  //     request.i18nLang,
+  //   )
+  //   return result
+  // }
 
   @ApiOperation({ summary: AppStrings.HEALTH_NUMEROLOGY_GET_OPERATION })
   @ApiResponse({
@@ -136,14 +136,46 @@ export class NumberController {
     status: HttpStatus.OK,
     description: AppStrings.TOTEMIC_ANIMALS_GET_RESPONSE,
     type: PageResponse,
+    isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
-  @Get('totemic-animal')
+  @Get('totemic-animals')
   async getTotemicAnimals(@Req() request) {
     const result = await this.numberService.getTotemicAnimals(
       request.user.user_uuid,
       request.i18nLang,
     )
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.DESTINY_PROGRAM_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.DESTINY_PROGRAM_GET_RESPONSE,
+    type: PageResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('destiny-program')
+  async getDestinyProgram(@Req() request) {
+    const result = await this.numberService.getDestinyProgram(
+      request.user.user_uuid,
+      request.i18nLang,
+    )
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.LUCKY_NUMBERS_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.LUCKY_NUMBERS_GET_RESPONSE,
+    type: PageResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('lucky-numbers')
+  async getLuckyNumbers(@Req() request) {
+    const result = await this.numberService.getLuckyNumbers(request.user.user_uuid)
     return result
   }
 }
