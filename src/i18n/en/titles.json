@@ -1,6 +1,7 @@
 {
   "pg": "A group of professions by fate",
   "negative_traits": "Negative character traits",
+  "positive_traits": "Positive character traits",
   "fate_number": "The number of fate",
   "life_path_number": "The number of the life path",
   "expression_number": "The number of expression",
