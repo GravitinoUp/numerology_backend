@@ -13,5 +13,8 @@
   "chronic_disease": "Chronic disease",
   "day_totem": "Totem by birth date",
   "year_totem": "Totem by year of birth",
-  "name_totem": "Name totem"
+  "name_totem": "Name totem",
+  "first_karmic_knot": "First karmic knote",
+  "second_karmic_knot": "Second karmic knote",
+  "third_karmic_knot": "Third karmic knote"
 }

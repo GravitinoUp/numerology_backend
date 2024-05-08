@@ -448,6 +448,54 @@ export class NumberService {
     }
   }
 
+  async getKarma(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+
+      const yearArcane = this.getYearArcane(userData.birthday_year.toString())
+      const monthArcane = userData.birthday_month
+      const dayArcane = this.getArcane(userData.birthday_day)
+
+      const firstKarmicKnot = {
+        number: this.getArcane(Math.abs(dayArcane - monthArcane)),
+        title: this.i18n.t('titles.first_karmic_knot'),
+      }
+      const secondKarmicKnot = {
+        number: this.getArcane(Math.abs(dayArcane - yearArcane)),
+        title: this.i18n.t('titles.second_karmic_knot'),
+      }
+      const thirdKarmicKnot = {
+        number: this.getArcane(Math.abs(monthArcane - yearArcane)),
+        title: this.i18n.t('titles.third_karmic_knot'),
+      }
+
+      const keys = [firstKarmicKnot, secondKarmicKnot, thirdKarmicKnot]
+
+      const pages = []
+      for (const key of keys) {
+        const page = await this.pageService.findOneByKey(
+          key.number.toString(),
+          PageTypesEnum.KARMA,
+          language_code,
+        )
+
+        if (page) {
+          page.page_title = key.title
+          pages.push(page)
+        } else {
+          Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
+        }
+      }
+
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+      return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
   getSumLte9(value: string): number {
     let result = 0
     for (const number of value) {

@@ -97,6 +97,13 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           en: 'The number of the life path',
         }),
       },
+      {
+        page_type_id: 16,
+        page_type_name: JSON.stringify({
+          ru: 'Карма и прошлая жизнь',
+          en: 'Karma and past life',
+        }),
+      },
     ])
   }
 

@@ -52,6 +52,8 @@ export const AppStrings = {
   DESTINY_PROGRAM_GET_RESPONSE: 'Программа судьбы успешно получены',
   LUCKY_NUMBERS_GET_OPERATION: 'Получение чисел удачи пользователя',
   LUCKY_NUMBERS_GET_RESPONSE: 'Числа удачи успешно получены',
+  KARMA_GET_OPERATION: 'Получение кармы пользователя',
+  KARMA_GET_RESPONSE: 'Карма успешно получены',
 
   PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',

@@ -178,4 +178,18 @@ export class NumberController {
     const result = await this.numberService.getLuckyNumbers(request.user.user_uuid)
     return result
   }
+
+  @ApiOperation({ summary: AppStrings.KARMA_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.KARMA_GET_RESPONSE,
+    type: PageResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('karma')
+  async getKarma(@Req() request) {
+    const result = await this.numberService.getKarma(request.user.user_uuid, request.i18nLang)
+    return result
+  }
 }

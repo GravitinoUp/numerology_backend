@@ -8,12 +8,12 @@ export class SeedUsers1714212775058 implements MigrationInterface {
     await queryRunner.manager.insert(Person, [
       {
         person_uuid: 'df33e1fe-664d-4bd1-bf14-12e8cf99e5ac',
-        last_name: 'Admin',
-        first_name: 'Admin',
-        patronymic: 'Admin',
-        birthday_day: 1,
-        birthday_month: 1,
-        birthday_year: 1,
+        last_name: 'Волкова',
+        first_name: 'Евгения',
+        patronymic: 'Александровна',
+        birthday_day: 18,
+        birthday_month: 6,
+        birthday_year: 1984,
       },
       {
         person_uuid: '1040ba07-dfea-4032-9a27-dcfc8f04e4f7',
