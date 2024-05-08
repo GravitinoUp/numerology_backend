@@ -62,6 +62,13 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           en: 'Metaphysical causes of diseases',
         }),
       },
+      {
+        page_type_id: 11,
+        page_type_name: JSON.stringify({
+          ru: 'Тотемное животное',
+          en: 'Totemic animal',
+        }),
+      },
     ])
   }
 

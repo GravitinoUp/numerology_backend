@@ -14,6 +14,7 @@ export const PageTypesEnum = {
   NUMBER_OF_FATE: 8,
   CHRONIC_DISEASES: 9,
   METAPHYSICAL_CAUSES_OF_DISEASES: 10,
+  TOTEMIC_ANIMAl: 11,
 }
 
 export const RuVowelLetters = ['а', 'о', 'э', 'е', 'и', 'ы', 'у', 'ё', 'ю', 'я']
