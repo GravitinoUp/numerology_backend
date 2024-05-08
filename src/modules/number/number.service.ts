@@ -48,7 +48,7 @@ export class NumberService {
       const userData = user_data ?? (await this.personService.getPersonData(user_uuid))
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
-      const fateNumber = this.getSumLte9(userBirthday)
+      const fateNumber = this.getQuersumme(userBirthday)
 
       const page = await this.pageService.findOneByKey(
         fateNumber.toString(),
@@ -138,7 +138,7 @@ export class NumberService {
         title: `${this.i18n.t('titles.pg')} 3`,
       }
       const pg4 = {
-        number: this.getSumLte9(userBirthday).toString(),
+        number: this.getQuersumme(userBirthday).toString(),
         title: `${this.i18n.t('titles.pg')} 4`,
       }
       const pg5 = {
@@ -223,13 +223,73 @@ export class NumberService {
     }
   }
 
+  async getStrongQualitites(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+    // TODO PLANETS
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+      const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
+
+      const yearArcane = this.getYearArcane(userData.birthday_year.toString())
+      const monthArcane = userData.birthday_month
+      const dayArcane = this.getArcane(userData.birthday_day)
+
+      const positiveTrait1 = {
+        number: this.getArcane(dayArcane),
+        title: `${this.i18n.t('titles.positive_traits')} 1`,
+      }
+      const positiveTrait2 = {
+        number: this.getArcane(monthArcane),
+        title: `${this.i18n.t('titles.positive_traits')} 2`,
+      }
+      const positiveTrait3 = {
+        number: this.getYearArcane(yearArcane.toString()),
+        title: `${this.i18n.t('titles.positive_traits')} 3`,
+      }
+      const positiveTrait4 = {
+        number: this.getArcane(dayArcane + monthArcane + yearArcane),
+        title: `${this.i18n.t('titles.positive_traits')} 4`,
+      }
+
+      const positiveTrait5 = {
+        number: this.getQuersumme(userBirthday),
+        title: `${this.i18n.t('titles.positive_traits')} 5`,
+      }
+
+      const keys = [positiveTrait1, positiveTrait2, positiveTrait3, positiveTrait4, positiveTrait5]
+
+      const pages = []
+      for (const key of keys) {
+        const page = await this.pageService.findOneByKey(
+          key.number.toString(),
+          PageTypesEnum.WEAK_TRAITS,
+          language_code,
+        )
+
+        if (page) {
+          page.page_title = key.title
+          pages.push(page)
+        } else {
+          Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
+        }
+      }
+
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+
+      return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
   async getPlanets(user_uuid: string, language_code: string): Promise<PageResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
       const lifePathNumber = {
-        number: this.getSumLte9(userBirthday).toString(),
+        number: this.getQuersumme(userBirthday).toString(),
         title: this.i18n.t('titles.life_path_number'),
       }
       const soulNumber = {
@@ -297,7 +357,7 @@ export class NumberService {
       }
       const yearKey = { number: userData.birthday_year, title: this.i18n.t('titles.year_totem') }
       const nameKey = {
-        number: this.getSumLte9(this.getNameNumber(userData.first_name, false).toString()),
+        number: this.getQuersumme(this.getNameNumber(userData.first_name, false).toString()),
         title: this.i18n.t('titles.name_totem'),
       }
 
@@ -360,7 +420,7 @@ export class NumberService {
         type: PageTypesEnum.SECRET_OF_NAME,
       }
       const expressionNumberKey = {
-        number: this.getSumLte9(
+        number: this.getQuersumme(
           this.getNameNumber(
             `${userData.first_name}${userData.last_name}${userData.patronymic}`,
             false,
@@ -371,7 +431,7 @@ export class NumberService {
         type: PageTypesEnum.EXPRESSION_NUMBER,
       }
       const lifePathNumber = {
-        number: this.getSumLte9(userBirthday),
+        number: this.getQuersumme(userBirthday),
         title: this.i18n.t('titles.life_path_number'),
         type: PageTypesEnum.LIFE_PATH_NUMBER,
       }
@@ -423,14 +483,14 @@ export class NumberService {
       const yearTask = this.getYearArcane(userData.birthday_year.toString())
       const communityTask = this.getArcane(dayTask + monthTask + yearTask)
       const nameKey = this.getArcane(this.getNameNumber(userData.first_name, false))
-      const expressionNumberKey = this.getSumLte9(
+      const expressionNumberKey = this.getQuersumme(
         this.getNameNumber(
           `${userData.first_name}${userData.last_name}${userData.patronymic}`,
           false,
           true,
         ).toString(),
       )
-      const lifePathNumber = this.getSumLte9(userBirthday)
+      const lifePathNumber = this.getQuersumme(userBirthday)
 
       const keys = [
         dayTask,
@@ -496,7 +556,7 @@ export class NumberService {
     }
   }
 
-  getSumLte9(value: string): number {
+  getQuersumme(value: string): number {
     let result = 0
     for (const number of value) {
       result += Number(number)
@@ -541,7 +601,7 @@ export class NumberService {
 
   getSoulNumber(firstName: string): number {
     const nameNumber = this.getNameNumber(firstName)
-    const soulNumber = this.getSumLte9(nameNumber.toString())
+    const soulNumber = this.getQuersumme(nameNumber.toString())
 
     return soulNumber
   }

@@ -87,17 +87,34 @@ export class NumberController {
     return result
   }
 
-  @ApiOperation({ summary: AppStrings.NEGATIVE_TRAITS_GET_OPERATION })
+  @ApiOperation({ summary: AppStrings.WEAK_QUALITIES_GET_OPERATION })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: AppStrings.NEGATIVE_TRAITS_GET_RESPONSE,
+    description: AppStrings.WEAK_QUALITIES_GET_RESPONSE,
     type: PageResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
-  @Get('negative-traits')
+  @Get('weak-qualities')
   async getNegaiveTraits(@Req() request) {
     const result = await this.numberService.getNegativeTraits(
+      request.user.user_uuid,
+      request.i18nLang,
+    )
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.STRONG_QUALITIES_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.STRONG_QUALITIES_GET_RESPONSE,
+    type: PageResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('strong-qualities')
+  async getStrongQualitites(@Req() request) {
+    const result = await this.numberService.getStrongQualitites(
       request.user.user_uuid,
       request.i18nLang,
     )

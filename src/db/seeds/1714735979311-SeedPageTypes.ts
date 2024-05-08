@@ -104,6 +104,13 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           en: 'Karma and past life',
         }),
       },
+      {
+        page_type_id: 17,
+        page_type_name: JSON.stringify({
+          ru: 'Сильные качества и таланты',
+          en: 'Strong qualities and talents',
+        }),
+      },
     ])
   }
 

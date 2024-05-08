@@ -20,6 +20,7 @@ export const PageTypesEnum = {
   EXPRESSION_NUMBER: 14,
   LIFE_PATH_NUMBER: 15,
   KARMA: 16,
+  STRONG_TRAITS: 17,
 }
 
 export const RuVowelLetters = ['а', 'о', 'э', 'е', 'и', 'ы', 'у', 'ё', 'ю', 'я']
