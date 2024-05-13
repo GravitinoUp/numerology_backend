@@ -16,6 +16,7 @@ import { UserService } from '../user/user.service'
 import { AuthDto } from './dto/auth.dto'
 import { I18nService } from 'nestjs-i18n'
 import { RefreshTokenDto } from './dto/refresh-token.dto'
+import { Throttle } from '@nestjs/throttler'
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -27,6 +28,7 @@ export class AuthController {
     private readonly i18n: I18nService,
   ) {}
 
+  @Throttle({ default: { limit: 1, ttl: 1000 } })
   @Post()
   async login(@Body() authDto: AuthDto, @Ip() ipAddress, @Req() request) {
     const user = await this.userService.authByPhone(authDto.phone)
@@ -42,11 +44,13 @@ export class AuthController {
     })
   }
 
+  @Throttle({ default: { limit: 1, ttl: 1000 } })
   @Post('refresh')
   async refreshToken(@Body() body: RefreshTokenDto) {
     return this.authService.refresh(body.refresh_token)
   }
 
+  @Throttle({ default: { limit: 1, ttl: 1000 } })
   @Delete('logout')
   async logout(@Body() body: RefreshTokenDto) {
     return this.authService.logout(body.refresh_token)

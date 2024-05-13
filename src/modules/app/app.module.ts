@@ -16,10 +16,10 @@ import { LanguageModule } from '../language/language.module'
 import { OnboardModule } from '../onboard/onboard.module'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
-import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
 import { PageTypeModule } from '../page_type/page_type.module'
 import { PageModule } from '../page/page.module'
 import { NumberModule } from '../number/number.module'
+import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
 
 @Module({
   imports: [
