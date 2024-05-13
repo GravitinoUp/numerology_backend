@@ -64,7 +64,7 @@ import { NumberModule } from '../number/number.module'
         password: config.get('db_password'),
         database: config.get('db_name'),
         entities: ['dist/src/modules/**/entities/*.entity{.ts,.js}'],
-        migrations: ['dist/src/db/**/*{.ts,.js}'],
+        migrations: ['dist/src/db/migrations/*{.ts,.js}'],
         autoLoadEntities: false,
         synchronize: false,
         migrationsRun: true,
