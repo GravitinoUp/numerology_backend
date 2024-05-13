@@ -21,6 +21,10 @@ export const PageTypesEnum = {
   LIFE_PATH_NUMBER: 15,
   KARMA: 16,
   STRONG_TRAITS: 17,
+  BLOOD_TYPE: 18,
+  ANGELIC_NUMEROLOGY: 19,
+  GUESSING_NUMBER: 20,
+  COMPATIBILITY: 21,
 }
 
 export const RuVowelLetters = ['а', 'о', 'э', 'е', 'и', 'ы', 'у', 'ё', 'ю', 'я']

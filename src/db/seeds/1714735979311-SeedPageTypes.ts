@@ -128,6 +128,38 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
         }),
         category_id: 1,
       },
+      {
+        page_type_id: 18,
+        page_type_name: JSON.stringify({
+          ru: 'Группа крови и нумерология',
+          en: 'Blood type and numerology',
+        }),
+        category_id: 3,
+      },
+      {
+        page_type_id: 19,
+        page_type_name: JSON.stringify({
+          ru: 'Ангельская нумерология',
+          en: 'Angelic numerology',
+        }),
+        category_id: 3,
+      },
+      {
+        page_type_id: 20,
+        page_type_name: JSON.stringify({
+          ru: 'Гадание по числам',
+          en: 'Gussing by numbers',
+        }),
+        category_id: 3,
+      },
+      {
+        page_type_id: 21,
+        page_type_name: JSON.stringify({
+          ru: 'Совместимость',
+          en: 'Compatibility',
+        }),
+        category_id: 3,
+      },
     ])
   }
 

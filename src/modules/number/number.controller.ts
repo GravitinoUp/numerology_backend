@@ -1,4 +1,13 @@
-import { Controller, Get, HttpStatus, Req, UseFilters, UseGuards } from '@nestjs/common'
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  HttpStatus,
+  Query,
+  Req,
+  UseFilters,
+  UseGuards,
+} from '@nestjs/common'
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { NumberService } from './number.service'
@@ -6,13 +15,17 @@ import { AppStrings } from 'src/common/constants/strings'
 import { PageResponse } from '../page/response'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
+import { I18nService } from 'nestjs-i18n'
 
 @ApiBearerAuth()
 @ApiTags('Numbers')
 @Controller('number')
 @UseFilters(AllExceptionsFilter)
 export class NumberController {
-  constructor(private readonly numberService: NumberService) {}
+  constructor(
+    private readonly numberService: NumberService,
+    private readonly i18n: I18nService,
+  ) {}
 
   @ApiOperation({ summary: AppStrings.FATE_CARD_GET_OPERATION })
   @ApiResponse({
@@ -207,6 +220,48 @@ export class NumberController {
   @Get('karma')
   async getKarma(@Req() request) {
     const result = await this.numberService.getKarma(request.user.user_uuid, request.i18nLang)
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.BLOOD_TYPE_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.BLOOD_TYPE_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('blood-type')
+  async getBloodType(@Query('query') bloodType: string, @Req() request) {
+    const result = await this.numberService.getBloodType(bloodType, request.i18nLang)
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.ANGELIC_NUMEROLOGY_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.ANGELIC_NUMEROLOGY_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('angelic-numerology')
+  async getAngelicNumerology(@Query('query') time: string, @Req() request) {
+    const result = await this.numberService.getAngelicNumerology(time, request.i18nLang)
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.GUESSING_NUMBER_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.GUESSING_NUMBER_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('guessing-number')
+  async getGuessingNumber(@Query('query') number: number, @Req() request) {
+    if (number > 999999999 || number < 100000000) {
+      throw new BadRequestException(this.i18n.t('errors.wrong_guessing_number'))
+    }
+    const result = await this.numberService.getGuessingNumber(number, request.i18nLang)
     return result
   }
 }

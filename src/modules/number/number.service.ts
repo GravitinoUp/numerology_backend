@@ -11,6 +11,7 @@ import {
 } from 'src/common/constants/constants'
 import { I18nService } from 'nestjs-i18n'
 import { Person } from '../person/entities/person.entity'
+import { GetCompatibilityDto } from './dto'
 
 @Injectable()
 export class NumberService {
@@ -75,7 +76,7 @@ export class NumberService {
     try {
       const userData = user_data ?? (await this.personService.getPersonData(user_uuid))
 
-      const yearArcane = this.getYearArcane(userData.birthday_year.toString())
+      const yearArcane = this.getLongNumberArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
       const tkk = this.getArcane(Math.abs(monthArcane - yearArcane)) //ТРЕТИЙ КАРМИЧЕСКИЙ УЗЕЛ
 
@@ -121,7 +122,7 @@ export class NumberService {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
-      const yearArcane = this.getYearArcane(userData.birthday_year.toString())
+      const yearArcane = this.getLongNumberArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
       const dayArcane = this.getArcane(userData.birthday_day)
 
@@ -178,7 +179,7 @@ export class NumberService {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
-      const yearArcane = this.getYearArcane(userData.birthday_year.toString())
+      const yearArcane = this.getLongNumberArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
       const dayArcane = this.getArcane(userData.birthday_day)
 
@@ -229,7 +230,7 @@ export class NumberService {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
-      const yearArcane = this.getYearArcane(userData.birthday_year.toString())
+      const yearArcane = this.getLongNumberArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
       const dayArcane = this.getArcane(userData.birthday_day)
 
@@ -242,7 +243,7 @@ export class NumberService {
         title: `${this.i18n.t('titles.positive_traits')} 2`,
       }
       const positiveTrait3 = {
-        number: this.getYearArcane(yearArcane.toString()),
+        number: this.getLongNumberArcane(yearArcane.toString()),
         title: `${this.i18n.t('titles.positive_traits')} 3`,
       }
       const positiveTrait4 = {
@@ -405,7 +406,7 @@ export class NumberService {
         type: PageTypesEnum.TASKS,
       }
       const yearTask = {
-        number: this.getYearArcane(userData.birthday_year.toString()),
+        number: this.getLongNumberArcane(userData.birthday_year.toString()),
         title: this.i18n.t('titles.year_task'),
         type: PageTypesEnum.TASKS,
       }
@@ -480,7 +481,7 @@ export class NumberService {
       const dayTask = this.getArcane(userData.birthday_day)
 
       const monthTask = userData.birthday_month
-      const yearTask = this.getYearArcane(userData.birthday_year.toString())
+      const yearTask = this.getLongNumberArcane(userData.birthday_year.toString())
       const communityTask = this.getArcane(dayTask + monthTask + yearTask)
       const nameKey = this.getArcane(this.getNameNumber(userData.first_name, false))
       const expressionNumberKey = this.getQuersumme(
@@ -512,7 +513,7 @@ export class NumberService {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
-      const yearArcane = this.getYearArcane(userData.birthday_year.toString())
+      const yearArcane = this.getLongNumberArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
       const dayArcane = this.getArcane(userData.birthday_day)
 
@@ -551,6 +552,112 @@ export class NumberService {
         throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
       }
       return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getBloodType(bloodType: string, language_code: string): Promise<PageResponse> {
+    try {
+      const page = await this.pageService.findOneByKey(
+        bloodType,
+        PageTypesEnum.BLOOD_TYPE,
+        language_code,
+      )
+
+      if (page) {
+        page.page_title = this.i18n.t('titles.blood_type')
+      } else {
+        Logger.error(`MISSING PAGE getBloodType: ${JSON.stringify(bloodType)}`)
+      }
+
+      if (!page) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+      return page
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getAngelicNumerology(time: string, language_code: string): Promise<PageResponse> {
+    try {
+      const page = await this.pageService.findOneByKey(
+        time,
+        PageTypesEnum.ANGELIC_NUMEROLOGY,
+        language_code,
+      )
+
+      if (page) {
+        page.page_title = this.i18n.t('titles.angelic_numerology')
+      } else {
+        Logger.error(`MISSING PAGE getAngelicNumerology: ${JSON.stringify(time)}`)
+      }
+
+      if (!page) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+      return page
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getGuessingNumber(number: number, language_code: string): Promise<PageResponse> {
+    try {
+      const formattedNumber = `${number.toString()}3`
+      const key = this.getLongNumberArcane(formattedNumber, 84)
+
+      const page = await this.pageService.findOneByKey(
+        key.toString(),
+        PageTypesEnum.GUESSING_NUMBER,
+        language_code,
+      )
+
+      if (page) {
+        page.page_title = this.i18n.t('titles.guessing_by_numbers')
+      } else {
+        Logger.error(`MISSING PAGE getGuessingNumber: ${JSON.stringify(key)}`)
+      }
+
+      if (!page) {
+        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+      }
+      return page
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getCompatibility(
+    getCompatibilityDto: GetCompatibilityDto,
+    language_code: string,
+  ): Promise<PageResponse[]> {
+    try {
+      const firstPartnerDate = `${getCompatibilityDto.first_partner_date.getDate()}${getCompatibilityDto.first_partner_date.getMonth()}${getCompatibilityDto.first_partner_date.getFullYear()}`
+      const secondPartnerDate = `${getCompatibilityDto.second_partner_date.getDate()}${getCompatibilityDto.second_partner_date.getMonth()}${getCompatibilityDto.second_partner_date.getFullYear()}`
+
+      const firstAracane = this.getLongNumberArcane(firstPartnerDate)
+      const secondArcane = this.getLongNumberArcane(secondPartnerDate)
+
+      const key = this.getArcane(firstAracane + secondArcane)
+
+      const page = await this.pageService.findOneByKey(
+        key.toString(),
+        PageTypesEnum.COMPATIBILITY,
+        language_code,
+      )
+
+      if (page) {
+        page.page_title = this.i18n.t('titles.arcane_compatibility')
+      } else {
+        Logger.error(`MISSING PAGE getCompatibility: ${JSON.stringify(key)}`)
+      }
+
+      if (!page) {
+        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+      }
+      return page
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
@@ -621,14 +728,14 @@ export class NumberService {
     return letterNumber
   }
 
-  getYearArcane(value: string): number {
+  getLongNumberArcane(value: string, maxNumber: number = 22): number {
     let arcane = 0
     for (const number of value) {
       arcane += Number(number)
     }
 
-    if (arcane > 22) {
-      arcane = arcane - 22
+    while (arcane > maxNumber) {
+      arcane = arcane - maxNumber
     }
 
     return arcane

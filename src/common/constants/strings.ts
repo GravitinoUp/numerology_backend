@@ -61,6 +61,12 @@ export const AppStrings = {
   LUCKY_NUMBERS_GET_RESPONSE: 'Числа удачи успешно получены',
   KARMA_GET_OPERATION: 'Получение кармы пользователя',
   KARMA_GET_RESPONSE: 'Карма успешно получены',
+  BLOOD_TYPE_GET_OPERATION: 'Получение описания по группе крови',
+  BLOOD_TYPE_GET_RESPONSE: 'Данные успешно получены',
+  ANGELIC_NUMEROLOGY_GET_OPERATION: 'Получение ангельской нумерологии',
+  ANGELIC_NUMEROLOGY_GET_RESPONSE: 'Данные успешно получены',
+  GUESSING_NUMBER_GET_OPERATION: 'Получение данных по числу',
+  GUESSING_NUMBER_GET_RESPONSE: 'Данные успешно получены',
 
   PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',
