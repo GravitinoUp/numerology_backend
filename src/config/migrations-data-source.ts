@@ -11,7 +11,7 @@ export const SeedsDataSource = new DataSource({
   password: `${process.env.DB_PASSWORD}`,
   database: `${process.env.DB_NAME}`,
   entities: ['dist/src/modules/**/entities/*.entity{.ts,.js}'],
-  migrations: ['dist/src/db/seeds/*{.ts,.js}'],
-  migrationsTableName: 'seeds',
+  migrations: ['dist/src/db/migrations/*{.ts,.js}'],
+  migrationsTableName: 'migrations',
   synchronize: true,
 })
