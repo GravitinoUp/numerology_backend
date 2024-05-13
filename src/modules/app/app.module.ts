@@ -20,6 +20,7 @@ import { PageTypeModule } from '../page_type/page_type.module'
 import { PageModule } from '../page/page.module'
 import { NumberModule } from '../number/number.module'
 import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
+import { CategoryModule } from '../category/category.module'
 
 @Module({
   imports: [
@@ -72,6 +73,7 @@ import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
     }),
     AuthModule,
     AuthCodeModule,
+    CategoryModule,
     LanguageModule,
     NumberModule,
     OnboardModule,

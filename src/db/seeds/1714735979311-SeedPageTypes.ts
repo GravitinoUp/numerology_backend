@@ -7,18 +7,22 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
       {
         page_type_id: 1,
         page_type_name: JSON.stringify({ ru: 'Нумерология здоровья', en: 'Numerology of health' }),
+        category_id: 3,
       },
       {
         page_type_id: 2,
         page_type_name: JSON.stringify({ ru: 'Карты судьбы', en: 'Cards of Fate' }),
+        category_id: 1,
       },
       {
         page_type_id: 3,
         page_type_name: JSON.stringify({ ru: 'Числа удачи', en: 'Luck numbers' }),
+        category_id: 9,
       },
       {
         page_type_id: 4,
         page_type_name: JSON.stringify({ ru: 'Планеты', en: 'Planets' }),
+        category_id: 1,
       },
       {
         page_type_id: 5,
@@ -26,6 +30,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Профессии и самореализация',
           en: 'Professions and self-realization',
         }),
+        category_id: 9,
       },
       {
         page_type_id: 6,
@@ -33,6 +38,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Слабые качества',
           en: 'Weak qualities',
         }),
+        category_id: 1,
       },
       {
         page_type_id: 7,
@@ -40,6 +46,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Кем были ваши предки',
           en: 'Who were your ancestors',
         }),
+        category_id: 9,
       },
       {
         page_type_id: 8,
@@ -47,6 +54,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Число судьбы и психосоматика',
           en: 'The number of fate and psychosomatics',
         }),
+        category_id: 1,
       },
       {
         page_type_id: 9,
@@ -54,6 +62,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Хронические заболевания',
           en: 'Chronic diseases',
         }),
+        category_id: 3,
       },
       {
         page_type_id: 10,
@@ -61,6 +70,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Метафизические причины болезней',
           en: 'Metaphysical causes of diseases',
         }),
+        category_id: 3,
       },
       {
         page_type_id: 11,
@@ -68,6 +78,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Тотемное животное',
           en: 'Totemic animal',
         }),
+        category_id: 9,
       },
       {
         page_type_id: 12,
@@ -75,6 +86,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Задачи для реализации',
           en: 'Tasks for implementation',
         }),
+        category_id: 1,
       },
       {
         page_type_id: 13,
@@ -82,6 +94,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Тайна имени',
           en: 'The secret of the name',
         }),
+        category_id: 1,
       },
       {
         page_type_id: 14,
@@ -89,6 +102,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Число выражения',
           en: 'Число выражения',
         }),
+        category_id: 1,
       },
       {
         page_type_id: 15,
@@ -96,6 +110,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Число жизненного пути',
           en: 'The number of the life path',
         }),
+        category_id: 1,
       },
       {
         page_type_id: 16,
@@ -103,6 +118,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Карма и прошлая жизнь',
           en: 'Karma and past life',
         }),
+        category_id: 2,
       },
       {
         page_type_id: 17,
@@ -110,6 +126,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Сильные качества и таланты',
           en: 'Strong qualities and talents',
         }),
+        category_id: 1,
       },
     ])
   }

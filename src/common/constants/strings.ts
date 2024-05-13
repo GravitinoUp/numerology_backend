@@ -3,6 +3,11 @@ export const AppStrings = {
   AUTH_CODE_EMAIL_SEND_OPERATION: 'Отправка кода по E-Mail',
   AUTH_CODE_SEND_RESPONSE: 'Код успешно отправлен',
 
+  CATEGORY_GET_ALL_OPERATION: 'Получение списка всех категорий',
+  CATEGORY_GET_ALL_RESPONSE: 'Категории успешно получены',
+  CATEGORY_UPDATE_OPERATION: 'Изменение категории',
+  CATEGORY_UPDATE_RESPONSE: 'Категория успешно изменена',
+
   LANGUAGE_CREATE_OPERATION: 'Создание нового языка',
   LANGUAGE_CREATE_RESPONSE: 'Язык успешно создан',
   LANGUAGE_GET_ALL_OPERATION: 'Получение списка всех языков',
