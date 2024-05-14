@@ -41,15 +41,15 @@ export function getNameNumber(
 
   let result = 0
   for (const letter of nameLetters) {
-    result += this.getLetterNumber(letter)
+    result += getLetterNumber(letter)
   }
 
   return result
 }
 
 export function getSoulNumber(firstName: string): number {
-  const nameNumber = this.getNameNumber(firstName)
-  const soulNumber = this.getQuersumme(nameNumber.toString())
+  const nameNumber = getNameNumber(firstName)
+  const soulNumber = getQuersumme(nameNumber.toString())
 
   return soulNumber
 }

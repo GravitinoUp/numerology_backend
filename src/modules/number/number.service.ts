@@ -689,8 +689,6 @@ export class NumberService {
         difficultiesCompatibility,
       ]
 
-      Logger.log(keys)
-
       const pages = []
       for (const key of keys) {
         const page = await this.pageService.findOneByKey(
