@@ -67,6 +67,8 @@ export const AppStrings = {
   ANGELIC_NUMEROLOGY_GET_RESPONSE: 'Данные успешно получены',
   GUESSING_NUMBER_GET_OPERATION: 'Получение данных по числу',
   GUESSING_NUMBER_GET_RESPONSE: 'Данные успешно получены',
+  COMPATIBILITY_GET_OPERATION: 'Получение совместимости по датам рождения',
+  COMPATIBILITY_GET_RESPONSE: 'Совместимость успешно получены',
 
   PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',

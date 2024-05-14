@@ -2,16 +2,17 @@ import { HttpException, HttpStatus, Injectable, Logger, NotFoundException } from
 import { PersonService } from '../person/person.service'
 import { PageService } from '../page/page.service'
 import { PageResponse } from '../page/response'
-import {
-  EnAlphabet,
-  EnVowelLetters,
-  PageTypesEnum,
-  RuAlphabet,
-  RuVowelLetters,
-} from 'src/common/constants/constants'
+import { PageTypesEnum } from 'src/common/constants/constants'
 import { I18nService } from 'nestjs-i18n'
 import { Person } from '../person/entities/person.entity'
 import { GetCompatibilityDto } from './dto'
+import {
+  getArcane,
+  getLongNumberArcane,
+  getNameNumber,
+  getQuersumme,
+  getSoulNumber,
+} from 'src/common/utils/numbers'
 
 @Injectable()
 export class NumberService {
@@ -49,7 +50,7 @@ export class NumberService {
       const userData = user_data ?? (await this.personService.getPersonData(user_uuid))
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
-      const fateNumber = this.getQuersumme(userBirthday)
+      const fateNumber = getQuersumme(userBirthday)
 
       const page = await this.pageService.findOneByKey(
         fateNumber.toString(),
@@ -76,9 +77,9 @@ export class NumberService {
     try {
       const userData = user_data ?? (await this.personService.getPersonData(user_uuid))
 
-      const yearArcane = this.getLongNumberArcane(userData.birthday_year.toString())
+      const yearArcane = getLongNumberArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
-      const tkk = this.getArcane(Math.abs(monthArcane - yearArcane)) //ТРЕТИЙ КАРМИЧЕСКИЙ УЗЕЛ
+      const tkk = getArcane(Math.abs(monthArcane - yearArcane)) //ТРЕТИЙ КАРМИЧЕСКИЙ УЗЕЛ
 
       const page = await this.pageService.findOneByKey(
         tkk.toString(),
@@ -122,28 +123,28 @@ export class NumberService {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
-      const yearArcane = this.getLongNumberArcane(userData.birthday_year.toString())
+      const yearArcane = getLongNumberArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
-      const dayArcane = this.getArcane(userData.birthday_day)
+      const dayArcane = getArcane(userData.birthday_day)
 
       const pg1 = {
-        number: this.getArcane(dayArcane + monthArcane + yearArcane).toString(),
+        number: getArcane(dayArcane + monthArcane + yearArcane).toString(),
         title: `${this.i18n.t('titles.pg')} 1`,
       }
       const pg2 = {
-        number: this.getArcane(dayArcane + 2 * monthArcane + yearArcane).toString(),
+        number: getArcane(dayArcane + 2 * monthArcane + yearArcane).toString(),
         title: `${this.i18n.t('titles.pg')} 2`,
       }
       const pg3 = {
-        number: this.getArcane(6 * dayArcane + 6 * monthArcane + 5 * yearArcane).toString(),
+        number: getArcane(6 * dayArcane + 6 * monthArcane + 5 * yearArcane).toString(),
         title: `${this.i18n.t('titles.pg')} 3`,
       }
       const pg4 = {
-        number: this.getQuersumme(userBirthday).toString(),
+        number: getQuersumme(userBirthday).toString(),
         title: `${this.i18n.t('titles.pg')} 4`,
       }
       const pg5 = {
-        number: this.getSoulNumber(userData.first_name).toString(),
+        number: getSoulNumber(userData.first_name).toString(),
         title: `${this.i18n.t('titles.pg')} 5`,
       }
 
@@ -179,20 +180,20 @@ export class NumberService {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
-      const yearArcane = this.getLongNumberArcane(userData.birthday_year.toString())
+      const yearArcane = getLongNumberArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
-      const dayArcane = this.getArcane(userData.birthday_day)
+      const dayArcane = getArcane(userData.birthday_day)
 
       const nt1 = {
-        number: this.getArcane(Math.abs(dayArcane - monthArcane)).toString(),
+        number: getArcane(Math.abs(dayArcane - monthArcane)).toString(),
         title: `${this.i18n.t('titles.negative_traits')} 1`,
       }
       const nt2 = {
-        number: this.getArcane(Math.abs(dayArcane - yearArcane)).toString(),
+        number: getArcane(Math.abs(dayArcane - yearArcane)).toString(),
         title: `${this.i18n.t('titles.negative_traits')} 2`,
       }
       const nt3 = {
-        number: this.getArcane(monthArcane - yearArcane).toString(),
+        number: getArcane(monthArcane - yearArcane).toString(),
         title: `${this.i18n.t('titles.negative_traits')} 3`,
       }
 
@@ -230,29 +231,29 @@ export class NumberService {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
-      const yearArcane = this.getLongNumberArcane(userData.birthday_year.toString())
+      const yearArcane = getLongNumberArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
-      const dayArcane = this.getArcane(userData.birthday_day)
+      const dayArcane = getArcane(userData.birthday_day)
 
       const positiveTrait1 = {
-        number: this.getArcane(dayArcane),
+        number: getArcane(dayArcane),
         title: `${this.i18n.t('titles.positive_traits')} 1`,
       }
       const positiveTrait2 = {
-        number: this.getArcane(monthArcane),
+        number: getArcane(monthArcane),
         title: `${this.i18n.t('titles.positive_traits')} 2`,
       }
       const positiveTrait3 = {
-        number: this.getLongNumberArcane(yearArcane.toString()),
+        number: getLongNumberArcane(yearArcane.toString()),
         title: `${this.i18n.t('titles.positive_traits')} 3`,
       }
       const positiveTrait4 = {
-        number: this.getArcane(dayArcane + monthArcane + yearArcane),
+        number: getArcane(dayArcane + monthArcane + yearArcane),
         title: `${this.i18n.t('titles.positive_traits')} 4`,
       }
 
       const positiveTrait5 = {
-        number: this.getQuersumme(userBirthday),
+        number: getQuersumme(userBirthday),
         title: `${this.i18n.t('titles.positive_traits')} 5`,
       }
 
@@ -290,11 +291,11 @@ export class NumberService {
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
       const lifePathNumber = {
-        number: this.getQuersumme(userBirthday).toString(),
+        number: getQuersumme(userBirthday).toString(),
         title: this.i18n.t('titles.life_path_number'),
       }
       const soulNumber = {
-        number: this.getSoulNumber(userData.first_name).toString(),
+        number: getSoulNumber(userData.first_name).toString(),
         title: this.i18n.t('titles.soul_number'),
       }
 
@@ -330,7 +331,7 @@ export class NumberService {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
-      const lastNameArcane = this.getArcane(this.getNameNumber(userData.last_name, false))
+      const lastNameArcane = getArcane(getNameNumber(userData.last_name, false))
 
       const page = await this.pageService.findOneByKey(
         lastNameArcane.toString(),
@@ -358,7 +359,7 @@ export class NumberService {
       }
       const yearKey = { number: userData.birthday_year, title: this.i18n.t('titles.year_totem') }
       const nameKey = {
-        number: this.getQuersumme(this.getNameNumber(userData.first_name, false).toString()),
+        number: getQuersumme(getNameNumber(userData.first_name, false).toString()),
         title: this.i18n.t('titles.name_totem'),
       }
 
@@ -396,7 +397,7 @@ export class NumberService {
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
       const dayTask = {
-        number: this.getArcane(userData.birthday_day),
+        number: getArcane(userData.birthday_day),
         title: this.i18n.t('titles.day_task'),
         type: PageTypesEnum.TASKS,
       }
@@ -406,23 +407,23 @@ export class NumberService {
         type: PageTypesEnum.TASKS,
       }
       const yearTask = {
-        number: this.getLongNumberArcane(userData.birthday_year.toString()),
+        number: getLongNumberArcane(userData.birthday_year.toString()),
         title: this.i18n.t('titles.year_task'),
         type: PageTypesEnum.TASKS,
       }
       const communityTask = {
-        number: this.getArcane(dayTask.number + monthTask.number + yearTask.number),
+        number: getArcane(dayTask.number + monthTask.number + yearTask.number),
         title: this.i18n.t('titles.community_task'),
         type: PageTypesEnum.TASKS,
       }
       const nameKey = {
-        number: this.getArcane(this.getNameNumber(userData.first_name, false)),
+        number: getArcane(getNameNumber(userData.first_name, false)),
         title: this.i18n.t('titles.secret_of_name'),
         type: PageTypesEnum.SECRET_OF_NAME,
       }
       const expressionNumberKey = {
-        number: this.getQuersumme(
-          this.getNameNumber(
+        number: getQuersumme(
+          getNameNumber(
             `${userData.first_name}${userData.last_name}${userData.patronymic}`,
             false,
             true,
@@ -432,7 +433,7 @@ export class NumberService {
         type: PageTypesEnum.EXPRESSION_NUMBER,
       }
       const lifePathNumber = {
-        number: this.getQuersumme(userBirthday),
+        number: getQuersumme(userBirthday),
         title: this.i18n.t('titles.life_path_number'),
         type: PageTypesEnum.LIFE_PATH_NUMBER,
       }
@@ -478,20 +479,20 @@ export class NumberService {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
-      const dayTask = this.getArcane(userData.birthday_day)
+      const dayTask = getArcane(userData.birthday_day)
 
       const monthTask = userData.birthday_month
-      const yearTask = this.getLongNumberArcane(userData.birthday_year.toString())
-      const communityTask = this.getArcane(dayTask + monthTask + yearTask)
-      const nameKey = this.getArcane(this.getNameNumber(userData.first_name, false))
-      const expressionNumberKey = this.getQuersumme(
-        this.getNameNumber(
+      const yearTask = getLongNumberArcane(userData.birthday_year.toString())
+      const communityTask = getArcane(dayTask + monthTask + yearTask)
+      const nameKey = getArcane(getNameNumber(userData.first_name, false))
+      const expressionNumberKey = getQuersumme(
+        getNameNumber(
           `${userData.first_name}${userData.last_name}${userData.patronymic}`,
           false,
           true,
         ).toString(),
       )
-      const lifePathNumber = this.getQuersumme(userBirthday)
+      const lifePathNumber = getQuersumme(userBirthday)
 
       const keys = [
         dayTask,
@@ -513,20 +514,20 @@ export class NumberService {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
-      const yearArcane = this.getLongNumberArcane(userData.birthday_year.toString())
+      const yearArcane = getLongNumberArcane(userData.birthday_year.toString())
       const monthArcane = userData.birthday_month
-      const dayArcane = this.getArcane(userData.birthday_day)
+      const dayArcane = getArcane(userData.birthday_day)
 
       const firstKarmicKnot = {
-        number: this.getArcane(Math.abs(dayArcane - monthArcane)),
+        number: getArcane(Math.abs(dayArcane - monthArcane)),
         title: this.i18n.t('titles.first_karmic_knot'),
       }
       const secondKarmicKnot = {
-        number: this.getArcane(Math.abs(dayArcane - yearArcane)),
+        number: getArcane(Math.abs(dayArcane - yearArcane)),
         title: this.i18n.t('titles.second_karmic_knot'),
       }
       const thirdKarmicKnot = {
-        number: this.getArcane(Math.abs(monthArcane - yearArcane)),
+        number: getArcane(Math.abs(monthArcane - yearArcane)),
         title: this.i18n.t('titles.third_karmic_knot'),
       }
 
@@ -606,7 +607,7 @@ export class NumberService {
   async getGuessingNumber(number: number, language_code: string): Promise<PageResponse> {
     try {
       const formattedNumber = `${number.toString()}3`
-      const key = this.getLongNumberArcane(formattedNumber, 84)
+      const key = getLongNumberArcane(formattedNumber, 84)
 
       const page = await this.pageService.findOneByKey(
         key.toString(),
@@ -634,121 +635,82 @@ export class NumberService {
     language_code: string,
   ): Promise<PageResponse[]> {
     try {
-      const firstPartnerDate = `${getCompatibilityDto.first_partner_date.getDate()}${getCompatibilityDto.first_partner_date.getMonth()}${getCompatibilityDto.first_partner_date.getFullYear()}`
-      const secondPartnerDate = `${getCompatibilityDto.second_partner_date.getDate()}${getCompatibilityDto.second_partner_date.getMonth()}${getCompatibilityDto.second_partner_date.getFullYear()}`
+      const firstDate = new Date(getCompatibilityDto.first_partner_date)
+      const secondDate = new Date(getCompatibilityDto.second_partner_date)
 
-      const firstAracane = this.getLongNumberArcane(firstPartnerDate)
-      const secondArcane = this.getLongNumberArcane(secondPartnerDate)
+      const firstPartnerDate = `${firstDate.getDate()}${firstDate.getMonth() + 1}${firstDate.getFullYear()}`
+      const firstYearArcane = getLongNumberArcane(firstDate.getFullYear().toString())
+      const firstMonthArcane = firstDate.getMonth() + 1
+      const firstDayArcane = getArcane(firstDate.getDate())
 
-      const key = this.getArcane(firstAracane + secondArcane)
+      const secondPartnerDate = `${secondDate.getDate()}${secondDate.getMonth() + 1}${secondDate.getFullYear()}`
+      const secondYearArcane = getLongNumberArcane(secondDate.getFullYear().toString())
+      const secondMonthArcane = secondDate.getMonth() + 1
+      const secondDayArcane = getArcane(secondDate.getDate())
 
-      const page = await this.pageService.findOneByKey(
-        key.toString(),
-        PageTypesEnum.COMPATIBILITY,
-        language_code,
-      )
-
-      if (page) {
-        page.page_title = this.i18n.t('titles.arcane_compatibility')
-      } else {
-        Logger.error(`MISSING PAGE getCompatibility: ${JSON.stringify(key)}`)
+      const firstArcane = getLongNumberArcane(firstPartnerDate)
+      const secondArcane = getLongNumberArcane(secondPartnerDate)
+      const arcaneCompatibility = {
+        number: getArcane(firstArcane + secondArcane),
+        title: this.i18n.t('titles.arcane_compatibility'),
+        type: PageTypesEnum.ARCANE_COMPATIBILITY,
       }
 
-      if (!page) {
-        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+      const firstSoulNumber = getLongNumberArcane(firstPartnerDate, 9)
+      const secondSoulNumber = getLongNumberArcane(secondPartnerDate, 9)
+      const soulNumberCompatibility = {
+        number: getArcane(firstSoulNumber + secondSoulNumber),
+        title: this.i18n.t('titles.soul_number_compatibility'),
+        type: PageTypesEnum.SOUL_NUMBER_COMPATIBILITY,
       }
-      return page
+
+      const firstTaskNumber = getArcane(firstDayArcane + firstMonthArcane + firstYearArcane)
+      const secondTaskNumber = getArcane(secondDayArcane + secondMonthArcane + secondYearArcane)
+      const tasksCompatibility = {
+        number: getArcane(firstTaskNumber + secondTaskNumber),
+        title: this.i18n.t('titles.tasks_compatibility'),
+        type: PageTypesEnum.JOINT_TASKS_COMPATIBILITY,
+      }
+
+      const firstDifficultyNumber = getArcane(firstDayArcane + firstMonthArcane)
+      const secondDifficultyNumber = getArcane(secondDayArcane + secondMonthArcane)
+      const difficultiesCompatibility = {
+        number: getArcane(firstDifficultyNumber + secondDifficultyNumber),
+        title: this.i18n.t('titles.difficulties_compatibility'),
+        type: PageTypesEnum.DIFFICULTIES_COMPATIBILITY,
+      }
+
+      const keys = [
+        arcaneCompatibility,
+        soulNumberCompatibility,
+        tasksCompatibility,
+        difficultiesCompatibility,
+      ]
+
+      Logger.log(keys)
+
+      const pages = []
+      for (const key of keys) {
+        const page = await this.pageService.findOneByKey(
+          key.number.toString(),
+          key.type,
+          language_code,
+        )
+
+        if (page) {
+          page.page_title = key.title
+          pages.push(page)
+        } else {
+          Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
+        }
+      }
+
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+      return pages
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
-  }
-
-  getQuersumme(value: string): number {
-    let result = 0
-    for (const number of value) {
-      result += Number(number)
-    }
-
-    while (result > 9) {
-      let num = 0
-      for (const number of result.toString()) {
-        num += Number(number)
-      }
-
-      result = num
-    }
-
-    return result
-  }
-
-  getNameNumber(name: string, onlyVowel: boolean = true, onlyConsonants: boolean = false): number {
-    let nameLetters = name.split('')
-
-    if (onlyVowel) {
-      nameLetters = nameLetters.filter(
-        (letter) =>
-          RuVowelLetters.includes(letter.toLowerCase()) ||
-          EnVowelLetters.includes(letter.toLowerCase()),
-      )
-    } else if (onlyConsonants) {
-      nameLetters = nameLetters.filter(
-        (letter) =>
-          !RuVowelLetters.includes(letter.toLowerCase()) &&
-          !EnVowelLetters.includes(letter.toLowerCase()),
-      )
-    }
-
-    let result = 0
-    for (const letter of nameLetters) {
-      result += this.getLetterNumber(letter)
-    }
-
-    return result
-  }
-
-  getSoulNumber(firstName: string): number {
-    const nameNumber = this.getNameNumber(firstName)
-    const soulNumber = this.getQuersumme(nameNumber.toString())
-
-    return soulNumber
-  }
-
-  getLetterNumber(letter: string): number {
-    let letterNumber = RuAlphabet.indexOf(letter.toUpperCase()) + 1
-    if (letterNumber == 0) {
-      letterNumber = EnAlphabet.indexOf(letter.toUpperCase()) + 1
-    }
-
-    while (letterNumber > 9) {
-      letterNumber -= 9
-    }
-
-    console.log(letter, letterNumber)
-
-    return letterNumber
-  }
-
-  getLongNumberArcane(value: string, maxNumber: number = 22): number {
-    let arcane = 0
-    for (const number of value) {
-      arcane += Number(number)
-    }
-
-    while (arcane > maxNumber) {
-      arcane = arcane - maxNumber
-    }
-
-    return arcane
-  }
-
-  getArcane(value: number): number {
-    let arcane = value
-    while (arcane > 22) {
-      arcane -= 22
-    }
-
-    if (arcane == 0) arcane = 22
-
-    return arcane
   }
 }

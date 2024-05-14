@@ -155,10 +155,34 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
       {
         page_type_id: 21,
         page_type_name: JSON.stringify({
-          ru: 'Совместимость',
-          en: 'Compatibility',
+          ru: 'Арканная совместимость',
+          en: 'Arcane compatibility',
         }),
-        category_id: 3,
+        category_id: 7,
+      },
+      {
+        page_type_id: 22,
+        page_type_name: JSON.stringify({
+          ru: 'Совместимость по числу судьбы',
+          en: 'Compatibility by the number of fate',
+        }),
+        category_id: 7,
+      },
+      {
+        page_type_id: 23,
+        page_type_name: JSON.stringify({
+          ru: 'Совместные задачи в паре',
+          en: 'Joint tasks in pairs',
+        }),
+        category_id: 7,
+      },
+      {
+        page_type_id: 24,
+        page_type_name: JSON.stringify({
+          ru: 'Возможные трудности в паре',
+          en: 'Possible difficulties in a couple',
+        }),
+        category_id: 7,
       },
     ])
   }

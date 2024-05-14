@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsDate } from 'class-validator'
+import { IsDateString } from 'class-validator'
 
 export class GetCompatibilityDto {
-  @IsDate()
-  @ApiProperty()
+  @IsDateString()
+  @ApiProperty({ default: '2024-05-14' })
   first_partner_date: Date
 
-  @IsDate()
-  @ApiProperty()
+  @IsDateString()
+  @ApiProperty({ default: '2024-05-14' })
   second_partner_date: Date
 }

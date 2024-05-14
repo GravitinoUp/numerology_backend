@@ -1,8 +1,10 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Get,
   HttpStatus,
+  Post,
   Query,
   Req,
   UseFilters,
@@ -16,6 +18,7 @@ import { PageResponse } from '../page/response'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { I18nService } from 'nestjs-i18n'
+import { GetCompatibilityDto } from './dto'
 
 @ApiBearerAuth()
 @ApiTags('Numbers')
@@ -262,6 +265,20 @@ export class NumberController {
       throw new BadRequestException(this.i18n.t('errors.wrong_guessing_number'))
     }
     const result = await this.numberService.getGuessingNumber(number, request.i18nLang)
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.COMPATIBILITY_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.COMPATIBILITY_GET_RESPONSE,
+    type: PageResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Post('compatibility')
+  async getCompatibility(@Body() compatibilityDto: GetCompatibilityDto, @Req() request) {
+    const result = await this.numberService.getCompatibility(compatibilityDto, request.i18nLang)
     return result
   }
 }
