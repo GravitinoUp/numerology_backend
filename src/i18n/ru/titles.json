@@ -21,5 +21,11 @@
   "blood_type": "Группа крови",
   "angelic_numerology": "Ангельская нумерология",
   "guessing_by_numbers": "Гадание по числам",
-  "arcane_compatibility": "Арканная овместимость"
+  "arcane_compatibility": "Арканная овместимость",
+  "soul_number_compatibility": "Совместимость по числу судьбы",
+  "tasks_compatibility": "Совместные задачи в паре",
+  "difficulties_compatibility": "Возможные трудности в паре",
+  "personal_year_number": "Персональное число года",
+  "phone_number_calculation": "Расчет номера телефона",
+  "house_number_calculation": "Расчет номера дома"
 }

@@ -184,6 +184,30 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
         }),
         category_id: 7,
       },
+      {
+        page_type_id: 25,
+        page_type_name: JSON.stringify({
+          ru: 'Персональное число года',
+          en: 'Personal number of the year',
+        }),
+        category_id: 5,
+      },
+      {
+        page_type_id: 26,
+        page_type_name: JSON.stringify({
+          ru: 'Расчет номера телефона',
+          en: 'Calculation of the phone number',
+        }),
+        category_id: 5,
+      },
+      {
+        page_type_id: 27,
+        page_type_name: JSON.stringify({
+          ru: 'Расчет номера дома',
+          en: 'Calculation of the house number',
+        }),
+        category_id: 5,
+      },
     ])
   }
 

@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
-import Model from 'src/modules/app/entities/model'
+import BaseModel from 'src/common/model'
 import { Onboard } from 'src/modules/onboard/entities/onboard.entity'
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm'
 
 @Entity({ name: 'Languages' })
-export class Language extends Model {
+export class Language extends BaseModel {
   @PrimaryColumn()
   @ApiProperty()
   language_code: string

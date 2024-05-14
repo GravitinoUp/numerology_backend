@@ -281,4 +281,49 @@ export class NumberController {
     const result = await this.numberService.getCompatibility(compatibilityDto, request.i18nLang)
     return result
   }
+
+  @ApiOperation({ summary: AppStrings.PREDICTION_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.PREDICTION_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('prediction')
+  async getPrediction(@Req() request) {
+    const result = await this.numberService.getPersonalYearNumber(
+      request.user.user_uuid,
+      request.i18nLang,
+    )
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.PHONE_NUMBER_CALCULATION_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.PHONE_NUMBER_CALCULATION_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('phone-calculation')
+  async getPhoneNumberCalculation(@Req() request) {
+    const result = await this.numberService.getPhoneNumberCalculation(
+      request.user.user_uuid,
+      request.i18nLang,
+    )
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.HOUSE_NUMBER_CALCULATION_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.HOUSE_NUMBER_CALCULATION_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('house-calculation')
+  async getHouseNumberCalculation(@Query('query') number: number, @Req() request) {
+    const result = await this.numberService.getHouseNumberCalculation(number, request.i18nLang)
+    return result
+  }
 }

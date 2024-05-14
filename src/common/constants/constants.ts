@@ -28,6 +28,9 @@ export const PageTypesEnum = {
   SOUL_NUMBER_COMPATIBILITY: 22,
   JOINT_TASKS_COMPATIBILITY: 23,
   DIFFICULTIES_COMPATIBILITY: 24,
+  PERSONAL_YEAR_NUMBER: 25,
+  PHONE_NUMBER_CALCULATION: 26,
+  HOUSE_NUMBER_CALCULATION: 27,
 }
 
 export const RuVowelLetters = ['а', 'о', 'э', 'е', 'и', 'ы', 'у', 'ё', 'ю', 'я']

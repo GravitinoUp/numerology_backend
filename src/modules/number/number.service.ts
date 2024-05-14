@@ -13,11 +13,13 @@ import {
   getQuersumme,
   getSoulNumber,
 } from 'src/common/utils/numbers'
+import { UserService } from '../user/user.service'
 
 @Injectable()
 export class NumberService {
   constructor(
     private readonly personService: PersonService,
+    private readonly userService: UserService,
     private readonly pageService: PageService,
     private readonly i18n: I18nService,
   ) {}
@@ -709,6 +711,88 @@ export class NumberService {
         throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
       }
       return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getPersonalYearNumber(user_uuid: string, language_code: string): Promise<PageResponse> {
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+      const day = getQuersumme(userData.birthday_day.toString())
+      const month = getQuersumme(userData.birthday_month.toString())
+      const year = getQuersumme(new Date().getFullYear().toString())
+
+      const formattedNumber = `${day}${month}${year}`
+      const personalNumber = getQuersumme(formattedNumber)
+
+      const page = await this.pageService.findOneByKey(
+        personalNumber.toString(),
+        PageTypesEnum.PERSONAL_YEAR_NUMBER,
+        language_code,
+      )
+
+      if (page) {
+        page.page_title = this.i18n.t('titles.personal_year_number')
+      } else {
+        Logger.error(`MISSING PAGE getPersonalYearNumber: ${JSON.stringify(personalNumber)}`)
+      }
+
+      if (!page) {
+        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+      }
+      return page
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getPhoneNumberCalculation(user_uuid: string, language_code: string): Promise<PageResponse> {
+    try {
+      const userData = await this.userService.findByUuid(user_uuid, false)
+      const phoneKey = getQuersumme(userData.phone.replaceAll('+', ''))
+
+      const page = await this.pageService.findOneByKey(
+        phoneKey.toString(),
+        PageTypesEnum.PHONE_NUMBER_CALCULATION,
+        language_code,
+      )
+
+      if (page) {
+        page.page_title = this.i18n.t('titles.phone_number_calculation')
+      } else {
+        Logger.error(`MISSING PAGE getPhoneNumberCalculation: ${JSON.stringify(phoneKey)}`)
+      }
+
+      if (!page) {
+        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+      }
+      return page
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getHouseNumberCalculation(number: number, language_code: string): Promise<PageResponse> {
+    try {
+      const houseKey = getQuersumme(number.toString())
+
+      const page = await this.pageService.findOneByKey(
+        houseKey.toString(),
+        PageTypesEnum.HOUSE_NUMBER_CALCULATION,
+        language_code,
+      )
+
+      if (page) {
+        page.page_title = this.i18n.t('titles.house_number_calculation')
+      } else {
+        Logger.error(`MISSING PAGE getHouseNumberCalculation: ${JSON.stringify(houseKey)}`)
+      }
+
+      if (!page) {
+        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+      }
+      return page
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }

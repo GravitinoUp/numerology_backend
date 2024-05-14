@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger'
-import Model from 'src/modules/app/entities/model'
+import BaseModel from 'src/common/model'
 import { Auth } from 'src/modules/auth/entities/auth.entity'
 import { Person } from 'src/modules/person/entities/person.entity'
 import { Role } from 'src/modules/role/entities/role.entity'
 import { Entity, Column, OneToMany, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm'
 
 @Entity({ name: 'Users' })
-export class User extends Model {
+export class User extends BaseModel {
   @PrimaryColumn()
   @ApiProperty()
   user_uuid: string

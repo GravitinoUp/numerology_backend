@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger'
-import Model from 'src/modules/app/entities/model'
+import BaseModel from 'src/common/model'
 import { Category } from 'src/modules/category/entities/category.entity'
 import { Page } from 'src/modules/page/entities/page.entity'
 import { Entity, Column, PrimaryColumn, OneToMany, JoinColumn, ManyToOne } from 'typeorm'
 
 @Entity({ name: 'PageTypes' })
-export class PageType extends Model {
+export class PageType extends BaseModel {
   @PrimaryColumn()
   @ApiProperty()
   page_type_id: number

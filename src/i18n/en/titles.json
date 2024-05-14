@@ -21,5 +21,11 @@
   "blood_type": "Blood type",
   "angelic_numerology": "Angelic numerology",
   "guessing_by_numbers": "Guessing by number",
-  "arcane_compatibility": "Arcane compatibility"
+  "arcane_compatibility": "Arcane compatibility",
+  "soul_number_compatibility": "Compatibility by the number of fate",
+  "tasks_compatibility": "Joint tasks in pairs",
+  "difficulties_compatibility": "Possible difficulties in a couple",
+  "personal_year_number": "Personal number of the year",
+  "phone_number_calculation": "Calculation of the phone number",
+  "house_number_calculation": "Calculation of the house number"
 }

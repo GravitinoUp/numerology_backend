@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
-import Model from 'src/modules/app/entities/model'
+import BaseModel from 'src/common/model'
 import { User } from 'src/modules/user/entities/user.entity'
 import { Entity, Column, OneToMany, PrimaryColumn } from 'typeorm'
 
 @Entity({ name: 'Roles' })
-export class Role extends Model {
+export class Role extends BaseModel {
   @PrimaryColumn()
   @ApiProperty()
   role_id: number
