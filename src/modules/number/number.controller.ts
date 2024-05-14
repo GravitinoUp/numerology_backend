@@ -326,4 +326,18 @@ export class NumberController {
     const result = await this.numberService.getHouseNumberCalculation(number, request.i18nLang)
     return result
   }
+
+  @ApiOperation({ summary: AppStrings.FATE_NUMBER_GIFTS_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.FATE_NUMBER_GIFTS_GET_RESPONSE,
+    type: PageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('fate-number-gifts')
+  async getFateNumberGift(@Query('query') date: Date, @Req() request) {
+    const formattedDate = new Date(date)
+    const result = await this.numberService.getFateNumberGift(formattedDate, request.i18nLang)
+    return result
+  }
 }

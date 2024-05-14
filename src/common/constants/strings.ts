@@ -75,6 +75,8 @@ export const AppStrings = {
   PHONE_NUMBER_CALCULATION_GET_RESPONSE: 'Данные успешно получены',
   HOUSE_NUMBER_CALCULATION_GET_OPERATION: 'Расчет номера дома/квартиры',
   HOUSE_NUMBER_CALCULATION_GET_RESPONSE: 'Данные успешно получены',
+  FATE_NUMBER_GIFTS_GET_OPERATION: 'Получение подарков по числу судьбы',
+  FATE_NUMBER_GIFTS_GET_RESPONSE: 'Подарки по числу судьбы успешно получены',
 
   PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',

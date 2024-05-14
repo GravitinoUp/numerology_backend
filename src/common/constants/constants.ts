@@ -31,6 +31,7 @@ export const PageTypesEnum = {
   PERSONAL_YEAR_NUMBER: 25,
   PHONE_NUMBER_CALCULATION: 26,
   HOUSE_NUMBER_CALCULATION: 27,
+  FATE_NUMBER_GIFTS: 28,
 }
 
 export const RuVowelLetters = ['а', 'о', 'э', 'е', 'и', 'ы', 'у', 'ё', 'ю', 'я']

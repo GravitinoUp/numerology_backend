@@ -797,4 +797,30 @@ export class NumberService {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
+
+  async getFateNumberGift(date: Date, language_code: string): Promise<PageResponse> {
+    try {
+      const formattedDate = `${date.getDate()}${date.getMonth() + 1}${date.getFullYear()}`
+      const giftKey = getQuersumme(formattedDate)
+
+      const page = await this.pageService.findOneByKey(
+        giftKey.toString(),
+        PageTypesEnum.FATE_NUMBER_GIFTS,
+        language_code,
+      )
+
+      if (page) {
+        page.page_title = this.i18n.t('titles.fate_number_gifts')
+      } else {
+        Logger.error(`MISSING PAGE getFateNumberGift: ${JSON.stringify(giftKey)}`)
+      }
+
+      if (!page) {
+        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+      }
+      return page
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 }

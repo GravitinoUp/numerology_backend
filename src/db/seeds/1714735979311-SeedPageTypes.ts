@@ -208,6 +208,14 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
         }),
         category_id: 5,
       },
+      {
+        page_type_id: 27,
+        page_type_name: JSON.stringify({
+          ru: 'Подарки по числу судьбы',
+          en: 'Gifts according to the number of fate',
+        }),
+        category_id: 9,
+      },
     ])
   }
 
