@@ -14,7 +14,7 @@ import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagg
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { NumberService } from './number.service'
 import { AppStrings } from 'src/common/constants/strings'
-import { PageResponse } from '../page/response'
+import { FormulaResultResponse } from '../formula-result/response'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { I18nService } from 'nestjs-i18n'
@@ -34,7 +34,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.FATE_CARD_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('fate-card')
@@ -76,7 +76,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.HEALTH_NUMEROLOGY_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -93,7 +93,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.PROFESSIONS_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -107,7 +107,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.WEAK_QUALITIES_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -124,7 +124,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.STRONG_QUALITIES_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -141,7 +141,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.PLANETS_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -155,7 +155,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.ANCESTORS_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('ancestors')
@@ -168,7 +168,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.TOTEMIC_ANIMALS_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -185,7 +185,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.DESTINY_PROGRAM_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -202,7 +202,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.LUCKY_NUMBERS_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -216,7 +216,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.KARMA_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -230,7 +230,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.BLOOD_TYPE_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('blood-type')
@@ -243,7 +243,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.ANGELIC_NUMEROLOGY_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('angelic-numerology')
@@ -256,7 +256,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.GUESSING_NUMBER_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('guessing-number')
@@ -272,7 +272,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.COMPATIBILITY_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
@@ -286,7 +286,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.PREDICTION_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('prediction')
@@ -302,7 +302,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.PHONE_NUMBER_CALCULATION_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('phone-calculation')
@@ -318,7 +318,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.HOUSE_NUMBER_CALCULATION_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('house-calculation')
@@ -331,7 +331,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.FATE_NUMBER_GIFTS_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('fate-number-gifts')
@@ -345,7 +345,7 @@ export class NumberController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: AppStrings.AROMATHERAPY_GET_RESPONSE,
-    type: PageResponse,
+    type: FormulaResultResponse,
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)

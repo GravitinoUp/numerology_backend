@@ -16,8 +16,8 @@ import { LanguageModule } from '../language/language.module'
 import { OnboardModule } from '../onboard/onboard.module'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
-import { PageTypeModule } from '../page_type/page_type.module'
-import { PageModule } from '../page/page.module'
+import { FormulaTypeModule } from '../formula_type/formula_type.module'
+import { FormulaResultModule } from '../formula-result/formula-result.module'
 import { NumberModule } from '../number/number.module'
 import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
 import { CategoryModule } from '../category/category.module'
@@ -77,8 +77,8 @@ import { CategoryModule } from '../category/category.module'
     LanguageModule,
     NumberModule,
     OnboardModule,
-    PageModule,
-    PageTypeModule,
+    FormulaResultModule,
+    FormulaTypeModule,
     PersonModule,
     RoleModule,
     UserModule,

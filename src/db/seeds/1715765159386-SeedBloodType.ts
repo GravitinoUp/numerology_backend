@@ -1,16 +1,15 @@
-import { PageTypesEnum } from 'src/common/constants/constants'
-import { Page } from 'src/modules/page/entities/page.entity'
+import { FormulaTypesEnum } from 'src/common/constants/constants'
+import { FormulaResult } from 'src/modules/formula-result/entities/formula-result.entity'
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class SeedBloodType1715765159386 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.manager.insert(Page, [
+    await queryRunner.manager.insert(FormulaResult, [
       {
-        page_type_id: PageTypesEnum.BLOOD_TYPE,
-        page_keys: ['1'],
-        page_name: 'Первая группа крови I',
-        page_image: '',
-        page_content: `1. *Лидерские качества*: Люди с первой группой крови часто описываются как решительные, самостоятельные и рожденные лидеры.
+        formula_type_id: FormulaTypesEnum.BLOOD_TYPE,
+        result_keys: ['1'],
+        result_name: 'Первая группа крови I',
+        result_content: `1. *Лидерские качества*: Люди с первой группой крови часто описываются как решительные, самостоятельные и рожденные лидеры.
 
           2. *Уверенность*: Они могут проявлять уверенность в себе и независимость, быть стойкими и сильными в сложных ситуациях.
           
@@ -27,11 +26,10 @@ export class SeedBloodType1715765159386 implements MigrationInterface {
         language_code: 'ru',
       },
       {
-        page_type_id: PageTypesEnum.BLOOD_TYPE,
-        page_keys: ['2'],
-        page_name: 'Вторая группа крови II',
-        page_image: '',
-        page_content: `1. *Сдержанность*: Люди с группой крови A часто описываются как сдержанные и контролируемые в выражении своих эмоций.
+        formula_type_id: FormulaTypesEnum.BLOOD_TYPE,
+        result_keys: ['2'],
+        result_name: 'Вторая группа крови II',
+        result_content: `1. *Сдержанность*: Люди с группой крови A часто описываются как сдержанные и контролируемые в выражении своих эмоций.
 
         2. *Внимательность к деталям*: Они могут проявлять тщательность и внимание к мелочам, будь то на работе или в личной жизни.
         
@@ -50,11 +48,10 @@ export class SeedBloodType1715765159386 implements MigrationInterface {
         language_code: 'ru',
       },
       {
-        page_type_id: PageTypesEnum.BLOOD_TYPE,
-        page_keys: ['3'],
-        page_name: 'Третья группа крови III',
-        page_image: '',
-        page_content: `1. *Независимость*: Люди с группой крови B часто описываются как независимые и самодостаточные, предпочитающие следовать своим собственным правилам.
+        formula_type_id: FormulaTypesEnum.BLOOD_TYPE,
+        result_keys: ['3'],
+        result_name: 'Третья группа крови III',
+        result_content: `1. *Независимость*: Люди с группой крови B часто описываются как независимые и самодостаточные, предпочитающие следовать своим собственным правилам.
 
         2. *Гибкость*: Им приписывают способность легко адаптироваться к новым условиям и изменениям, благодаря чему они могут легко справляться с новыми ситуациями.
         
@@ -73,11 +70,10 @@ export class SeedBloodType1715765159386 implements MigrationInterface {
         language_code: 'ru',
       },
       {
-        page_type_id: PageTypesEnum.BLOOD_TYPE,
-        page_keys: ['4'],
-        page_name: 'Четвертая группа крови IV',
-        page_image: '',
-        page_content: `1. *Комплексный подход*: Люди с группой крови AB часто рассматриваются как сочетание черт групп A и B, что может делать их уникальными и многогранными личностями.
+        formula_type_id: FormulaTypesEnum.BLOOD_TYPE,
+        result_keys: ['4'],
+        result_name: 'Четвертая группа крови IV',
+        result_content: `1. *Комплексный подход*: Люди с группой крови AB часто рассматриваются как сочетание черт групп A и B, что может делать их уникальными и многогранными личностями.
 
         2. *Дипломатичность*: Они обычно считаются дипломатами, способными понимать разные точки зрения и находить общий язык с различными людьми.
         
@@ -97,13 +93,12 @@ export class SeedBloodType1715765159386 implements MigrationInterface {
       },
     ])
 
-    await queryRunner.manager.insert(Page, [
+    await queryRunner.manager.insert(FormulaResult, [
       {
-        page_type_id: PageTypesEnum.BLOOD_TYPE,
-        page_keys: ['1'],
-        page_name: 'Первая группа крови I',
-        page_image: '',
-        page_content: `1. *Лидерские качества*: Люди с первой группой крови часто описываются как решительные, самостоятельные и рожденные лидеры.
+        formula_type_id: FormulaTypesEnum.BLOOD_TYPE,
+        result_keys: ['1'],
+        result_name: 'Первая группа крови I',
+        result_content: `1. *Лидерские качества*: Люди с первой группой крови часто описываются как решительные, самостоятельные и рожденные лидеры.
 
           2. *Уверенность*: Они могут проявлять уверенность в себе и независимость, быть стойкими и сильными в сложных ситуациях.
           
@@ -120,11 +115,10 @@ export class SeedBloodType1715765159386 implements MigrationInterface {
         language_code: 'en',
       },
       {
-        page_type_id: PageTypesEnum.BLOOD_TYPE,
-        page_keys: ['2'],
-        page_name: 'Вторая группа крови II',
-        page_image: '',
-        page_content: `1. *Сдержанность*: Люди с группой крови A часто описываются как сдержанные и контролируемые в выражении своих эмоций.
+        formula_type_id: FormulaTypesEnum.BLOOD_TYPE,
+        result_keys: ['2'],
+        result_name: 'Вторая группа крови II',
+        result_content: `1. *Сдержанность*: Люди с группой крови A часто описываются как сдержанные и контролируемые в выражении своих эмоций.
 
         2. *Внимательность к деталям*: Они могут проявлять тщательность и внимание к мелочам, будь то на работе или в личной жизни.
         
@@ -143,11 +137,10 @@ export class SeedBloodType1715765159386 implements MigrationInterface {
         language_code: 'en',
       },
       {
-        page_type_id: PageTypesEnum.BLOOD_TYPE,
-        page_keys: ['3'],
-        page_name: 'Третья группа крови III',
-        page_image: '',
-        page_content: `1. *Независимость*: Люди с группой крови B часто описываются как независимые и самодостаточные, предпочитающие следовать своим собственным правилам.
+        formula_type_id: FormulaTypesEnum.BLOOD_TYPE,
+        result_keys: ['3'],
+        result_name: 'Третья группа крови III',
+        result_content: `1. *Независимость*: Люди с группой крови B часто описываются как независимые и самодостаточные, предпочитающие следовать своим собственным правилам.
 
         2. *Гибкость*: Им приписывают способность легко адаптироваться к новым условиям и изменениям, благодаря чему они могут легко справляться с новыми ситуациями.
         
@@ -166,11 +159,10 @@ export class SeedBloodType1715765159386 implements MigrationInterface {
         language_code: 'en',
       },
       {
-        page_type_id: PageTypesEnum.BLOOD_TYPE,
-        page_keys: ['4'],
-        page_name: 'Четвертая группа крови IV',
-        page_image: '',
-        page_content: `1. *Комплексный подход*: Люди с группой крови AB часто рассматриваются как сочетание черт групп A и B, что может делать их уникальными и многогранными личностями.
+        formula_type_id: FormulaTypesEnum.BLOOD_TYPE,
+        result_keys: ['4'],
+        result_name: 'Четвертая группа крови IV',
+        result_content: `1. *Комплексный подход*: Люди с группой крови AB часто рассматриваются как сочетание черт групп A и B, что может делать их уникальными и многогранными личностями.
 
         2. *Дипломатичность*: Они обычно считаются дипломатами, способными понимать разные точки зрения и находить общий язык с различными людьми.
         
@@ -192,8 +184,8 @@ export class SeedBloodType1715765159386 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.manager.delete(Page, {
-      page_type_id: PageTypesEnum.BLOOD_TYPE,
+    await queryRunner.manager.delete(FormulaResult, {
+      page_type_id: FormulaTypesEnum.BLOOD_TYPE,
     })
   }
 }

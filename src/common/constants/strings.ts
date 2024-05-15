@@ -80,12 +80,12 @@ export const AppStrings = {
   AROMATHERAPY_GET_OPERATION: 'Получение ароматерапии',
   AROMATHERAPY_GET_RESPONSE: 'Данные успешно получены',
 
-  PAGE_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
-  PAGE_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',
-  PAGE_TYPE_GET_ONE_OPERATION: 'Получение типа страницы',
-  PAGE_TYPE_GET_ONE_RESPONSE: 'Тип страницы успешно получены',
-  PAGE_TYPE_UPDATE_OPERATION: 'Изменение типа страницы',
-  PAGE_TYPE_UPDATE_RESPONSE: 'Тип страницы успешно изменен',
+  FORMULA_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
+  FORMULA_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',
+  FORMULA_TYPE_GET_ONE_OPERATION: 'Получение типа страницы',
+  FORMULA_TYPE_GET_ONE_RESPONSE: 'Тип страницы успешно получены',
+  FORMULA_TYPE_UPDATE_OPERATION: 'Изменение типа страницы',
+  FORMULA_TYPE_UPDATE_RESPONSE: 'Тип страницы успешно изменен',
 
   USERS_CREATE_OPERATION: 'Регистрация пользователя',
   USERS_CREATE_RESPONSE: 'Пользователь успешно зарегистрирован',

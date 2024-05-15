@@ -1,24 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString, IsOptional, IsInt } from 'class-validator'
 
-export class CreatePageTypeDto {
+export class CreateFormulaTypeDto {
   @IsString()
   @ApiProperty()
-  page_type_name: string
+  formula_type_name: string
 }
 
-export class UpdatePageTypeDto {
+export class UpdateFormulaTypeDto {
   @IsInt()
   @ApiProperty({ default: 1 })
-  page_type_id: number
+  formula_type_id: number
 
   @IsString()
   @IsOptional()
   @ApiProperty({ required: false })
-  page_type_name?: string
+  formula_type_name?: string
 
   @IsString()
   @IsOptional()
   @ApiProperty({ required: false })
-  page_type_description?: string
+  formula_type_description?: string
 }

@@ -1,76 +1,53 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
 
-export class CreatePages1714735168107 implements MigrationInterface {
+export class CreatePages1715776896240 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.createTable(
-      new Table({
-        name: 'PageTypes',
-        columns: [
-          {
-            name: 'page_type_id',
-            type: 'int',
-            isPrimary: true,
-            isGenerated: true,
-            generationStrategy: 'increment',
-          },
-          {
-            name: 'page_type_name',
-            type: 'json',
-          },
-          {
-            name: 'page_type_description',
-            type: 'json',
-            default: `to_json('{\"ru\":\"\",\"en\":\"\"}'::text)`,
-          },
-          {
-            name: 'created_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
-          {
-            name: 'updated_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
-        ],
-      }),
-      true,
-    )
-
     await queryRunner.createTable(
       new Table({
         name: 'Pages',
         columns: [
           {
             name: 'page_uuid',
-            type: 'uuid',
+            type: 'int',
             isPrimary: true,
             isGenerated: true,
-            generationStrategy: 'uuid',
-          },
-          {
-            name: 'page_type_id',
-            type: 'int',
-          },
-          {
-            name: 'page_keys',
-            type: 'varchar[]',
+            generationStrategy: 'increment',
           },
           {
             name: 'page_name',
             type: 'varchar',
           },
           {
-            name: 'page_image',
-            type: 'varchar',
+            name: 'page_description',
+            type: 'text',
+            default: `''`,
           },
           {
-            name: 'page_content',
-            type: 'text',
+            name: 'page_image',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'page_icon',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'color',
+            type: 'varchar',
+            default: `'#000000'`,
+          },
+          {
+            name: 'key',
+            type: 'varchar',
           },
           {
             name: 'language_code',
             type: 'varchar',
+          },
+          {
+            name: 'category_id',
+            type: 'int',
           },
           {
             name: 'created_at',
@@ -90,9 +67,9 @@ export class CreatePages1714735168107 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'Pages',
       new TableForeignKey({
-        columnNames: ['page_type_id'],
-        referencedColumnNames: ['page_type_id'],
-        referencedTableName: 'PageTypes',
+        columnNames: ['category_id'],
+        referencedColumnNames: ['category_id'],
+        referencedTableName: 'Categories',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),
@@ -112,6 +89,5 @@ export class CreatePages1714735168107 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('Pages')
-    await queryRunner.dropTable('PageTypes')
   }
 }

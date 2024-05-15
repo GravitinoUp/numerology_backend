@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { PersonService } from '../person/person.service'
-import { PageService } from '../page/page.service'
-import { PageResponse } from '../page/response'
-import { PageTypesEnum } from 'src/common/constants/constants'
+import { FormulaResultService } from '../formula-result/formula-result.service'
+import { FormulaResultResponse } from '../formula-result/response'
+import { FormulaTypesEnum } from 'src/common/constants/constants'
 import { I18nService } from 'nestjs-i18n'
 import { Person } from '../person/entities/person.entity'
 import { GetCompatibilityDto } from './dto'
@@ -20,17 +20,30 @@ export class NumberService {
   constructor(
     private readonly personService: PersonService,
     private readonly userService: UserService,
-    private readonly pageService: PageService,
+    private readonly formulaResultService: FormulaResultService,
     private readonly i18n: I18nService,
   ) {}
 
-  async getFateCard(user_uuid: string, language_code: string): Promise<PageResponse> {
+  async getFateCard(user_uuid: string, language_code: string): Promise<FormulaResultResponse> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const key = `${('0' + userData.birthday_day).slice(-2)}.${('0' + userData.birthday_month).slice(-2)}`
 
-      const page = await this.pageService.findOneByKey(key, PageTypesEnum.FATE_CARDS, language_code)
+      const page = await this.formulaResultService.findOneByKey(
+        key,
+        FormulaTypesEnum.FATE_CARDS,
+        language_code,
+      )
+
       if (page) {
+        const formulaType = page.formula_type
+        page.formula_type = Object.assign(formulaType, {
+          formula_type_name: JSON.parse(formulaType.formula_type_name)[language_code] as string,
+          formula_type_description: JSON.parse(formulaType.formula_type_description)[
+            language_code
+          ] as string,
+        }) // TODO
+
         return page
       } else {
         throw new HttpException(
@@ -47,21 +60,20 @@ export class NumberService {
     user_uuid: string,
     language_code: string,
     user_data?: Person,
-  ): Promise<PageResponse> {
+  ): Promise<FormulaResultResponse> {
     try {
       const userData = user_data ?? (await this.personService.getPersonData(user_uuid))
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
       const fateNumber = getQuersumme(userBirthday)
 
-      const page = await this.pageService.findOneByKey(
+      const page = await this.formulaResultService.findOneByKey(
         fateNumber.toString(),
-        PageTypesEnum.NUMBER_OF_FATE,
+        FormulaTypesEnum.NUMBER_OF_FATE,
         language_code,
       )
 
       if (page) {
-        page.page_title = await this.i18n.t('titles.fate_number')
         return page
       } else {
         Logger.error(`MISSING FATE NUMBER PAGE ${JSON.stringify(fateNumber)}`)
@@ -75,7 +87,7 @@ export class NumberService {
     user_uuid: string,
     language_code: string,
     user_data?: Person,
-  ): Promise<PageResponse> {
+  ): Promise<FormulaResultResponse> {
     try {
       const userData = user_data ?? (await this.personService.getPersonData(user_uuid))
 
@@ -83,14 +95,13 @@ export class NumberService {
       const monthArcane = userData.birthday_month
       const tkk = getArcane(Math.abs(monthArcane - yearArcane)) //ТРЕТИЙ КАРМИЧЕСКИЙ УЗЕЛ
 
-      const page = await this.pageService.findOneByKey(
+      const page = await this.formulaResultService.findOneByKey(
         tkk.toString(),
-        PageTypesEnum.CHRONIC_DISEASES,
+        FormulaTypesEnum.CHRONIC_DISEASES,
         language_code,
       )
 
       if (page) {
-        page.page_title = await this.i18n.t('titles.chronic_disease')
         return page
       } else {
         Logger.error(`MISSING DISEASE PAGE ${JSON.stringify(tkk)}`)
@@ -100,7 +111,10 @@ export class NumberService {
     }
   }
 
-  async getHealthNumerology(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+  async getHealthNumerology(
+    user_uuid: string,
+    language_code: string,
+  ): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
@@ -119,7 +133,7 @@ export class NumberService {
     }
   }
 
-  async getProfessions(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+  async getProfessions(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     // TODO PLANETS
     try {
       const userData = await this.personService.getPersonData(user_uuid)
@@ -153,14 +167,13 @@ export class NumberService {
       const keys = [pg1, pg2, pg3, pg4, pg5]
       const pages = []
       for (const pg of keys) {
-        const page = await this.pageService.findOneByKey(
+        const page = await this.formulaResultService.findOneByKey(
           pg.number.toString(),
-          PageTypesEnum.PROFESSIONS,
+          FormulaTypesEnum.PROFESSIONS,
           language_code,
         )
 
         if (page) {
-          page.page_title = pg.title
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(pg)}`)
@@ -177,7 +190,10 @@ export class NumberService {
     }
   }
 
-  async getNegativeTraits(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+  async getNegativeTraits(
+    user_uuid: string,
+    language_code: string,
+  ): Promise<FormulaResultResponse[]> {
     // TODO PLANETS
     try {
       const userData = await this.personService.getPersonData(user_uuid)
@@ -203,14 +219,13 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.pageService.findOneByKey(
+        const page = await this.formulaResultService.findOneByKey(
           key.number.toString(),
-          PageTypesEnum.WEAK_TRAITS,
+          FormulaTypesEnum.WEAK_TRAITS,
           language_code,
         )
 
         if (page) {
-          page.page_title = key.title
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -227,7 +242,10 @@ export class NumberService {
     }
   }
 
-  async getStrongQualitites(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+  async getStrongQualitites(
+    user_uuid: string,
+    language_code: string,
+  ): Promise<FormulaResultResponse[]> {
     // TODO PLANETS
     try {
       const userData = await this.personService.getPersonData(user_uuid)
@@ -263,14 +281,13 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.pageService.findOneByKey(
+        const page = await this.formulaResultService.findOneByKey(
           key.number.toString(),
-          PageTypesEnum.WEAK_TRAITS,
+          FormulaTypesEnum.WEAK_TRAITS,
           language_code,
         )
 
         if (page) {
-          page.page_title = key.title
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -287,7 +304,7 @@ export class NumberService {
     }
   }
 
-  async getPlanets(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+  async getPlanets(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -305,14 +322,13 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.pageService.findOneByKey(
+        const page = await this.formulaResultService.findOneByKey(
           key.number.toString(),
-          PageTypesEnum.PLANETS,
+          FormulaTypesEnum.PLANETS,
           language_code,
         )
 
         if (page) {
-          page.page_title = key.title
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -329,15 +345,15 @@ export class NumberService {
     }
   }
 
-  async getAncestors(user_uuid: string, language_code: string): Promise<PageResponse> {
+  async getAncestors(user_uuid: string, language_code: string): Promise<FormulaResultResponse> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
       const lastNameArcane = getArcane(getNameNumber(userData.last_name, false))
 
-      const page = await this.pageService.findOneByKey(
+      const page = await this.formulaResultService.findOneByKey(
         lastNameArcane.toString(),
-        PageTypesEnum.ANCESTORS,
+        FormulaTypesEnum.ANCESTORS,
         language_code,
       )
 
@@ -351,7 +367,10 @@ export class NumberService {
     }
   }
 
-  async getTotemicAnimals(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+  async getTotemicAnimals(
+    user_uuid: string,
+    language_code: string,
+  ): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
@@ -369,14 +388,13 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.pageService.findOneByKey(
+        const page = await this.formulaResultService.findOneByKey(
           key.number.toString(),
-          PageTypesEnum.TOTEMIC_ANIMAl,
+          FormulaTypesEnum.TOTEMIC_ANIMAl,
           language_code,
         )
 
         if (page) {
-          page.page_title = key.title
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -393,7 +411,10 @@ export class NumberService {
     }
   }
 
-  async getDestinyProgram(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+  async getDestinyProgram(
+    user_uuid: string,
+    language_code: string,
+  ): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -401,27 +422,27 @@ export class NumberService {
       const dayTask = {
         number: getArcane(userData.birthday_day),
         title: this.i18n.t('titles.day_task'),
-        type: PageTypesEnum.TASKS,
+        type: FormulaTypesEnum.TASKS,
       }
       const monthTask = {
         number: userData.birthday_month,
         title: this.i18n.t('titles.month_task'),
-        type: PageTypesEnum.TASKS,
+        type: FormulaTypesEnum.TASKS,
       }
       const yearTask = {
         number: getLongNumberArcane(userData.birthday_year.toString()),
         title: this.i18n.t('titles.year_task'),
-        type: PageTypesEnum.TASKS,
+        type: FormulaTypesEnum.TASKS,
       }
       const communityTask = {
         number: getArcane(dayTask.number + monthTask.number + yearTask.number),
         title: this.i18n.t('titles.community_task'),
-        type: PageTypesEnum.TASKS,
+        type: FormulaTypesEnum.TASKS,
       }
       const nameKey = {
         number: getArcane(getNameNumber(userData.first_name, false)),
         title: this.i18n.t('titles.secret_of_name'),
-        type: PageTypesEnum.SECRET_OF_NAME,
+        type: FormulaTypesEnum.SECRET_OF_NAME,
       }
       const expressionNumberKey = {
         number: getQuersumme(
@@ -432,12 +453,12 @@ export class NumberService {
           ).toString(),
         ),
         title: this.i18n.t('titles.expression_number'),
-        type: PageTypesEnum.EXPRESSION_NUMBER,
+        type: FormulaTypesEnum.EXPRESSION_NUMBER,
       }
       const lifePathNumber = {
         number: getQuersumme(userBirthday),
         title: this.i18n.t('titles.life_path_number'),
-        type: PageTypesEnum.LIFE_PATH_NUMBER,
+        type: FormulaTypesEnum.LIFE_PATH_NUMBER,
       }
 
       const keys = [
@@ -452,14 +473,13 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.pageService.findOneByKey(
+        const page = await this.formulaResultService.findOneByKey(
           key.number.toString(),
           key.type,
           language_code,
         )
 
         if (page) {
-          page.page_title = key.title
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -512,7 +532,7 @@ export class NumberService {
     }
   }
 
-  async getKarma(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+  async getKarma(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
@@ -537,14 +557,13 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.pageService.findOneByKey(
+        const page = await this.formulaResultService.findOneByKey(
           key.number.toString(),
-          PageTypesEnum.KARMA,
+          FormulaTypesEnum.KARMA,
           language_code,
         )
 
         if (page) {
-          page.page_title = key.title
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -560,16 +579,15 @@ export class NumberService {
     }
   }
 
-  async getBloodType(bloodType: string, language_code: string): Promise<PageResponse> {
+  async getBloodType(bloodType: string, language_code: string): Promise<FormulaResultResponse> {
     try {
-      const page = await this.pageService.findOneByKey(
+      const page = await this.formulaResultService.findOneByKey(
         bloodType,
-        PageTypesEnum.BLOOD_TYPE,
+        FormulaTypesEnum.BLOOD_TYPE,
         language_code,
       )
 
       if (page) {
-        page.page_title = this.i18n.t('titles.blood_type')
       } else {
         Logger.error(`MISSING PAGE getBloodType: ${JSON.stringify(bloodType)}`)
       }
@@ -583,16 +601,15 @@ export class NumberService {
     }
   }
 
-  async getAngelicNumerology(time: string, language_code: string): Promise<PageResponse> {
+  async getAngelicNumerology(time: string, language_code: string): Promise<FormulaResultResponse> {
     try {
-      const page = await this.pageService.findOneByKey(
+      const page = await this.formulaResultService.findOneByKey(
         time,
-        PageTypesEnum.ANGELIC_NUMEROLOGY,
+        FormulaTypesEnum.ANGELIC_NUMEROLOGY,
         language_code,
       )
 
       if (page) {
-        page.page_title = this.i18n.t('titles.angelic_numerology')
       } else {
         Logger.error(`MISSING PAGE getAngelicNumerology: ${JSON.stringify(time)}`)
       }
@@ -606,19 +623,18 @@ export class NumberService {
     }
   }
 
-  async getGuessingNumber(number: number, language_code: string): Promise<PageResponse> {
+  async getGuessingNumber(number: number, language_code: string): Promise<FormulaResultResponse> {
     try {
       const formattedNumber = `${number.toString()}3`
       const key = getLongNumberArcane(formattedNumber, 84)
 
-      const page = await this.pageService.findOneByKey(
+      const page = await this.formulaResultService.findOneByKey(
         key.toString(),
-        PageTypesEnum.GUESSING_NUMBER,
+        FormulaTypesEnum.GUESSING_NUMBER,
         language_code,
       )
 
       if (page) {
-        page.page_title = this.i18n.t('titles.guessing_by_numbers')
       } else {
         Logger.error(`MISSING PAGE getGuessingNumber: ${JSON.stringify(key)}`)
       }
@@ -635,7 +651,7 @@ export class NumberService {
   async getCompatibility(
     getCompatibilityDto: GetCompatibilityDto,
     language_code: string,
-  ): Promise<PageResponse[]> {
+  ): Promise<FormulaResultResponse[]> {
     try {
       const firstDate = new Date(getCompatibilityDto.first_partner_date)
       const secondDate = new Date(getCompatibilityDto.second_partner_date)
@@ -655,7 +671,7 @@ export class NumberService {
       const arcaneCompatibility = {
         number: getArcane(firstArcane + secondArcane),
         title: this.i18n.t('titles.arcane_compatibility'),
-        type: PageTypesEnum.ARCANE_COMPATIBILITY,
+        type: FormulaTypesEnum.ARCANE_COMPATIBILITY,
       }
 
       const firstSoulNumber = getLongNumberArcane(firstPartnerDate, 9)
@@ -663,7 +679,7 @@ export class NumberService {
       const soulNumberCompatibility = {
         number: getArcane(firstSoulNumber + secondSoulNumber),
         title: this.i18n.t('titles.soul_number_compatibility'),
-        type: PageTypesEnum.SOUL_NUMBER_COMPATIBILITY,
+        type: FormulaTypesEnum.SOUL_NUMBER_COMPATIBILITY,
       }
 
       const firstTaskNumber = getArcane(firstDayArcane + firstMonthArcane + firstYearArcane)
@@ -671,7 +687,7 @@ export class NumberService {
       const tasksCompatibility = {
         number: getArcane(firstTaskNumber + secondTaskNumber),
         title: this.i18n.t('titles.tasks_compatibility'),
-        type: PageTypesEnum.JOINT_TASKS_COMPATIBILITY,
+        type: FormulaTypesEnum.JOINT_TASKS_COMPATIBILITY,
       }
 
       const firstDifficultyNumber = getArcane(firstDayArcane + firstMonthArcane)
@@ -679,7 +695,7 @@ export class NumberService {
       const difficultiesCompatibility = {
         number: getArcane(firstDifficultyNumber + secondDifficultyNumber),
         title: this.i18n.t('titles.difficulties_compatibility'),
-        type: PageTypesEnum.DIFFICULTIES_COMPATIBILITY,
+        type: FormulaTypesEnum.DIFFICULTIES_COMPATIBILITY,
       }
 
       const keys = [
@@ -691,14 +707,13 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.pageService.findOneByKey(
+        const page = await this.formulaResultService.findOneByKey(
           key.number.toString(),
           key.type,
           language_code,
         )
 
         if (page) {
-          page.page_title = key.title
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -714,7 +729,10 @@ export class NumberService {
     }
   }
 
-  async getPersonalYearNumber(user_uuid: string, language_code: string): Promise<PageResponse> {
+  async getPersonalYearNumber(
+    user_uuid: string,
+    language_code: string,
+  ): Promise<FormulaResultResponse> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const day = getQuersumme(userData.birthday_day.toString())
@@ -724,14 +742,13 @@ export class NumberService {
       const formattedNumber = `${day}${month}${year}`
       const personalNumber = getQuersumme(formattedNumber)
 
-      const page = await this.pageService.findOneByKey(
+      const page = await this.formulaResultService.findOneByKey(
         personalNumber.toString(),
-        PageTypesEnum.PERSONAL_YEAR_NUMBER,
+        FormulaTypesEnum.PERSONAL_YEAR_NUMBER,
         language_code,
       )
 
       if (page) {
-        page.page_title = this.i18n.t('titles.personal_year_number')
       } else {
         Logger.error(`MISSING PAGE getPersonalYearNumber: ${JSON.stringify(personalNumber)}`)
       }
@@ -745,19 +762,21 @@ export class NumberService {
     }
   }
 
-  async getPhoneNumberCalculation(user_uuid: string, language_code: string): Promise<PageResponse> {
+  async getPhoneNumberCalculation(
+    user_uuid: string,
+    language_code: string,
+  ): Promise<FormulaResultResponse> {
     try {
       const userData = await this.userService.findByUuid(user_uuid, false)
       const phoneKey = getQuersumme(userData.phone.replaceAll('+', ''))
 
-      const page = await this.pageService.findOneByKey(
+      const page = await this.formulaResultService.findOneByKey(
         phoneKey.toString(),
-        PageTypesEnum.PHONE_NUMBER_CALCULATION,
+        FormulaTypesEnum.PHONE_NUMBER_CALCULATION,
         language_code,
       )
 
       if (page) {
-        page.page_title = this.i18n.t('titles.phone_number_calculation')
       } else {
         Logger.error(`MISSING PAGE getPhoneNumberCalculation: ${JSON.stringify(phoneKey)}`)
       }
@@ -771,18 +790,20 @@ export class NumberService {
     }
   }
 
-  async getHouseNumberCalculation(number: number, language_code: string): Promise<PageResponse> {
+  async getHouseNumberCalculation(
+    number: number,
+    language_code: string,
+  ): Promise<FormulaResultResponse> {
     try {
       const houseKey = getQuersumme(number.toString())
 
-      const page = await this.pageService.findOneByKey(
+      const page = await this.formulaResultService.findOneByKey(
         houseKey.toString(),
-        PageTypesEnum.HOUSE_NUMBER_CALCULATION,
+        FormulaTypesEnum.HOUSE_NUMBER_CALCULATION,
         language_code,
       )
 
       if (page) {
-        page.page_title = this.i18n.t('titles.house_number_calculation')
       } else {
         Logger.error(`MISSING PAGE getHouseNumberCalculation: ${JSON.stringify(houseKey)}`)
       }
@@ -796,19 +817,18 @@ export class NumberService {
     }
   }
 
-  async getFateNumberGift(date: Date, language_code: string): Promise<PageResponse> {
+  async getFateNumberGift(date: Date, language_code: string): Promise<FormulaResultResponse> {
     try {
       const formattedDate = `${date.getDate()}${date.getMonth() + 1}${date.getFullYear()}`
       const giftKey = getQuersumme(formattedDate)
 
-      const page = await this.pageService.findOneByKey(
+      const page = await this.formulaResultService.findOneByKey(
         giftKey.toString(),
-        PageTypesEnum.FATE_NUMBER_GIFTS,
+        FormulaTypesEnum.FATE_NUMBER_GIFTS,
         language_code,
       )
 
       if (page) {
-        page.page_title = this.i18n.t('titles.fate_number_gifts')
       } else {
         Logger.error(`MISSING PAGE getFateNumberGift: ${JSON.stringify(giftKey)}`)
       }
@@ -822,7 +842,10 @@ export class NumberService {
     }
   }
 
-  async getAromatherapy(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+  async getAromatherapy(
+    user_uuid: string,
+    language_code: string,
+  ): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -830,27 +853,26 @@ export class NumberService {
       const soulNumberKey = {
         number: getQuersumme(userBirthday),
         title: '',
-        type: PageTypesEnum.SOUL_NUMBER_ESSENTIAL_OIL,
+        type: FormulaTypesEnum.SOUL_NUMBER_ESSENTIAL_OIL,
       }
 
       const dayArcaneKey = {
         number: getArcane(userData.birthday_day),
         title: '',
-        type: PageTypesEnum.DAY_ARCANE_ESSENTIAL_OIL,
+        type: FormulaTypesEnum.DAY_ARCANE_ESSENTIAL_OIL,
       }
 
       const keys = [soulNumberKey, dayArcaneKey]
 
       const pages = []
       for (const key of keys) {
-        const page = await this.pageService.findOneByKey(
+        const page = await this.formulaResultService.findOneByKey(
           key.number.toString(),
           key.type,
           language_code,
         )
 
         if (page) {
-          page.page_title = key.title
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
