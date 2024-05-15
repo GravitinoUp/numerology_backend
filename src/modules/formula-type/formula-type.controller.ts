@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
-import { FormulaTypeService } from './formula_type.service'
+import { FormulaTypeService } from './formula-type.service'
 import { I18nService } from 'nestjs-i18n'
 import { AppStrings } from 'src/common/constants/strings'
 import { FormulaTypeResponse, StatusFormulaTypeResponse } from './response'

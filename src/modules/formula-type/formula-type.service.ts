@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { FormulaType } from './entities/formula_type.entity'
+import { FormulaType } from './entities/formula-type.entity'
 import { FormulaTypeResponse, StatusFormulaTypeResponse } from './response'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'

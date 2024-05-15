@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import BaseModel from 'src/common/model'
 import { Language } from 'src/modules/language/entities/language.entity'
-import { FormulaType } from 'src/modules/formula_type/entities/formula_type.entity'
+import { FormulaType } from 'src/modules/formula-type/entities/formula-type.entity'
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm'
 
 @Entity({ name: 'FormulaResults' })

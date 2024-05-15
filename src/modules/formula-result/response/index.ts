@@ -8,7 +8,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator'
-import { FormulaType } from 'src/modules/formula_type/entities/formula_type.entity'
+import { FormulaType } from 'src/modules/formula-type/entities/formula-type.entity'
 
 export class FormulaResultResponse {
   @IsUUID()

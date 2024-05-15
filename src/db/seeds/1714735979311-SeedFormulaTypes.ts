@@ -1,5 +1,5 @@
 import { FormulaTypesEnum } from 'src/common/constants/constants'
-import { FormulaType } from 'src/modules/formula_type/entities/formula_type.entity'
+import { FormulaType } from 'src/modules/formula-type/entities/formula-type.entity'
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class SeedFormulaTypes1714735979311 implements MigrationInterface {
