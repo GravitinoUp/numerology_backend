@@ -16,11 +16,12 @@ import { LanguageModule } from '../language/language.module'
 import { OnboardModule } from '../onboard/onboard.module'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
-import { PageTypeModule } from '../page_type/page_type.module'
-import { PageModule } from '../page/page.module'
+import { FormulaTypeModule } from '../formula-type/formula-type.module'
+import { FormulaResultModule } from '../formula-result/formula-result.module'
 import { NumberModule } from '../number/number.module'
 import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
 import { CategoryModule } from '../category/category.module'
+import { PageModule } from '../page/page.module'
 
 @Module({
   imports: [
@@ -74,11 +75,12 @@ import { CategoryModule } from '../category/category.module'
     AuthModule,
     AuthCodeModule,
     CategoryModule,
+    FormulaResultModule,
+    FormulaTypeModule,
     LanguageModule,
     NumberModule,
     OnboardModule,
     PageModule,
-    PageTypeModule,
     PersonModule,
     RoleModule,
     UserModule,

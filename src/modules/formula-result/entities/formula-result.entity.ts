@@ -1,47 +1,35 @@
 import { ApiProperty } from '@nestjs/swagger'
 import BaseModel from 'src/common/model'
 import { Language } from 'src/modules/language/entities/language.entity'
+import { FormulaType } from 'src/modules/formula-type/entities/formula-type.entity'
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm'
-import { Category } from 'src/modules/category/entities/category.entity'
 
-@Entity({ name: 'Pages' })
-export class Page extends BaseModel {
+@Entity({ name: 'FormulaResults' })
+export class FormulaResult extends BaseModel {
   @PrimaryColumn()
   @ApiProperty()
-  page_uuid: string
+  result_uuid: string
 
   @Column()
   @ApiProperty()
-  page_name: string
+  formula_type_id: number
 
-  @Column({ type: 'text' })
+  @ManyToOne(() => FormulaType, (formulaType) => formulaType.formula_type_id)
+  @JoinColumn({ name: 'formula_type_id', referencedColumnName: 'formula_type_id' })
   @ApiProperty()
-  page_description: string
-
-  @Column({ type: 'varchar' })
-  @ApiProperty()
-  page_image: string
-
-  @Column({ type: 'varchar' })
-  @ApiProperty()
-  page_icon: string
-
-  @Column({ type: 'varchar' })
-  @ApiProperty()
-  color: string
+  formula_type: FormulaType
 
   @Column({ type: 'varchar', array: true })
   @ApiProperty()
-  key: string
+  result_keys: string[]
 
   @Column()
   @ApiProperty()
-  category_id: number
+  result_name: string
 
-  @ManyToOne(() => Category, (category) => category.category_id)
-  @JoinColumn({ name: 'category_id', referencedColumnName: 'category_id' })
+  @Column({ type: 'text' })
   @ApiProperty()
-  category: Category
+  result_content: string
 
   @Column()
   @ApiProperty()

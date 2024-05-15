@@ -6,7 +6,7 @@ export const RolesEnum = {
 
 export const codeTTL = 2 // Минуты
 
-export const PageTypesEnum = {
+export const FormulaTypesEnum = {
   HEALTH: 1,
   FATE_CARDS: 2,
   LUCKY_NUMBERS: 3,
