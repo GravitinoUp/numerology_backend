@@ -30,6 +30,8 @@ export const AppStrings = {
   PAGE_CREATE_RESPONSE: 'Страница успешно создана',
   PAGE_GET_ALL_OPERATION: 'Получение списка всех страниц',
   PAGE_GET_ALL_RESPONSE: 'Страницы успешно получены',
+  PAGE_GET_BY_CATEGORY_OPERATION: 'Получение списка страниц по категории',
+  PAGE_GET_BY_CATEGORY_RESPONSE: 'Страницы успешно получены',
   PAGE_UPDATE_OPERATION: 'Изменение страницы',
   PAGE_UPDATE_RESPONSE: 'Страница успешно изменен',
   PAGE_DELETE_OPERATION: 'Удаление страницы',

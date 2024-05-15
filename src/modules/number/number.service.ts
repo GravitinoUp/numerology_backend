@@ -25,7 +25,7 @@ export class NumberService {
     private readonly i18n: I18nService,
   ) {}
 
-  async getFateCard(user_uuid: string, language_code: string): Promise<FormulaResultResponse> {
+  async getFateCard(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const key = `${('0' + userData.birthday_day).slice(-2)}.${('0' + userData.birthday_month).slice(-2)}`
@@ -39,7 +39,7 @@ export class NumberService {
       if (page) {
         page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
 
-        return page
+        return [page]
       } else {
         throw new HttpException(
           await this.i18n.t('errors.fate_card_not_found'),
@@ -331,7 +331,7 @@ export class NumberService {
     }
   }
 
-  async getAncestors(user_uuid: string, language_code: string): Promise<FormulaResultResponse> {
+  async getAncestors(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
@@ -345,7 +345,7 @@ export class NumberService {
 
       if (page) {
         page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
-        return page
+        return [page]
       } else {
         throw new NotFoundException(await this.i18n.t('errors.page_not_found'))
       }
@@ -557,7 +557,7 @@ export class NumberService {
     }
   }
 
-  async getBloodType(bloodType: string, language_code: string): Promise<FormulaResultResponse> {
+  async getBloodType(bloodType: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const page = await this.formulaResultService.findOneByKey(
         bloodType,
@@ -574,13 +574,16 @@ export class NumberService {
       if (!page) {
         throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
       }
-      return page
+      return [page]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
-  async getAngelicNumerology(time: string, language_code: string): Promise<FormulaResultResponse> {
+  async getAngelicNumerology(
+    time: string,
+    language_code: string,
+  ): Promise<FormulaResultResponse[]> {
     try {
       const page = await this.formulaResultService.findOneByKey(
         time,
@@ -597,13 +600,13 @@ export class NumberService {
       if (!page) {
         throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
       }
-      return page
+      return [page]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
-  async getGuessingNumber(number: number, language_code: string): Promise<FormulaResultResponse> {
+  async getGuessingNumber(number: number, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const formattedNumber = `${number.toString()}3`
       const key = getLongNumberArcane(formattedNumber, 84)
@@ -623,7 +626,7 @@ export class NumberService {
       if (!page) {
         throw new NotFoundException(this.i18n.t('errors.data_not_found'))
       }
-      return page
+      return [page]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
@@ -710,7 +713,7 @@ export class NumberService {
   async getPersonalYearNumber(
     user_uuid: string,
     language_code: string,
-  ): Promise<FormulaResultResponse> {
+  ): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const day = getQuersumme(userData.birthday_day.toString())
@@ -735,7 +738,7 @@ export class NumberService {
       if (!page) {
         throw new NotFoundException(this.i18n.t('errors.data_not_found'))
       }
-      return page
+      return [page]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
@@ -744,7 +747,7 @@ export class NumberService {
   async getPhoneNumberCalculation(
     user_uuid: string,
     language_code: string,
-  ): Promise<FormulaResultResponse> {
+  ): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.userService.findByUuid(user_uuid, false)
       const phoneKey = getQuersumme(userData.phone.replaceAll('+', ''))
@@ -764,7 +767,7 @@ export class NumberService {
       if (!page) {
         throw new NotFoundException(this.i18n.t('errors.data_not_found'))
       }
-      return page
+      return [page]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
@@ -773,7 +776,7 @@ export class NumberService {
   async getHouseNumberCalculation(
     number: number,
     language_code: string,
-  ): Promise<FormulaResultResponse> {
+  ): Promise<FormulaResultResponse[]> {
     try {
       const houseKey = getQuersumme(number.toString())
 
@@ -792,13 +795,13 @@ export class NumberService {
       if (!page) {
         throw new NotFoundException(this.i18n.t('errors.data_not_found'))
       }
-      return page
+      return [page]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
-  async getFateNumberGift(date: Date, language_code: string): Promise<FormulaResultResponse> {
+  async getFateNumberGift(date: Date, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const formattedDate = `${date.getDate()}${date.getMonth() + 1}${date.getFullYear()}`
       const giftKey = getQuersumme(formattedDate)
@@ -818,7 +821,7 @@ export class NumberService {
       if (!page) {
         throw new NotFoundException(this.i18n.t('errors.data_not_found'))
       }
-      return page
+      return [page]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }

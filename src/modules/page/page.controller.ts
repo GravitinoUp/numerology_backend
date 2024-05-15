@@ -4,6 +4,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Param,
   Patch,
   Req,
   UseFilters,
@@ -43,6 +44,20 @@ export class PageController {
   @Get('all')
   async findAll(@Req() request) {
     const result = await this.pageService.findAll(request.i18nLang)
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.PAGE_GET_BY_CATEGORY_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.PAGE_GET_BY_CATEGORY_RESPONSE,
+    type: PageResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('all/:category_id')
+  async findByCategory(@Param('category_id') categoryId: number, @Req() request) {
+    const result = await this.pageService.findByCategory(categoryId, request.i18nLang)
     return result
   }
 
