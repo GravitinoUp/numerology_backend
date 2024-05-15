@@ -54,7 +54,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
           ru: 'Число судьбы и психосоматика',
           en: 'The number of fate and psychosomatics',
         }),
-        category_id: 1,
+        category_id: 3,
       },
       {
         page_type_id: 9,
@@ -209,7 +209,7 @@ export class SeedPageTypes1714735979311 implements MigrationInterface {
         category_id: 5,
       },
       {
-        page_type_id: 27,
+        page_type_id: 28,
         page_type_name: JSON.stringify({
           ru: 'Подарки по числу судьбы',
           en: 'Gifts according to the number of fate',

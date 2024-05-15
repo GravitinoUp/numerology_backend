@@ -337,7 +337,7 @@ export class NumberService {
 
       const page = await this.pageService.findOneByKey(
         lastNameArcane.toString(),
-        PageTypesEnum.PARENTS,
+        PageTypesEnum.ANCESTORS,
         language_code,
       )
 
