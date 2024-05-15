@@ -21,6 +21,7 @@ import { FormulaResultModule } from '../formula-result/formula-result.module'
 import { NumberModule } from '../number/number.module'
 import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
 import { CategoryModule } from '../category/category.module'
+import { PageModule } from '../page/page.module'
 
 @Module({
   imports: [
@@ -74,11 +75,12 @@ import { CategoryModule } from '../category/category.module'
     AuthModule,
     AuthCodeModule,
     CategoryModule,
+    FormulaResultModule,
+    FormulaTypeModule,
     LanguageModule,
     NumberModule,
     OnboardModule,
-    FormulaResultModule,
-    FormulaTypeModule,
+    PageModule,
     PersonModule,
     RoleModule,
     UserModule,

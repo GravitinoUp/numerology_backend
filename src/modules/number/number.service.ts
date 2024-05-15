@@ -14,6 +14,7 @@ import {
   getSoulNumber,
 } from 'src/common/utils/numbers'
 import { UserService } from '../user/user.service'
+import getLocalizedFormulaType from 'src/common/utils/get_localized_formula_type'
 
 @Injectable()
 export class NumberService {
@@ -36,13 +37,7 @@ export class NumberService {
       )
 
       if (page) {
-        const formulaType = page.formula_type
-        page.formula_type = Object.assign(formulaType, {
-          formula_type_name: JSON.parse(formulaType.formula_type_name)[language_code] as string,
-          formula_type_description: JSON.parse(formulaType.formula_type_description)[
-            language_code
-          ] as string,
-        }) // TODO
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
 
         return page
       } else {
@@ -74,6 +69,7 @@ export class NumberService {
       )
 
       if (page) {
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
         return page
       } else {
         Logger.error(`MISSING FATE NUMBER PAGE ${JSON.stringify(fateNumber)}`)
@@ -102,6 +98,7 @@ export class NumberService {
       )
 
       if (page) {
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
         return page
       } else {
         Logger.error(`MISSING DISEASE PAGE ${JSON.stringify(tkk)}`)
@@ -145,23 +142,18 @@ export class NumberService {
 
       const pg1 = {
         number: getArcane(dayArcane + monthArcane + yearArcane).toString(),
-        title: `${this.i18n.t('titles.pg')} 1`,
       }
       const pg2 = {
         number: getArcane(dayArcane + 2 * monthArcane + yearArcane).toString(),
-        title: `${this.i18n.t('titles.pg')} 2`,
       }
       const pg3 = {
         number: getArcane(6 * dayArcane + 6 * monthArcane + 5 * yearArcane).toString(),
-        title: `${this.i18n.t('titles.pg')} 3`,
       }
       const pg4 = {
         number: getQuersumme(userBirthday).toString(),
-        title: `${this.i18n.t('titles.pg')} 4`,
       }
       const pg5 = {
         number: getSoulNumber(userData.first_name).toString(),
-        title: `${this.i18n.t('titles.pg')} 5`,
       }
 
       const keys = [pg1, pg2, pg3, pg4, pg5]
@@ -174,6 +166,7 @@ export class NumberService {
         )
 
         if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(pg)}`)
@@ -204,15 +197,12 @@ export class NumberService {
 
       const nt1 = {
         number: getArcane(Math.abs(dayArcane - monthArcane)).toString(),
-        title: `${this.i18n.t('titles.negative_traits')} 1`,
       }
       const nt2 = {
         number: getArcane(Math.abs(dayArcane - yearArcane)).toString(),
-        title: `${this.i18n.t('titles.negative_traits')} 2`,
       }
       const nt3 = {
         number: getArcane(monthArcane - yearArcane).toString(),
-        title: `${this.i18n.t('titles.negative_traits')} 3`,
       }
 
       const keys = [nt1, nt2, nt3]
@@ -226,6 +216,7 @@ export class NumberService {
         )
 
         if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -257,24 +248,19 @@ export class NumberService {
 
       const positiveTrait1 = {
         number: getArcane(dayArcane),
-        title: `${this.i18n.t('titles.positive_traits')} 1`,
       }
       const positiveTrait2 = {
         number: getArcane(monthArcane),
-        title: `${this.i18n.t('titles.positive_traits')} 2`,
       }
       const positiveTrait3 = {
         number: getLongNumberArcane(yearArcane.toString()),
-        title: `${this.i18n.t('titles.positive_traits')} 3`,
       }
       const positiveTrait4 = {
         number: getArcane(dayArcane + monthArcane + yearArcane),
-        title: `${this.i18n.t('titles.positive_traits')} 4`,
       }
 
       const positiveTrait5 = {
         number: getQuersumme(userBirthday),
-        title: `${this.i18n.t('titles.positive_traits')} 5`,
       }
 
       const keys = [positiveTrait1, positiveTrait2, positiveTrait3, positiveTrait4, positiveTrait5]
@@ -288,6 +274,7 @@ export class NumberService {
         )
 
         if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -311,11 +298,9 @@ export class NumberService {
 
       const lifePathNumber = {
         number: getQuersumme(userBirthday).toString(),
-        title: this.i18n.t('titles.life_path_number'),
       }
       const soulNumber = {
         number: getSoulNumber(userData.first_name).toString(),
-        title: this.i18n.t('titles.soul_number'),
       }
 
       const keys = [lifePathNumber, soulNumber]
@@ -329,6 +314,7 @@ export class NumberService {
         )
 
         if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -358,6 +344,7 @@ export class NumberService {
       )
 
       if (page) {
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
         return page
       } else {
         throw new NotFoundException(await this.i18n.t('errors.page_not_found'))
@@ -376,12 +363,10 @@ export class NumberService {
 
       const dateKey = {
         number: `${('0' + userData.birthday_day).slice(-2)}.${('0' + userData.birthday_month).slice(-2)}`,
-        title: this.i18n.t('titles.day_totem'),
       }
-      const yearKey = { number: userData.birthday_year, title: this.i18n.t('titles.year_totem') }
+      const yearKey = { number: userData.birthday_year }
       const nameKey = {
         number: getQuersumme(getNameNumber(userData.first_name, false).toString()),
-        title: this.i18n.t('titles.name_totem'),
       }
 
       const keys = [dateKey, yearKey, nameKey]
@@ -395,6 +380,7 @@ export class NumberService {
         )
 
         if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -421,27 +407,22 @@ export class NumberService {
 
       const dayTask = {
         number: getArcane(userData.birthday_day),
-        title: this.i18n.t('titles.day_task'),
         type: FormulaTypesEnum.TASKS,
       }
       const monthTask = {
         number: userData.birthday_month,
-        title: this.i18n.t('titles.month_task'),
         type: FormulaTypesEnum.TASKS,
       }
       const yearTask = {
         number: getLongNumberArcane(userData.birthday_year.toString()),
-        title: this.i18n.t('titles.year_task'),
         type: FormulaTypesEnum.TASKS,
       }
       const communityTask = {
         number: getArcane(dayTask.number + monthTask.number + yearTask.number),
-        title: this.i18n.t('titles.community_task'),
         type: FormulaTypesEnum.TASKS,
       }
       const nameKey = {
         number: getArcane(getNameNumber(userData.first_name, false)),
-        title: this.i18n.t('titles.secret_of_name'),
         type: FormulaTypesEnum.SECRET_OF_NAME,
       }
       const expressionNumberKey = {
@@ -452,12 +433,10 @@ export class NumberService {
             true,
           ).toString(),
         ),
-        title: this.i18n.t('titles.expression_number'),
         type: FormulaTypesEnum.EXPRESSION_NUMBER,
       }
       const lifePathNumber = {
         number: getQuersumme(userBirthday),
-        title: this.i18n.t('titles.life_path_number'),
         type: FormulaTypesEnum.LIFE_PATH_NUMBER,
       }
 
@@ -480,6 +459,7 @@ export class NumberService {
         )
 
         if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -542,15 +522,12 @@ export class NumberService {
 
       const firstKarmicKnot = {
         number: getArcane(Math.abs(dayArcane - monthArcane)),
-        title: this.i18n.t('titles.first_karmic_knot'),
       }
       const secondKarmicKnot = {
         number: getArcane(Math.abs(dayArcane - yearArcane)),
-        title: this.i18n.t('titles.second_karmic_knot'),
       }
       const thirdKarmicKnot = {
         number: getArcane(Math.abs(monthArcane - yearArcane)),
-        title: this.i18n.t('titles.third_karmic_knot'),
       }
 
       const keys = [firstKarmicKnot, secondKarmicKnot, thirdKarmicKnot]
@@ -564,6 +541,7 @@ export class NumberService {
         )
 
         if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -588,6 +566,7 @@ export class NumberService {
       )
 
       if (page) {
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
       } else {
         Logger.error(`MISSING PAGE getBloodType: ${JSON.stringify(bloodType)}`)
       }
@@ -610,6 +589,7 @@ export class NumberService {
       )
 
       if (page) {
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
       } else {
         Logger.error(`MISSING PAGE getAngelicNumerology: ${JSON.stringify(time)}`)
       }
@@ -635,6 +615,7 @@ export class NumberService {
       )
 
       if (page) {
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
       } else {
         Logger.error(`MISSING PAGE getGuessingNumber: ${JSON.stringify(key)}`)
       }
@@ -670,7 +651,6 @@ export class NumberService {
       const secondArcane = getLongNumberArcane(secondPartnerDate)
       const arcaneCompatibility = {
         number: getArcane(firstArcane + secondArcane),
-        title: this.i18n.t('titles.arcane_compatibility'),
         type: FormulaTypesEnum.ARCANE_COMPATIBILITY,
       }
 
@@ -678,7 +658,6 @@ export class NumberService {
       const secondSoulNumber = getLongNumberArcane(secondPartnerDate, 9)
       const soulNumberCompatibility = {
         number: getArcane(firstSoulNumber + secondSoulNumber),
-        title: this.i18n.t('titles.soul_number_compatibility'),
         type: FormulaTypesEnum.SOUL_NUMBER_COMPATIBILITY,
       }
 
@@ -686,7 +665,6 @@ export class NumberService {
       const secondTaskNumber = getArcane(secondDayArcane + secondMonthArcane + secondYearArcane)
       const tasksCompatibility = {
         number: getArcane(firstTaskNumber + secondTaskNumber),
-        title: this.i18n.t('titles.tasks_compatibility'),
         type: FormulaTypesEnum.JOINT_TASKS_COMPATIBILITY,
       }
 
@@ -694,7 +672,6 @@ export class NumberService {
       const secondDifficultyNumber = getArcane(secondDayArcane + secondMonthArcane)
       const difficultiesCompatibility = {
         number: getArcane(firstDifficultyNumber + secondDifficultyNumber),
-        title: this.i18n.t('titles.difficulties_compatibility'),
         type: FormulaTypesEnum.DIFFICULTIES_COMPATIBILITY,
       }
 
@@ -714,6 +691,7 @@ export class NumberService {
         )
 
         if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
@@ -749,6 +727,7 @@ export class NumberService {
       )
 
       if (page) {
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
       } else {
         Logger.error(`MISSING PAGE getPersonalYearNumber: ${JSON.stringify(personalNumber)}`)
       }
@@ -777,6 +756,7 @@ export class NumberService {
       )
 
       if (page) {
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
       } else {
         Logger.error(`MISSING PAGE getPhoneNumberCalculation: ${JSON.stringify(phoneKey)}`)
       }
@@ -804,6 +784,7 @@ export class NumberService {
       )
 
       if (page) {
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
       } else {
         Logger.error(`MISSING PAGE getHouseNumberCalculation: ${JSON.stringify(houseKey)}`)
       }
@@ -829,6 +810,7 @@ export class NumberService {
       )
 
       if (page) {
+        page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
       } else {
         Logger.error(`MISSING PAGE getFateNumberGift: ${JSON.stringify(giftKey)}`)
       }
@@ -852,13 +834,11 @@ export class NumberService {
 
       const soulNumberKey = {
         number: getQuersumme(userBirthday),
-        title: '',
         type: FormulaTypesEnum.SOUL_NUMBER_ESSENTIAL_OIL,
       }
 
       const dayArcaneKey = {
         number: getArcane(userData.birthday_day),
-        title: '',
         type: FormulaTypesEnum.DAY_ARCANE_ESSENTIAL_OIL,
       }
 
@@ -873,6 +853,7 @@ export class NumberService {
         )
 
         if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
