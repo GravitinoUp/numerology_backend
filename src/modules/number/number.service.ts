@@ -821,4 +821,48 @@ export class NumberService {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
+
+  async getAromatherapy(user_uuid: string, language_code: string): Promise<PageResponse[]> {
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+      const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
+
+      const soulNumberKey = {
+        number: getQuersumme(userBirthday),
+        title: '',
+        type: PageTypesEnum.SOUL_NUMBER_ESSENTIAL_OIL,
+      }
+
+      const dayArcaneKey = {
+        number: getArcane(userData.birthday_day),
+        title: '',
+        type: PageTypesEnum.DAY_ARCANE_ESSENTIAL_OIL,
+      }
+
+      const keys = [soulNumberKey, dayArcaneKey]
+
+      const pages = []
+      for (const key of keys) {
+        const page = await this.pageService.findOneByKey(
+          key.number.toString(),
+          key.type,
+          language_code,
+        )
+
+        if (page) {
+          page.page_title = key.title
+          pages.push(page)
+        } else {
+          Logger.error(`MISSING PAGE ${JSON.stringify(key)}`)
+        }
+      }
+
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+      return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 }

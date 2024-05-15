@@ -7,7 +7,9 @@ export const RolesEnum = {
 export const codeTTL = 2 // Минуты
 
 export const PageTypesEnum = {
+  HEALTH: 1,
   FATE_CARDS: 2,
+  LUCKY_NUMBERS: 3,
   PLANETS: 4,
   PROFESSIONS: 5,
   WEAK_TRAITS: 6,
@@ -33,6 +35,8 @@ export const PageTypesEnum = {
   PHONE_NUMBER_CALCULATION: 26,
   HOUSE_NUMBER_CALCULATION: 27,
   FATE_NUMBER_GIFTS: 28,
+  SOUL_NUMBER_ESSENTIAL_OIL: 29,
+  DAY_ARCANE_ESSENTIAL_OIL: 30,
 }
 
 export const RuVowelLetters = ['а', 'о', 'э', 'е', 'и', 'ы', 'у', 'ё', 'ю', 'я']

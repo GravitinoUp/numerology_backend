@@ -340,4 +340,21 @@ export class NumberController {
     const result = await this.numberService.getFateNumberGift(formattedDate, request.i18nLang)
     return result
   }
+
+  @ApiOperation({ summary: AppStrings.AROMATHERAPY_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.AROMATHERAPY_GET_RESPONSE,
+    type: PageResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('aromatherapy')
+  async getAromatherapy(@Req() request) {
+    const result = await this.numberService.getAromatherapy(
+      request.user.user_uuid,
+      request.i18nLang,
+    )
+    return result
+  }
 }
