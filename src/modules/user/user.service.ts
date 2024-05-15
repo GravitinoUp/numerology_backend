@@ -7,7 +7,7 @@ import { CreateUserDto, ResetUserPasswordDto, UpdateUserDto, UpdateUserPasswordD
 import { CreatePersonDto } from '../person/dto'
 import { Person } from '../person/entities/person.entity'
 import * as bcrypt from 'bcrypt'
-import { Roles } from 'src/common/constants/constants'
+import { RolesEnum } from 'src/common/constants/constants'
 import { CreateAuthCodeDto } from '../auth_code/dto'
 import { AuthCodeService } from '../auth_code/auth_code.service'
 import { I18nService } from 'nestjs-i18n'
@@ -48,7 +48,7 @@ export class UserService {
           user_uuid: personUuid,
           ...user,
           person_uuid: personUuid,
-          role_id: Roles.USER,
+          role_id: RolesEnum.USER,
         })
         .returning('*')
         .execute()

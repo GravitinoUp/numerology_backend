@@ -19,6 +19,9 @@ import { PageTypeResponse, StatusPageTypeResponse } from './response'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { UpdatePageTypeDto } from './dto'
+import { RolesEnum } from 'src/common/constants/constants'
+import { Roles } from '../role/guards/decorators/role.decorator'
+import { RolesGuard } from '../role/guards/roles.guard'
 
 @ApiBearerAuth()
 @ApiTags('PageTypes')
@@ -63,7 +66,8 @@ export class PageTypeController {
     description: AppStrings.PAGE_TYPE_UPDATE_RESPONSE,
     type: StatusPageTypeResponse,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
   @Patch()
   async update(@Body() updatePageTypeDto: UpdatePageTypeDto) {
     const isPageTypeExists = await this.pageTypeService.isPageTypeExists(

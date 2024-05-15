@@ -1,4 +1,5 @@
 {
+  "access_denied": "Access denied!",
   "user_deactivated": "User deactivated!",
   "wrong_credentials": "Incorrent phone or password!",
   "invalid_jwt": "Invalid auth token!",

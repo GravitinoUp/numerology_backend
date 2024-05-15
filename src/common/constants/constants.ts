@@ -1,6 +1,7 @@
-export const Roles = {
+export const RolesEnum = {
   USER: 1,
   ADMIN: 2,
+  MANAGER: 3,
 }
 
 export const codeTTL = 2 // Минуты

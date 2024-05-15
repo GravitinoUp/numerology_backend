@@ -20,6 +20,9 @@ import { CreateLanguageDto, UpdateLanguageDto } from './dto'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { I18nService } from 'nestjs-i18n'
+import { RolesEnum } from 'src/common/constants/constants'
+import { Roles } from '../role/guards/decorators/role.decorator'
+import { RolesGuard } from '../role/guards/roles.guard'
 
 @ApiBearerAuth()
 @ApiTags('Languages')
@@ -37,7 +40,8 @@ export class LanguageController {
     description: AppStrings.LANGUAGE_CREATE_RESPONSE,
     type: StatusLanguageResponse,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
   @Post()
   async create(@Body() createLanguageDto: CreateLanguageDto) {
     const result = await this.languageService.create(createLanguageDto)
@@ -64,7 +68,8 @@ export class LanguageController {
     description: AppStrings.LANGUAGE_UPDATE_RESPONSE,
     type: StatusLanguageResponse,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
   @Patch()
   async update(@Body() updateLanguageDto: UpdateLanguageDto) {
     const isLanguageExists = await this.languageService.isLanguageExists(
@@ -85,7 +90,8 @@ export class LanguageController {
     description: AppStrings.LANGUAGE_DELETE_RESPONSE,
     type: StatusLanguageResponse,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
   @Delete(':code')
   async delete(@Param('code') language_code: string) {
     const isLanguageExists = await this.languageService.isLanguageExists(language_code)

@@ -9,6 +9,7 @@ export class SeedRoles1713970472690 implements MigrationInterface {
         role_name: 'user',
       },
       { role_id: 2, role_name: 'admin' },
+      { role_id: 3, role_name: 'manager' },
     ])
   }
 

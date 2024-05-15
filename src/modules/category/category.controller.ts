@@ -18,6 +18,9 @@ import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { CategoryResponse, StatusCategoryResponse } from './response'
 import { UpdateCategoryDto } from './dto'
 import { I18nService } from 'nestjs-i18n'
+import { RolesGuard } from '../role/guards/roles.guard'
+import { Roles } from '../role/guards/decorators/role.decorator'
+import { RolesEnum } from 'src/common/constants/constants'
 
 @ApiBearerAuth()
 @ApiTags('Categories')
@@ -49,7 +52,8 @@ export class CategoryController {
     description: AppStrings.CATEGORY_UPDATE_RESPONSE,
     type: StatusCategoryResponse,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
   @Patch()
   async update(@Body() updateCategory: UpdateCategoryDto) {
     const isCategoryExists = await this.categoryService.isCategoryExists(updateCategory.category_id)
