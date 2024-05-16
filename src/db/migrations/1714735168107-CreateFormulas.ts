@@ -65,6 +65,11 @@ export class CreateFormulas1714735168107 implements MigrationInterface {
             type: 'text',
           },
           {
+            name: 'result_image',
+            type: 'text',
+            default: `''`,
+          },
+          {
             name: 'language_code',
             type: 'varchar',
           },

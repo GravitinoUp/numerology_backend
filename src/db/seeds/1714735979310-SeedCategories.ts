@@ -8,25 +8,25 @@ export class SeedCategories1714735979310 implements MigrationInterface {
         category_id: 1,
         category_name: JSON.stringify({ ru: 'Программа судьбы', en: 'The destiny program' }),
         category_description: JSON.stringify({ ru: '', en: '' }),
-        category_image: '',
+        category_image: `/files/uploads?path=uploads/images/categories/destiny.jpg`,
       },
       {
         category_id: 2,
         category_name: JSON.stringify({ ru: 'Карма. Прошлая жизнь', en: 'Karma. Past life' }),
         category_description: JSON.stringify({ ru: '', en: '' }),
-        category_image: '',
+        category_image: `/files/uploads?path=uploads/images/categories/karma.jpg`,
       },
       {
         category_id: 3,
         category_name: JSON.stringify({ ru: 'Здоровье', en: 'Health' }),
         category_description: JSON.stringify({ ru: '', en: '' }),
-        category_image: '',
+        category_image: `/files/uploads?path=uploads/images/categories/health.jpg`,
       },
       {
         category_id: 4,
         category_name: JSON.stringify({ ru: 'Прогноз', en: 'Prediction' }),
         category_description: JSON.stringify({ ru: '', en: '' }),
-        category_image: '',
+        category_image: `/files/uploads?path=uploads/images/categories/graphics.jpg`,
       },
       {
         category_id: 5,
@@ -35,7 +35,7 @@ export class SeedCategories1714735979310 implements MigrationInterface {
           en: 'Numerological calculations',
         }),
         category_description: JSON.stringify({ ru: '', en: '' }),
-        category_image: '',
+        category_image: `/files/uploads?path=uploads/images/categories/numerology.jpg`,
       },
       {
         category_id: 6,
@@ -44,7 +44,7 @@ export class SeedCategories1714735979310 implements MigrationInterface {
           en: 'Style by date of birth',
         }),
         category_description: JSON.stringify({ ru: '', en: '' }),
-        category_image: '',
+        category_image: `/files/uploads?path=uploads/images/categories/style.jpg`,
       },
       {
         category_id: 7,
@@ -53,7 +53,7 @@ export class SeedCategories1714735979310 implements MigrationInterface {
           en: 'Compatibility',
         }),
         category_description: JSON.stringify({ ru: '', en: '' }),
-        category_image: '',
+        category_image: `/files/uploads?path=uploads/images/categories/relations.jpg`,
       },
       {
         category_id: 8,
@@ -62,7 +62,7 @@ export class SeedCategories1714735979310 implements MigrationInterface {
           en: 'Color chart',
         }),
         category_description: JSON.stringify({ ru: '', en: '' }),
-        category_image: '',
+        category_image: `/files/uploads?path=uploads/images/categories/colorgramm.jpg`,
       },
       {
         category_id: 9,
@@ -71,7 +71,7 @@ export class SeedCategories1714735979310 implements MigrationInterface {
           en: 'Useful numerology',
         }),
         category_description: JSON.stringify({ ru: '', en: '' }),
-        category_image: '',
+        category_image: `/files/uploads?path=uploads/images/categories/usefull-numerology.jpg`,
       },
     ])
   }

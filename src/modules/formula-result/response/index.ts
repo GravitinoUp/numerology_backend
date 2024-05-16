@@ -37,6 +37,10 @@ export class FormulaResultResponse {
 
   @IsString()
   @ApiProperty()
+  result_image: string
+
+  @IsString()
+  @ApiProperty()
   language_code: string
 }
 

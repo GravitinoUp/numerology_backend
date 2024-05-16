@@ -21,6 +21,11 @@ export class CreateFormulaResultDto {
   result_content: string
 
   @IsString()
+  @IsOptional()
+  @ApiProperty()
+  result_image?: string
+
+  @IsString()
   @ApiProperty()
   language_code: string
 }
@@ -49,6 +54,11 @@ export class UpdateFormulaDto {
   @IsOptional()
   @ApiProperty()
   result_content?: string
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  result_image?: string
 
   @IsString()
   @IsOptional()

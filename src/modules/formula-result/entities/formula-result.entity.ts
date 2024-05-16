@@ -31,6 +31,10 @@ export class FormulaResult extends BaseModel {
   @ApiProperty()
   result_content: string
 
+  @Column({ default: '' })
+  @ApiProperty()
+  result_image: string
+
   @Column()
   @ApiProperty()
   language_code: string
