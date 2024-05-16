@@ -7,7 +7,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Программа судьбы',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/destiny.jpg',
         page_icon: '',
         color: '#0085FF',
         key: 'destiny-program',
@@ -17,7 +17,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Сильные качества и таланты',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/strong-qualities.jpg',
         page_icon: '',
         color: '#4B3DAA',
         key: 'strong-qualities',
@@ -27,7 +27,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Карты судьбы',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/fate-cards.jpg',
         page_icon: '',
         color: '#796095',
         key: 'fate-card',
@@ -37,7 +37,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Слабые качества',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/weak-qualities.jpg',
         page_icon: '',
         color: '#667176',
         key: 'weak-qualities',
@@ -47,7 +47,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Планеты',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/planets.jpg',
         page_icon: '',
         color: '#4F3F39',
         key: 'planets',
@@ -56,7 +56,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       },
       {
         page_name: 'Карма и прошлая жизнь',
-        page_description: '',
+        page_description: '/files/uploads?path=uploads/images/pages/karma.jpg',
         page_image: '',
         page_icon: '',
         color: '#004F6C',
@@ -66,7 +66,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       },
       {
         page_name: 'Нумерология здоровья',
-        page_description: '',
+        page_description: '/files/uploads?path=uploads/images/pages/health.jpg',
         page_image: '',
         page_icon: '',
         color: '#2BB986',
@@ -77,7 +77,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Группа крови и нумерология',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/blood-type.jpg',
         page_icon: '',
         color: '#D32F31',
         key: 'blood-type',
@@ -87,7 +87,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Ароматерапия',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/aromatherapy.jpg',
         page_icon: '',
         color: '#F05191',
         key: 'aromatherapy',
@@ -97,7 +97,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Графики',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/graphs.jpg',
         page_icon: '',
         color: '#5669CD',
         key: 'graph',
@@ -107,7 +107,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Расчет номера телефона',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/phone-number.jpg',
         page_icon: '',
         color: '#0085FF',
         key: 'phone-calculation',
@@ -117,7 +117,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Расчет номера дома',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/house-number.jpg',
         page_icon: '',
         color: '#4B3DAA',
         key: 'house-calculation',
@@ -127,7 +127,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Прогноз',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/prediction.jpg',
         page_icon: '',
         color: '#F29F15',
         key: 'prediction',
@@ -136,7 +136,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       },
       {
         page_name: 'Стиль по дате рождения',
-        page_description: '',
+        page_description: '/files/uploads?path=uploads/images/pages/style.jpg',
         page_image: '',
         page_icon: '',
         color: '#F05191',
@@ -146,7 +146,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       },
       {
         page_name: 'Совместимость',
-        page_description: '',
+        page_description: '/files/uploads?path=uploads/images/pages/relations.jpg',
         page_image: '',
         page_icon: '',
         color: '#00969F',
@@ -156,7 +156,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       },
       {
         page_name: 'Цветограмма человека',
-        page_description: '',
+        page_description: '/files/uploads?path=uploads/images/pages/colorgramm.jpg',
         page_image: '',
         page_icon: '',
         color: '#0091FB',
@@ -167,7 +167,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Формулы на все случаи жизни',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/all-formulas.jpg',
         page_icon: '',
         color: '#0085FF',
         key: 'all-formulas',
@@ -177,7 +177,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Подарки по числу судьбы',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/fate-gifts.jpg',
         page_icon: '',
         color: '#CE5A51',
         key: 'fate-number-gifts',
@@ -187,7 +187,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Тотемное животное',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/totemic-animal.jpg',
         page_icon: '',
         color: '#00A692',
         key: 'totemic-animals',
@@ -197,7 +197,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Числа удачи',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/lucky-numbers.jpg',
         page_icon: '',
         color: '#F29F15',
         key: 'lucky-numbers',
@@ -207,7 +207,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Ангельская нумерология',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/angelic-numerology.jpg',
         page_icon: '',
         color: '#5EBBFF',
         key: 'angelic-numerology',
@@ -217,7 +217,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Профессии и самореализация',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/professions.jpg',
         page_icon: '',
         color: '#4B3016',
         key: 'professions',
@@ -227,7 +227,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Чтение мыслей по числам',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/guessing-numbers.jpg',
         page_icon: '',
         color: '#4B3DAA',
         key: 'guessing-number',
@@ -237,7 +237,7 @@ export class SeedPagesEn1715846128747 implements MigrationInterface {
       {
         page_name: 'Кем были ваши предки',
         page_description: '',
-        page_image: '',
+        page_image: '/files/uploads?path=uploads/images/pages/ancestors.jpg',
         page_icon: '',
         color: '#FF7C7C',
         key: 'ancestors',
