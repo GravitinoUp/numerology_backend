@@ -296,12 +296,16 @@ export class NumberService {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
+      console.log(userBirthday)
+
       const lifePathNumber = {
         number: getQuersumme(userBirthday).toString(),
       }
       const soulNumber = {
         number: getSoulNumber(userData.first_name).toString(),
       }
+
+      console.log(userBirthday, lifePathNumber, soulNumber)
 
       const keys = [lifePathNumber, soulNumber]
 
