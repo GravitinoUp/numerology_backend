@@ -10,6 +10,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['13.01', '11.02', '09.03', '07.04', '05.05', '03.06', '01.07'],
         result_name: 'Туз Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/52.jpg',
         language_code: 'ru',
       },
       {
@@ -17,6 +18,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['12.01', '10.02', '08.03', '06.04', '04.05', '02.06'],
         result_name: '2 Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/40.jpg',
         language_code: 'ru',
       },
       {
@@ -24,6 +26,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['11.01', '09.02', '07.03', '05.04', '03.05', '01.06'],
         result_name: '3 Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/41.jpg',
         language_code: 'ru',
       },
       {
@@ -31,6 +34,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['10.01', '08.02', '06.03', '04.04', ' 02.05'],
         result_name: '4 Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/42.jpg',
         language_code: 'ru',
       },
       {
@@ -38,6 +42,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['09.01', '07.02', '05.03', '03.04', '01.05'],
         result_name: '5 Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/43.jpg',
         language_code: 'ru',
       },
       {
@@ -45,6 +50,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['08.01', '06.02', '04.03', '02.04'],
         result_name: '6 Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/44.jpg',
         language_code: 'ru',
       },
       {
@@ -52,6 +58,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['07.01', '05.02', '03.03', '01.04'],
         result_name: '7 Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/45.jpg',
         language_code: 'ru',
       },
       {
@@ -59,6 +66,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['06.01', '04.02', '02.03'],
         result_name: '8 Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/46.jpg',
         language_code: 'ru',
       },
       {
@@ -66,6 +74,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['05.01', '03.02', '01.03'],
         result_name: '9 Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/47.jpg',
         language_code: 'ru',
       },
       {
@@ -73,6 +82,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['04.01', '02.02'],
         result_name: '10 Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/48.jpg',
         language_code: 'ru',
       },
       {
@@ -80,6 +90,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['03.01', '01.02'],
         result_name: 'Валет Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/49.jpg',
         language_code: 'ru',
       },
       {
@@ -87,6 +98,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['02.01'],
         result_name: 'Дама Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/50.jpg',
         language_code: 'ru',
       },
       {
@@ -94,6 +106,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['01.01'],
         result_name: 'Король Пик',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/51.jpg',
         language_code: 'ru',
       },
       {
@@ -101,6 +114,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['31.05', '29.06', '27.07', '25.08', '23.09', '21.10', '19.11', '17.12'],
         result_name: 'Туз Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/26.jpg',
         language_code: 'ru',
       },
       {
@@ -108,6 +122,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['30.05', '28.06', '26.07', '24.08', '22.09', '20.10', '18.11', '16.12'],
         result_name: '2 Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/14.jpg',
         language_code: 'ru',
       },
       {
@@ -115,6 +130,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['29.05', '27.06', '25.07', '23.08', '21.09', '19.10', '17.11', '15.12'],
         result_name: '3 Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/15.jpg',
         language_code: 'ru',
       },
       {
@@ -132,6 +148,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '4 Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/16.jpg',
         language_code: 'ru',
       },
       {
@@ -150,6 +167,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '5 Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/17.jpg',
         language_code: 'ru',
       },
       {
@@ -168,6 +186,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '6 Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/18.jpg',
         language_code: 'ru',
       },
       {
@@ -186,6 +205,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '7 Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/19.jpg',
         language_code: 'ru',
       },
       {
@@ -204,6 +224,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '8 Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/20.jpg',
         language_code: 'ru',
       },
       {
@@ -224,6 +245,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '9 Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/21.jpg',
         language_code: 'ru',
       },
       {
@@ -244,6 +266,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '10 Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/22.jpg',
         language_code: 'ru',
       },
       {
@@ -264,6 +287,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: 'Валет Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/23.jpg',
         language_code: 'ru',
       },
       {
@@ -284,6 +308,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: 'Дама Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/24.jpg',
         language_code: 'ru',
       },
       {
@@ -304,6 +329,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: 'Король Треф',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/25.jpg',
         language_code: 'ru',
       },
       {
@@ -324,6 +350,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: 'Туз Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/13.jpg',
         language_code: 'ru',
       },
       {
@@ -344,6 +371,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '2 Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/01.jpg',
         language_code: 'ru',
       },
       {
@@ -364,6 +392,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '3 Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/02.jpg',
         language_code: 'ru',
       },
       {
@@ -384,6 +413,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '4 Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/03.jpg',
         language_code: 'ru',
       },
       {
@@ -403,6 +433,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '5 Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/04.jpg',
         language_code: 'ru',
       },
       {
@@ -422,6 +453,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '6 Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/05.jpg',
         language_code: 'ru',
       },
       {
@@ -440,6 +472,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '7 Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/06.jpg',
         language_code: 'ru',
       },
       {
@@ -458,6 +491,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '8 Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/07.jpg',
         language_code: 'ru',
       },
       {
@@ -475,6 +509,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '9 Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/08.jpg',
         language_code: 'ru',
       },
       {
@@ -492,6 +527,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         ],
         result_name: '10 Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/09.jpg',
         language_code: 'ru',
       },
       {
@@ -499,6 +535,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['16.01', '14.02', '12.03', '10.04', '08.05', '06.06', '04.07', '02.08'],
         result_name: 'Валет Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/10.jpg',
         language_code: 'ru',
       },
       {
@@ -506,6 +543,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['15.01', '13.02', '11.03', '09.04', '07.05', '05.06', '03.07', '01.08'],
         result_name: 'Дама Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/11.jpg',
         language_code: 'ru',
       },
       {
@@ -513,6 +551,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['14.01', '12.02', '10.03', '08.04', '06.05', '04.06', '02.07'],
         result_name: 'Король Бубен',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/12.jpg',
         language_code: 'ru',
       },
       {
@@ -520,6 +559,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['30.12'],
         result_name: 'Туз Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/39.jpg',
         language_code: 'ru',
       },
       {
@@ -527,6 +567,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['29.12'],
         result_name: '2 Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/27.jpg',
         language_code: 'ru',
       },
       {
@@ -534,6 +575,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['28.11', '28.12'],
         result_name: '3 Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/28.jpg',
         language_code: 'ru',
       },
       {
@@ -541,6 +583,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['31.10', '29.11', '27.12'],
         result_name: '4 Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/29.jpg',
         language_code: 'ru',
       },
       {
@@ -548,6 +591,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['30.10', '28.11', '26.12'],
         result_name: '5 Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/30.jpg',
         language_code: 'ru',
       },
       {
@@ -555,6 +599,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['29.10', '27.11', '25.12'],
         result_name: '6 Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/31.jpg',
         language_code: 'ru',
       },
       {
@@ -562,6 +607,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['30.09', '28.10', '26.11', '24.12'],
         result_name: '7 Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/32.jpg',
         language_code: 'ru',
       },
       {
@@ -569,6 +615,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['29.09', '27.10', '25.11', '23.12'],
         result_name: '8 Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/33.jpg',
         language_code: 'ru',
       },
       {
@@ -576,6 +623,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['30.08', '28.09', '26.10', '24.11', '22.12'],
         result_name: '9 Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/34.jpg',
         language_code: 'ru',
       },
       {
@@ -583,6 +631,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['31.07', '29.08', '27.09', '25.10', '23.11', '21.12'],
         result_name: '10 Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/35.jpg',
         language_code: 'ru',
       },
       {
@@ -590,6 +639,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['30.07', '28.08', '26.09', '24.10', '22.11', '20.12'],
         result_name: 'Валет Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/36.jpg',
         language_code: 'ru',
       },
       {
@@ -597,6 +647,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['29.07', '27.08', '25.09', '23.10', '21.11', '19.12'],
         result_name: 'Дама Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/37.jpg',
         language_code: 'ru',
       },
       {
@@ -604,6 +655,7 @@ export class SeedFateCards1714982059926 implements MigrationInterface {
         result_keys: ['30.06', '28.07', '26.08', '24.09', '22.10', '20.11', '18.12'],
         result_name: 'Король Червей',
         result_content: '',
+        result_image: '/files/uploads?path=uploads/images/cards/38.jpg',
         language_code: 'ru',
       },
       {
