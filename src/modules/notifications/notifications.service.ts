@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { NotificationResponse } from './response'
+import { NotificationResponse, StatusNotificationResponse } from './response'
 import { UserService } from '../user/user.service'
 import { Notification } from './entities/notifications.entity'
+import { CreateNotificationDto } from './dto'
 
 @Injectable()
 export class NotificationsService {
@@ -12,6 +13,23 @@ export class NotificationsService {
     private notificationRepository: Repository<Notification>,
     private readonly userService: UserService,
   ) {}
+
+  async create(notification: CreateNotificationDto): Promise<StatusNotificationResponse> {
+    try {
+      const newNotification = await this.notificationRepository
+        .createQueryBuilder()
+        .insert()
+        .values({
+          ...notification,
+        })
+        .returning('*')
+        .execute()
+
+      return { status: true, data: newNotification.raw[0] }
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 
   async findMy(user_uuid: string, language_code: string): Promise<NotificationResponse[]> {
     try {
