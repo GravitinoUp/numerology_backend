@@ -23,6 +23,7 @@ import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
 import { CategoryModule } from '../category/category.module'
 import { PageModule } from '../page/page.module'
 import { FilesModule } from '../files/files.module'
+import { NotificationsModule } from '../notifications/notifications.module'
 
 @Module({
   imports: [
@@ -80,6 +81,7 @@ import { FilesModule } from '../files/files.module'
     FormulaTypeModule,
     FilesModule,
     LanguageModule,
+    NotificationsModule,
     NumberModule,
     OnboardModule,
     PageModule,

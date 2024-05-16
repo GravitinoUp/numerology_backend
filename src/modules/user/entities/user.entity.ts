@@ -45,6 +45,14 @@ export class User extends BaseModel {
   @ApiProperty()
   password: string
 
+  @Column({ type: 'varchar', array: true })
+  @ApiProperty()
+  notification_tokens: string[]
+
+  @Column({ type: 'varchar', array: true })
+  @ApiProperty()
+  notification_topics: string[]
+
   @OneToMany(() => Auth, (auth) => auth.user, { cascade: true, eager: true })
   auths: Auth[]
 }

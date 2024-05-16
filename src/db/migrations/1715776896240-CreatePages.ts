@@ -8,10 +8,10 @@ export class CreatePages1715776896240 implements MigrationInterface {
         columns: [
           {
             name: 'page_uuid',
-            type: 'int',
+            type: 'uuid',
             isPrimary: true,
             isGenerated: true,
-            generationStrategy: 'increment',
+            generationStrategy: 'uuid',
           },
           {
             name: 'page_name',

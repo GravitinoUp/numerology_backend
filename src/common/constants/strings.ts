@@ -17,6 +17,15 @@ export const AppStrings = {
   LANGUAGE_DELETE_OPERATION: 'Удаление языка',
   LANGUAGE_DELETE_RESPONSE: 'Язык успешно удален',
 
+  NOTIFICATIONS_CREATE_OPERATION: 'Создание нового уведомления',
+  NOTIFICATIONS_CREATE_RESPONSE: 'Уведомление успешно отправлено',
+  NOTIFICATIONS_GET_MY_OPERATION: 'Получение списка полученных уведомлений',
+  NOTIFICATIONS_GET_MY_RESPONSE: 'Уведомления успешно получены',
+  NOTIFICATIONS_UPDATE_OPERATION: 'Изменение уведомления',
+  NOTIFICATIONS_UPDATE_RESPONSE: 'Уведомление успешно изменено',
+  NOTIFICATIONS_DELETE_OPERATION: 'Удаление уведомления',
+  NOTIFICATIONS_DELETE_RESPONSE: 'Уведомление успешно удалено',
+
   ONBOARD_CREATE_OPERATION: 'Создание нового приветственного экрана',
   ONBOARD_CREATE_RESPONSE: 'Приветственный экран успешно создан',
   ONBOARD_GET_ALL_OPERATION: 'Получение списка всех приветственных экранов',

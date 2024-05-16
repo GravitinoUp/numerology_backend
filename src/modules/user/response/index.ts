@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsBoolean, IsOptional, IsString, IsUUID } from 'class-validator'
+import { IsArray, IsBoolean, IsOptional, IsString, IsUUID } from 'class-validator'
 
 export class UserResponse {
   @IsUUID()
@@ -30,6 +30,14 @@ export class UserResponse {
   @IsString()
   @ApiProperty()
   password: string
+
+  @IsArray()
+  @ApiProperty()
+  notification_tokens: string[]
+
+  @IsArray()
+  @ApiProperty()
+  notification_topics: string[]
 }
 
 export class StatusUserResponse {
