@@ -131,7 +131,6 @@ export class NumberService {
   }
 
   async getProfessions(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
-    // TODO TALENTS
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -164,14 +163,14 @@ export class NumberService {
       const talentKeys = keys
 
       const pgPlanet1 = {
-        number: userData.birthday_day.toString()[0],
+        number: pg4.number,
         key: FormulaTypesEnum.PLANETS,
       }
       keys.push(pgPlanet1)
 
       if (userData.birthday_day > 9) {
         const pgPlanet2 = {
-          number: userData.birthday_day.toString()[1],
+          number: pg5.number, // TODO Должно быть 5 и 6
           key: FormulaTypesEnum.PLANETS,
         }
 
@@ -223,7 +222,6 @@ export class NumberService {
     user_uuid: string,
     language_code: string,
   ): Promise<FormulaResultResponse[]> {
-    // TODO PLANETS
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
