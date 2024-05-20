@@ -131,7 +131,7 @@ export class NumberService {
   }
 
   async getProfessions(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
-    // TODO PLANETS
+    // TODO TALENTS
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -142,26 +142,47 @@ export class NumberService {
 
       const pg1 = {
         number: getArcane(dayArcane + monthArcane + yearArcane).toString(),
+        key: FormulaTypesEnum.PROFESSIONS,
       }
       const pg2 = {
         number: getArcane(dayArcane + 2 * monthArcane + yearArcane).toString(),
+        key: FormulaTypesEnum.PROFESSIONS,
       }
       const pg3 = {
         number: getArcane(6 * dayArcane + 6 * monthArcane + 5 * yearArcane).toString(),
+        key: FormulaTypesEnum.PROFESSIONS,
       }
       const pg4 = {
         number: getQuersumme(userBirthday).toString(),
+        key: FormulaTypesEnum.PROFESSIONS,
       }
       const pg5 = {
         number: getSoulNumber(userData.first_name).toString(),
+        key: FormulaTypesEnum.PROFESSIONS,
+      }
+      const keys = [pg1, pg2, pg3, pg4, pg5]
+      const talentKeys = keys
+
+      const pgPlanet1 = {
+        number: userData.birthday_day.toString()[0],
+        key: FormulaTypesEnum.PLANETS,
+      }
+      keys.push(pgPlanet1)
+
+      if (userData.birthday_day > 9) {
+        const pgPlanet2 = {
+          number: userData.birthday_day.toString()[1],
+          key: FormulaTypesEnum.PLANETS,
+        }
+
+        keys.push(pgPlanet2)
       }
 
-      const keys = [pg1, pg2, pg3, pg4, pg5]
       const pages = []
       for (const pg of keys) {
         const page = await this.formulaResultService.findOneByKey(
           pg.number.toString(),
-          FormulaTypesEnum.PROFESSIONS,
+          pg.key,
           language_code,
         )
 
@@ -169,7 +190,22 @@ export class NumberService {
           page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
           pages.push(page)
         } else {
-          Logger.error(`MISSING PAGE ${JSON.stringify(pg)}`)
+          Logger.error(`MISSING PAGE: ${JSON.stringify(pg)}`)
+        }
+      }
+
+      for (const talent of talentKeys) {
+        const page = await this.formulaResultService.findOneByKey(
+          talent.number.toString(),
+          FormulaTypesEnum.TALENTS,
+          language_code,
+        )
+
+        if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
+          pages.push(page)
+        } else {
+          Logger.error(`MISSING PAGE: ${JSON.stringify(talent)}`)
         }
       }
 
@@ -197,21 +233,39 @@ export class NumberService {
 
       const nt1 = {
         number: getArcane(Math.abs(dayArcane - monthArcane)).toString(),
+        type: FormulaTypesEnum.WEAK_TRAITS,
       }
       const nt2 = {
         number: getArcane(Math.abs(dayArcane - yearArcane)).toString(),
+        type: FormulaTypesEnum.WEAK_TRAITS,
       }
       const nt3 = {
         number: getArcane(monthArcane - yearArcane).toString(),
+        type: FormulaTypesEnum.WEAK_TRAITS,
       }
 
       const keys = [nt1, nt2, nt3]
+
+      const ntPlanet1 = {
+        number: userData.birthday_day.toString()[0],
+        type: FormulaTypesEnum.PLANETS,
+      }
+      keys.push(ntPlanet1)
+
+      if (userData.birthday_day > 9) {
+        const ntPlanet2 = {
+          number: userData.birthday_day.toString()[1],
+          type: FormulaTypesEnum.PLANETS,
+        }
+
+        keys.push(ntPlanet2)
+      }
 
       const pages = []
       for (const key of keys) {
         const page = await this.formulaResultService.findOneByKey(
           key.number.toString(),
-          FormulaTypesEnum.WEAK_TRAITS,
+          key.type,
           language_code,
         )
 
@@ -237,7 +291,6 @@ export class NumberService {
     user_uuid: string,
     language_code: string,
   ): Promise<FormulaResultResponse[]> {
-    // TODO PLANETS
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -247,29 +300,49 @@ export class NumberService {
       const dayArcane = getArcane(userData.birthday_day)
 
       const positiveTrait1 = {
-        number: getArcane(dayArcane),
+        number: getArcane(dayArcane).toString(),
+        type: FormulaTypesEnum.STRONG_TRAITS,
       }
       const positiveTrait2 = {
-        number: getArcane(monthArcane),
+        number: getArcane(monthArcane).toString(),
+        type: FormulaTypesEnum.STRONG_TRAITS,
       }
       const positiveTrait3 = {
         number: getLongNumberArcane(yearArcane.toString()),
+        type: FormulaTypesEnum.STRONG_TRAITS,
       }
       const positiveTrait4 = {
-        number: getArcane(dayArcane + monthArcane + yearArcane),
+        number: getArcane(dayArcane + monthArcane + yearArcane).toString(),
+        type: FormulaTypesEnum.STRONG_TRAITS,
       }
 
       const positiveTrait5 = {
-        number: getQuersumme(userBirthday),
+        number: getQuersumme(userBirthday).toString(),
+        type: FormulaTypesEnum.STRONG_TRAITS,
       }
 
       const keys = [positiveTrait1, positiveTrait2, positiveTrait3, positiveTrait4, positiveTrait5]
+
+      const ptPlanet1 = {
+        number: userData.birthday_day.toString()[0],
+        type: FormulaTypesEnum.PLANETS,
+      }
+      keys.push(ptPlanet1)
+
+      if (userData.birthday_day > 9) {
+        const ptPlanet2 = {
+          number: userData.birthday_day.toString()[1],
+          type: FormulaTypesEnum.PLANETS,
+        }
+
+        keys.push(ptPlanet2)
+      }
 
       const pages = []
       for (const key of keys) {
         const page = await this.formulaResultService.findOneByKey(
           key.number.toString(),
-          FormulaTypesEnum.WEAK_TRAITS,
+          key.type,
           language_code,
         )
 
@@ -296,16 +369,12 @@ export class NumberService {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
 
-      console.log(userBirthday)
-
       const lifePathNumber = {
         number: getQuersumme(userBirthday).toString(),
       }
       const soulNumber = {
         number: getSoulNumber(userData.first_name).toString(),
       }
-
-      console.log(userBirthday, lifePathNumber, soulNumber)
 
       const keys = [lifePathNumber, soulNumber]
 

@@ -111,8 +111,8 @@ export class SeedFormulaTypes1714735979311 implements MigrationInterface {
       {
         formula_type_id: FormulaTypesEnum.STRONG_TRAITS,
         formula_type_name: JSON.stringify({
-          ru: 'Сильные качества и таланты',
-          en: 'Strong qualities and talents',
+          ru: 'Сильные качества',
+          en: 'Strong qualities',
         }),
       },
       {
@@ -204,6 +204,13 @@ export class SeedFormulaTypes1714735979311 implements MigrationInterface {
         formula_type_name: JSON.stringify({
           ru: 'Эфирное масло по аркану дня рождения',
           en: 'Essential oil for the arcana of the birthday',
+        }),
+      },
+      {
+        formula_type_id: FormulaTypesEnum.TALENTS,
+        formula_type_name: JSON.stringify({
+          ru: 'Таланты',
+          en: 'Talents',
         }),
       },
     ])

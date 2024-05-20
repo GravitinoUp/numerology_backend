@@ -37,6 +37,7 @@ export const FormulaTypesEnum = {
   FATE_NUMBER_GIFTS: 28,
   SOUL_NUMBER_ESSENTIAL_OIL: 29,
   DAY_ARCANE_ESSENTIAL_OIL: 30,
+  TALENTS: 31,
 }
 
 export const RuVowelLetters = ['а', 'о', 'э', 'е', 'и', 'ы', 'у', 'ё', 'ю', 'я']
