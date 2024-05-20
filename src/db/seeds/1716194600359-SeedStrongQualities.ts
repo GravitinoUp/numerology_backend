@@ -47,7 +47,7 @@ export class SeedStrongQualities1716194600359 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: [FormulaTypesEnum.STRONG_TRAITS, FormulaTypesEnum.TALENTS],
+      formula_type_id: [FormulaTypesEnum.STRONG_TRAITS, FormulaTypesEnum.TALENTS],
     })
   }
 }

@@ -27,7 +27,7 @@ export class SeedProfessions1716194361789 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.PROFESSIONS,
+      formula_type_id: FormulaTypesEnum.PROFESSIONS,
     })
   }
 }

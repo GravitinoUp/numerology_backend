@@ -27,7 +27,7 @@ export class SeedGuessingNumber1716194969705 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.GUESSING_NUMBER,
+      formula_type_id: FormulaTypesEnum.GUESSING_NUMBER,
     })
   }
 }

@@ -27,7 +27,7 @@ export class SeedLifePathNumber1716194841944 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.LIFE_PATH_NUMBER,
+      formula_type_id: FormulaTypesEnum.LIFE_PATH_NUMBER,
     })
   }
 }

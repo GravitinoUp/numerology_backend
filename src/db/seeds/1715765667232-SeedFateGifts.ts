@@ -27,7 +27,7 @@ export class SeedFateGifts1715765667232 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.FATE_NUMBER_GIFTS,
+      formula_type_id: FormulaTypesEnum.FATE_NUMBER_GIFTS,
     })
   }
 }

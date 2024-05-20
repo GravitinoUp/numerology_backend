@@ -27,7 +27,7 @@ export class SeedSecretOfName1716194754920 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.SECRET_OF_NAME,
+      formula_type_id: FormulaTypesEnum.SECRET_OF_NAME,
     })
   }
 }

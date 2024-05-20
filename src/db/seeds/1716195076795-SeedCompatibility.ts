@@ -45,27 +45,7 @@ export class SeedCompatibility1716195076795 implements MigrationInterface {
     }
 
     //СОВМЕСТНЫЕ ЗАДАЧИ В ПАРЕ
-    for (let index = 1; index <= 9; index++) {
-      await queryRunner.manager.insert(FormulaResult, [
-        {
-          formula_type_id: FormulaTypesEnum.JOINT_TASKS_COMPATIBILITY,
-          result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'ru',
-        },
-        {
-          formula_type_id: FormulaTypesEnum.JOINT_TASKS_COMPATIBILITY,
-          result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'en',
-        },
-      ])
-    }
-
-    //СОВМЕСТНЫЕ ЗАДАЧИ В ПАРЕ
-    for (let index = 1; index <= 9; index++) {
+    for (let index = 1; index <= 22; index++) {
       await queryRunner.manager.insert(FormulaResult, [
         {
           formula_type_id: FormulaTypesEnum.JOINT_TASKS_COMPATIBILITY,
@@ -85,7 +65,7 @@ export class SeedCompatibility1716195076795 implements MigrationInterface {
     }
 
     //ВОЗМОЖНЫЕ ТРУДНОСТИ В ПАРЕ
-    for (let index = 1; index <= 9; index++) {
+    for (let index = 1; index <= 22; index++) {
       await queryRunner.manager.insert(FormulaResult, [
         {
           formula_type_id: FormulaTypesEnum.DIFFICULTIES_COMPATIBILITY,
@@ -107,7 +87,7 @@ export class SeedCompatibility1716195076795 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: [
+      formula_type_id: [
         FormulaTypesEnum.ARCANE_COMPATIBILITY,
         FormulaTypesEnum.SOUL_NUMBER_COMPATIBILITY,
         FormulaTypesEnum.JOINT_TASKS_COMPATIBILITY,

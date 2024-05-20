@@ -153,6 +153,6 @@ export class SeedPlanets1715074069836 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.manager.delete(FormulaResult, { page_type_id: FormulaTypesEnum.PLANETS })
+    await queryRunner.manager.delete(FormulaResult, { formula_type_id: FormulaTypesEnum.PLANETS })
   }
 }

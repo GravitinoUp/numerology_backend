@@ -669,6 +669,8 @@ export class SeedFateCardsEn1714983623482 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.manager.delete(FormulaResult, { page_type_id: FormulaTypesEnum.FATE_CARDS })
+    await queryRunner.manager.delete(FormulaResult, {
+      formula_type_id: FormulaTypesEnum.FATE_CARDS,
+    })
   }
 }

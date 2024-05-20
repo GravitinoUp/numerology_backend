@@ -58,8 +58,6 @@ export class OnboardController {
   })
   @Get('all')
   async findAll(@Req() request) {
-    console.log(request.i18nLang)
-
     const result = await this.onboardService.findAll(request.i18nLang)
 
     return result

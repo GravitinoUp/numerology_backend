@@ -27,7 +27,7 @@ export class SeedPhoneNumber1715765590276 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.PHONE_NUMBER_CALCULATION,
+      formula_type_id: FormulaTypesEnum.PHONE_NUMBER_CALCULATION,
     })
   }
 }

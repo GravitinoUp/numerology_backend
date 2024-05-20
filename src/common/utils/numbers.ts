@@ -64,8 +64,6 @@ export function getLetterNumber(letter: string): number {
     letterNumber -= 9
   }
 
-  console.log(letter, letterNumber)
-
   return letterNumber
 }
 

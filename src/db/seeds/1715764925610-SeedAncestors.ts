@@ -27,7 +27,7 @@ export class SeedAncestors1715764925610 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.ANCESTORS,
+      formula_type_id: FormulaTypesEnum.ANCESTORS,
     })
   }
 }

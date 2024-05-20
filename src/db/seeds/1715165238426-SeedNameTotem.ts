@@ -175,7 +175,7 @@ export class SeedNameTotem1715165238426 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.TOTEMIC_ANIMAl,
+      formula_type_id: FormulaTypesEnum.TOTEMIC_ANIMAl,
     })
   }
 }

@@ -47,7 +47,7 @@ export class SeedHealthNumerology1715764391182 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: [FormulaTypesEnum.NUMBER_OF_FATE, FormulaTypesEnum.CHRONIC_DISEASES],
+      formula_type_id: [FormulaTypesEnum.NUMBER_OF_FATE, FormulaTypesEnum.CHRONIC_DISEASES],
     })
   }
 }

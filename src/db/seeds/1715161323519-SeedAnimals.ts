@@ -1433,7 +1433,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.TOTEMIC_ANIMAl,
+      formula_type_id: FormulaTypesEnum.TOTEMIC_ANIMAl,
     })
   }
 }

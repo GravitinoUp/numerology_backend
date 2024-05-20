@@ -185,7 +185,7 @@ export class SeedBloodType1715765159386 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.BLOOD_TYPE,
+      formula_type_id: FormulaTypesEnum.BLOOD_TYPE,
     })
   }
 }

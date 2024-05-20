@@ -27,7 +27,7 @@ export class SeedExpressionNumber1716194806885 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.EXPRESSION_NUMBER,
+      formula_type_id: FormulaTypesEnum.EXPRESSION_NUMBER,
     })
   }
 }

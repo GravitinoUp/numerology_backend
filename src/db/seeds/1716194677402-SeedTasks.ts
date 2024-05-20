@@ -27,7 +27,7 @@ export class SeedTasks1716194677402 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.TASKS,
+      formula_type_id: FormulaTypesEnum.TASKS,
     })
   }
 }

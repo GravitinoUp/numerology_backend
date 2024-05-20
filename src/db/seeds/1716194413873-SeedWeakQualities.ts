@@ -27,7 +27,7 @@ export class SeedWeakQualities1716194413873 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: FormulaTypesEnum.WEAK_TRAITS,
+      formula_type_id: FormulaTypesEnum.WEAK_TRAITS,
     })
   }
 }

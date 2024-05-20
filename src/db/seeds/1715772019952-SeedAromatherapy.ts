@@ -465,7 +465,7 @@ export class SeedAromatherapy1715772019952 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
-      page_type_id: [
+      formula_type_id: [
         FormulaTypesEnum.SOUL_NUMBER_ESSENTIAL_OIL,
         FormulaTypesEnum.DAY_ARCANE_ESSENTIAL_OIL,
       ],
