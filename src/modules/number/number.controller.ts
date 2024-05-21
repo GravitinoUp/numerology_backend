@@ -357,4 +357,18 @@ export class NumberController {
     )
     return result
   }
+
+  @ApiOperation({ summary: AppStrings.RUNIC_FORMULAS_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.RUNIC_FORMULAS_GET_RESPONSE,
+    type: FormulaResultResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('runic-formulas')
+  async getRunicFormulas(@Req() request) {
+    const result = await this.numberService.getRunicFormulas(request.i18nLang)
+    return result
+  }
 }

@@ -13,6 +13,7 @@ import { FilesInterceptor } from '@nestjs/platform-express'
 import { I18nService } from 'nestjs-i18n'
 import { extname } from 'path'
 import { diskStorage } from 'multer'
+import { Throttle } from '@nestjs/throttler'
 
 @Controller('files')
 export class FilesController {
@@ -62,6 +63,7 @@ export class FilesController {
   }
 
   @Get('uploads')
+  @Throttle({ default: { limit: 100, ttl: 1000 } })
   async findUpload(@Query('path') path: string, @Req() request, @Res() res) {
     return res.sendFile(path, { root: './' })
   }

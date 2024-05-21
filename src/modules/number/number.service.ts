@@ -942,4 +942,20 @@ export class NumberService {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
+
+  async getRunicFormulas(language_code: string): Promise<FormulaResultResponse[]> {
+    try {
+      const pages = await this.formulaResultService.findAllByType(
+        FormulaTypesEnum.RUNIC_FORMULAS,
+        language_code,
+      )
+
+      if (pages.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+      return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 }

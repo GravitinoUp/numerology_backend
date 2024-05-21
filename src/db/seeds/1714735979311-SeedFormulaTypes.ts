@@ -213,6 +213,13 @@ export class SeedFormulaTypes1714735979311 implements MigrationInterface {
           en: 'Talents',
         }),
       },
+      {
+        formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
+        formula_type_name: JSON.stringify({
+          ru: 'Рунические формулы на все случаи жизни',
+          en: 'Runic formulas for all occasions',
+        }),
+      },
     ])
   }
 

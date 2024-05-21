@@ -90,6 +90,8 @@ export const AppStrings = {
   FATE_NUMBER_GIFTS_GET_RESPONSE: 'Подарки по числу судьбы успешно получены',
   AROMATHERAPY_GET_OPERATION: 'Получение ароматерапии',
   AROMATHERAPY_GET_RESPONSE: 'Данные успешно получены',
+  RUNIC_FORMULAS_GET_OPERATION: 'Получение рунических формул',
+  RUNIC_FORMULAS_GET_RESPONSE: 'Данные успешно получены',
 
   FORMULA_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   FORMULA_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',

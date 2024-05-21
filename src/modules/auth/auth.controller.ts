@@ -28,7 +28,7 @@ export class AuthController {
     private readonly i18n: I18nService,
   ) {}
 
-  @Throttle({ default: { limit: 1, ttl: 1000 } })
+  @Throttle({ default: { limit: 2, ttl: 2000 } })
   @Post()
   async login(@Body() authDto: AuthDto, @Ip() ipAddress, @Req() request) {
     const user = await this.userService.authByPhone(authDto.phone)
@@ -44,13 +44,13 @@ export class AuthController {
     })
   }
 
-  @Throttle({ default: { limit: 1, ttl: 1000 } })
+  @Throttle({ default: { limit: 2, ttl: 2000 } })
   @Post('refresh')
   async refreshToken(@Body() body: RefreshTokenDto) {
     return this.authService.refresh(body.refresh_token)
   }
 
-  @Throttle({ default: { limit: 1, ttl: 1000 } })
+  @Throttle({ default: { limit: 2, ttl: 2000 } })
   @Delete('logout')
   async logout(@Body() body: RefreshTokenDto) {
     return this.authService.logout(body.refresh_token)

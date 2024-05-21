@@ -74,4 +74,23 @@ export class FormulaResultService {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
+
+  async findAllByType(type_id: number, language_code: string): Promise<FormulaResultResponse[]> {
+    try {
+      const result = await this.formulaResultRepository
+        .createQueryBuilder('result')
+        .select()
+        .leftJoinAndSelect('result.formula_type', 'formula_type')
+        .where('result.formula_type_id = :type_id', {
+          type_id,
+        })
+        .andWhere('result.language_code = :language_code', { language_code })
+        .getMany()
+
+      return result
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 }

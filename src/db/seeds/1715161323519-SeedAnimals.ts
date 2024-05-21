@@ -46,7 +46,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Сокол',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-falcon.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-falcon.png',
         language_code: 'ru',
       },
       {
@@ -91,7 +91,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Бобр',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-beaver.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-beaver.png',
         language_code: 'ru',
       },
       {
@@ -136,7 +136,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Олень',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-deer.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-deer.png',
         language_code: 'ru',
       },
       {
@@ -176,7 +176,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Дятел',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-woodpecker.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-woodpecker.png',
         language_code: 'ru',
       },
       {
@@ -216,7 +216,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Лосось',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-salmon.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-salmon.png',
         language_code: 'ru',
       },
       {
@@ -256,7 +256,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Медведь',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-bear.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-bear.png',
         language_code: 'ru',
       },
       {
@@ -301,7 +301,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Ворон',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-raven.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-raven.png',
         language_code: 'ru',
       },
       {
@@ -346,7 +346,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Змея',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-snake.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-snake.png',
         language_code: 'ru',
       },
       {
@@ -389,7 +389,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Сова',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-owl.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-owl.png',
         language_code: 'ru',
       },
       {
@@ -427,7 +427,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Снежный гусь',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-snow-goose.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-snow-goose.png',
         language_code: 'ru',
       },
       {
@@ -466,7 +466,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Выдра',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-otter.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-otter.png',
         language_code: 'ru',
       },
       {
@@ -511,7 +511,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Волк',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-wolf.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-wolf.png',
         language_code: 'ru',
       },
       {
@@ -519,7 +519,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1907', '1939', '1971', '2003', '2035'],
         result_name: 'Баран',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-ram.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-ram.png',
         language_code: 'ru',
       },
       {
@@ -527,7 +527,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1908', '1940', '1972', '2004', '2036'],
         result_name: 'Мангуст',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-mongoose.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-mongoose.png',
         language_code: 'ru',
       },
       {
@@ -535,7 +535,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1910', '1942', '1974', '2006', '2038'],
         result_name: 'Аист',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-stork.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-stork.png',
         language_code: 'ru',
       },
       {
@@ -543,7 +543,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1911', '1943', '1975', '2007', '2039'],
         result_name: 'Паук',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-spider.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-spider.png',
         language_code: 'ru',
       },
       {
@@ -551,7 +551,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1914', '1946', '1978', '2010', '2042'],
         result_name: 'Черепаха',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-turtle.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-turtle.png',
         language_code: 'ru',
       },
       {
@@ -559,7 +559,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1915', '1947', '1979', '2011', '2043'],
         result_name: 'Сорока',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-magpie.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-magpie.png',
         language_code: 'ru',
       },
       {
@@ -567,7 +567,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1916', '1948', '1980', '2012', '2044'],
         result_name: 'Белка',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-squirrel.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-squirrel.png',
         language_code: 'ru',
       },
       {
@@ -575,7 +575,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1918', '1950', '1982', '2014', '2046'],
         result_name: 'Петух',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-cock.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-cock.png',
         language_code: 'ru',
       },
       {
@@ -583,7 +583,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1919', '1951', '1983', '2015', '2047'],
         result_name: 'Тур/Бык',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-bull.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-bull.png',
         language_code: 'ru',
       },
       {
@@ -591,7 +591,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1920', '1952', '1984', '2016', '2048'],
         result_name: 'Барсук',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-badger.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-badger.png',
         language_code: 'ru',
       },
       {
@@ -599,7 +599,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1921', '1953', '1985', '2017', '2049'],
         result_name: 'Верблюд',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-camel.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-camel.png',
         language_code: 'ru',
       },
       {
@@ -607,7 +607,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1922', '1954', '1986', '2018', '2050'],
         result_name: 'Ёж',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-hedgehog.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-hedgehog.png',
         language_code: 'ru',
       },
       {
@@ -615,7 +615,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1923', '1955', '1987', '2019', '2051'],
         result_name: 'Лань',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-doe.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-doe.png',
         language_code: 'ru',
       },
       {
@@ -623,7 +623,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1924', '1956', '1988', '2020', '2052'],
         result_name: 'Слон',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-elephant.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-elephant.png',
         language_code: 'ru',
       },
       {
@@ -631,7 +631,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1925', '1957', '1989', '2021', '2053'],
         result_name: 'Конь/Лошадь',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-horse.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-horse.png',
         language_code: 'ru',
       },
       {
@@ -639,7 +639,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1926', '1958', '1990', '2022', '2054'],
         result_name: 'Гепард',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-cheetah.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-cheetah.png',
         language_code: 'ru',
       },
       {
@@ -647,7 +647,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1927', '1959', '1991', '2023', '2055'],
         result_name: 'Павлин',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-peacock.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-peacock.png',
         language_code: 'ru',
       },
       {
@@ -655,7 +655,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1928', '1960', '1992', '2024', '2056'],
         result_name: 'Лебедь',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-swan.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-swan.png',
         language_code: 'ru',
       },
       {
@@ -663,7 +663,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1929', '1961', '1993', '2025', '2057'],
         result_name: 'Рысь/Соловей',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-lynx.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-lynx.png',
         language_code: 'ru',
       },
       {
@@ -671,7 +671,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1930', '1962', '1994', '2026', '2058'],
         result_name: 'Осёл',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-donkey.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-donkey.png',
         language_code: 'ru',
       },
       {
@@ -679,7 +679,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1931', '1963', '1995', '2027', '2059'],
         result_name: 'Белый Медведь',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-white-bear.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-white-bear.png',
         language_code: 'ru',
       },
       {
@@ -687,7 +687,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1900', '1932', '1964', '1996', '2028'],
         result_name: 'Орёл',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-eagle.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-eagle.png',
         language_code: 'ru',
       },
       {
@@ -695,7 +695,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1901', '1933', '1965', '1997', '2029'],
         result_name: 'Лисица',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-fox.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-fox.png',
         language_code: 'ru',
       },
       {
@@ -703,7 +703,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1902', '1934', '1966', '1998', '2030'],
         result_name: 'Дельфин',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-dolphin.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-dolphin.png',
         language_code: 'ru',
       },
       {
@@ -711,7 +711,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1903', '1935', '1967', '1999', '2031'],
         result_name: 'Вепрь',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-boar.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-boar.png',
         language_code: 'ru',
       },
     ])
@@ -760,7 +760,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Falcon',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-falcon.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-falcon.png',
         language_code: 'en',
       },
       {
@@ -805,7 +805,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Beaver',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-beaver.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-beaver.png',
         language_code: 'en',
       },
       {
@@ -850,7 +850,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Deer',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-deer.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-deer.png',
         language_code: 'en',
       },
       {
@@ -890,7 +890,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Woodpecker',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-woodpecker.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-woodpecker.png',
         language_code: 'en',
       },
       {
@@ -930,7 +930,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Salmon',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-salmon.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-salmon.png',
         language_code: 'en',
       },
       {
@@ -970,7 +970,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Bear',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-bear.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-bear.png',
         language_code: 'en',
       },
       {
@@ -1015,7 +1015,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Raven',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-raven.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-raven.png',
         language_code: 'en',
       },
       {
@@ -1060,7 +1060,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Snake',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-snake.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-snake.png',
         language_code: 'en',
       },
       {
@@ -1103,7 +1103,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Owl',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-owl.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-owl.png',
         language_code: 'en',
       },
       {
@@ -1141,7 +1141,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'The Snow Goose',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-snow-goose.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-snow-goose.png',
         language_code: 'en',
       },
       {
@@ -1180,7 +1180,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Otter',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-otter.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-otter.png',
         language_code: 'en',
       },
       {
@@ -1225,7 +1225,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         ],
         result_name: 'Wolf',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-wolf.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-wolf.png',
         language_code: 'en',
       },
       {
@@ -1233,7 +1233,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1907', '1939', '1971', '2003', '2035'],
         result_name: 'Ram',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-ram.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-ram.png',
         language_code: 'en',
       },
       {
@@ -1241,7 +1241,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1908', '1940', '1972', '2004', '2036'],
         result_name: 'Mongoose',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-mongoose.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-mongoose.png',
         language_code: 'en',
       },
       {
@@ -1249,7 +1249,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1910', '1942', '1974', '2006', '2038'],
         result_name: 'Stork',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-stork.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-stork.png',
         language_code: 'en',
       },
       {
@@ -1257,7 +1257,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1911', '1943', '1975', '2007', '2039'],
         result_name: 'Spider',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-spider.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-spider.png',
         language_code: 'en',
       },
       {
@@ -1265,7 +1265,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1914', '1946', '1978', '2010', '2042'],
         result_name: 'Turtle',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-turtle.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-turtle.png',
         language_code: 'en',
       },
       {
@@ -1273,7 +1273,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1915', '1947', '1979', '2011', '2043'],
         result_name: 'Magpie',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-magpie.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-magpie.png',
         language_code: 'en',
       },
       {
@@ -1281,7 +1281,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1916', '1948', '1980', '2012', '2044'],
         result_name: 'Squirrel',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-squirrel.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-squirrel.png',
         language_code: 'en',
       },
       {
@@ -1289,7 +1289,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1918', '1950', '1982', '2014', '2046'],
         result_name: 'Rooster',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-cock.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-cock.png',
         language_code: 'en',
       },
       {
@@ -1297,7 +1297,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1919', '1951', '1983', '2015', '2047'],
         result_name: 'Tour/Bull',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-bull.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-bull.png',
         language_code: 'en',
       },
       {
@@ -1305,7 +1305,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1920', '1952', '1984', '2016', '2048'],
         result_name: 'Badger',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-badger.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-badger.png',
         language_code: 'en',
       },
       {
@@ -1313,7 +1313,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1921', '1953', '1985', '2017', '2049'],
         result_name: 'Camel',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-camel.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-camel.png',
         language_code: 'en',
       },
       {
@@ -1321,7 +1321,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1922', '1954', '1986', '2018', '2050'],
         result_name: 'Hedgehog',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-hedgehog.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-hedgehog.png',
         language_code: 'en',
       },
       {
@@ -1329,7 +1329,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1923', '1955', '1987', '2019', '2051'],
         result_name: 'Doe',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-doe.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-doe.png',
         language_code: 'en',
       },
       {
@@ -1337,7 +1337,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1924', '1956', '1988', '2020', '2052'],
         result_name: 'Elephant',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-elephant.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-elephant.png',
         language_code: 'en',
       },
       {
@@ -1345,7 +1345,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1925', '1957', '1989', '2021', '2053'],
         result_name: 'Horse',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-horse.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-horse.png',
         language_code: 'en',
       },
       {
@@ -1353,7 +1353,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1926', '1958', '1990', '2022', '2054'],
         result_name: 'Cheetah',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-cheetah.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-cheetah.png',
         language_code: 'en',
       },
       {
@@ -1361,7 +1361,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1927', '1959', '1991', '2023', '2055'],
         result_name: 'Peafowl',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-peacock.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-peacock.png',
         language_code: 'en',
       },
       {
@@ -1369,7 +1369,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1928', '1960', '1992', '2024', '2056'],
         result_name: 'Swan',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-swan.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-swan.png',
         language_code: 'en',
       },
       {
@@ -1377,7 +1377,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1929', '1961', '1993', '2025', '2057'],
         result_name: 'Lynx/Nightingale',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-lynx.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-lynx.png',
         language_code: 'en',
       },
       {
@@ -1385,7 +1385,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1930', '1962', '1994', '2026', '2058'],
         result_name: 'Donkey',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-donkey.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-donkey.png',
         language_code: 'en',
       },
       {
@@ -1393,7 +1393,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1931', '1963', '1995', '2027', '2059'],
         result_name: 'Polar bear',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-white-bear.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-white-bear.png',
         language_code: 'en',
       },
       {
@@ -1401,7 +1401,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1900', '1932', '1964', '1996', '2028'],
         result_name: 'Eagle',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-eagle.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-eagle.png',
         language_code: 'en',
       },
       {
@@ -1409,7 +1409,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1901', '1933', '1965', '1997', '2029'],
         result_name: 'The Fox',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-fox.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-fox.png',
         language_code: 'en',
       },
       {
@@ -1417,7 +1417,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1902', '1934', '1966', '1998', '2030'],
         result_name: 'Dolphin',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-dolphin.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-dolphin.png',
         language_code: 'en',
       },
       {
@@ -1425,7 +1425,7 @@ export class SeedAnimals1715161323519 implements MigrationInterface {
         result_keys: ['1903', '1935', '1967', '1999', '2031'],
         result_name: 'The Boar',
         result_content: '',
-        result_image: '/files/uploads?path=uploads/images/pages/totem-boar.jpg',
+        result_image: '/files/uploads?path=uploads/images/totems/totem-boar.png',
         language_code: 'en',
       },
     ])
