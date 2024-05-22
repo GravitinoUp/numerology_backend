@@ -42,9 +42,9 @@ export class FilesController {
   )
   @Post('upload')
   async upload(
+    @Query('directory') directory: string,
     @UploadedFiles()
     files: Array<Express.Multer.File>,
-    @Req() request,
   ) {
     const urls = []
 
@@ -55,7 +55,7 @@ export class FilesController {
         throw new Error('Размер файла превышает 5 мб')
       }
 
-      const url = `${request.protocol}://${request.get('Host')}/file/uploads?path=${file.path}`
+      const url = `/files/uploads?path=${file.path}`
       urls.push(url)
     }
 
