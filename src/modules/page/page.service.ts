@@ -12,19 +12,28 @@ export class PageService {
     private pageRepository: Repository<Page>,
   ) {}
 
-  async findAll(language_code: string): Promise<PageResponse[]> {
+  async findAll(language_code: string, format_names: boolean = true): Promise<PageResponse[]> {
     try {
       const pages = await this.pageRepository.createQueryBuilder().select().getMany()
 
-      const result = await this.formatLocalization(pages, language_code)
-      return result
+      if (format_names == true) {
+        const result = this.formatLocalization(pages, language_code)
+        return result
+      } else {
+        const result = this.parseLocalization(pages)
+        return result
+      }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
-  async findByCategory(category_id: number, language_code: string): Promise<PageResponse[]> {
+  async findByCategory(
+    category_id: number,
+    language_code: string,
+    format_names: boolean = true,
+  ): Promise<PageResponse[]> {
     try {
       const pages = await this.pageRepository
         .createQueryBuilder()
@@ -34,8 +43,13 @@ export class PageService {
         })
         .getMany()
 
-      const result = await this.formatLocalization(pages, language_code)
-      return result
+      if (format_names == true) {
+        const result = this.formatLocalization(pages, language_code)
+        return result
+      } else {
+        const result = this.parseLocalization(pages)
+        return result
+      }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -83,6 +97,20 @@ export class PageService {
       const formattedObject = Object.assign(object, {
         page_name: JSON.parse(object.page_name)[language_code] as string,
         page_description: JSON.parse(object.page_description)[language_code] as string,
+      })
+
+      result.push(formattedObject)
+    }
+
+    return result
+  }
+
+  parseLocalization(data: Page[]): PageResponse[] {
+    const result = []
+    for (const object of data) {
+      const formattedObject = Object.assign(object, {
+        page_name: JSON.parse(object.page_name) as string,
+        page_description: JSON.parse(object.page_description) as string,
       })
 
       result.push(formattedObject)

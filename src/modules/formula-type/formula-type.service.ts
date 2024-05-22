@@ -12,7 +12,10 @@ export class FormulaTypeService {
     private formulaTypeRepository: Repository<FormulaType>,
   ) {}
 
-  async findAll(language_code: string): Promise<FormulaTypeResponse[]> {
+  async findAll(
+    language_code: string,
+    format_names: boolean = true,
+  ): Promise<FormulaTypeResponse[]> {
     try {
       const formulaTypes = await this.formulaTypeRepository
         .createQueryBuilder()
@@ -20,8 +23,13 @@ export class FormulaTypeService {
         .orderBy('formula_type_id', 'ASC')
         .getMany()
 
-      const result = this.formatLocalization(formulaTypes, language_code)
-      return result
+      if (format_names == true) {
+        const result = this.formatLocalization(formulaTypes, language_code)
+        return result
+      } else {
+        const result = this.parseLocalization(formulaTypes)
+        return result
+      }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -31,6 +39,7 @@ export class FormulaTypeService {
   async findAllByType(
     formula_type_key: string,
     language_code: string,
+    format_names: boolean = true,
   ): Promise<FormulaTypeResponse[]> {
     try {
       const formulaTypes = await this.formulaTypeRepository
@@ -40,8 +49,13 @@ export class FormulaTypeService {
         .orderBy('formula_type_id', 'ASC')
         .getMany()
 
-      const result = this.formatLocalization(formulaTypes, language_code)
-      return result
+      if (format_names == true) {
+        const result = this.formatLocalization(formulaTypes, language_code)
+        return result
+      } else {
+        const result = this.parseLocalization(formulaTypes)
+        return result
+      }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -118,6 +132,20 @@ export class FormulaTypeService {
         formula_type_description: JSON.parse(object.formula_type_description)[
           language_code
         ] as string,
+      })
+
+      result.push(formattedObject)
+    }
+
+    return result
+  }
+
+  parseLocalization(data: FormulaType[]): FormulaTypeResponse[] {
+    const result = []
+    for (const object of data) {
+      const formattedObject = Object.assign(object, {
+        formula_type_name: JSON.parse(object.formula_type_name) as string,
+        formula_type_description: JSON.parse(object.formula_type_description) as string,
       })
 
       result.push(formattedObject)

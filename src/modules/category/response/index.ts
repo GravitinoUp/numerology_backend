@@ -11,8 +11,9 @@ export class CategoryResponse {
   category_name: string
 
   @IsString()
+  @IsOptional()
   @ApiProperty()
-  category_image: string
+  category_image?: string
 
   @IsJSON()
   @ApiProperty()

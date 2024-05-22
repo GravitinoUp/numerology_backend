@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Inject,
   Patch,
+  Query,
   Req,
   UseFilters,
   UseGuards,
@@ -44,14 +45,14 @@ export class CategoryController {
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('all')
-  async findAll(@Req() request) {
-    const key = `${CacheRoutes.CATEGORIES}/all-${request.i18nLang}`
+  async findAll(@Req() request, @Query('format_names') format_names?: boolean) {
+    const key = `${CacheRoutes.CATEGORIES}/all-${request.i18nLang}-${format_names}`
     let categories: CategoryResponse[] = await this.cacheManager.get(key)
 
-    if (categories) {
+    if (false) {
       return categories
     } else {
-      categories = await this.categoryService.findAll(request.i18nLang)
+      categories = await this.categoryService.findAll(request.i18nLang, format_names)
       await this.cacheManager.set(key, categories)
       return categories
     }

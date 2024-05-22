@@ -12,7 +12,7 @@ export class CategoryService {
     private categoryRepository: Repository<Category>,
   ) {}
 
-  async findAll(language_code: string): Promise<CategoryResponse[]> {
+  async findAll(language_code: string, format_names: boolean = true): Promise<CategoryResponse[]> {
     try {
       const categories = await this.categoryRepository
         .createQueryBuilder()
@@ -20,8 +20,13 @@ export class CategoryService {
         .orderBy('category_id', 'ASC')
         .getMany()
 
-      const result = this.formatLocalization(categories, language_code)
-      return result
+      if (format_names == true) {
+        const result = this.formatLocalization(categories, language_code)
+        return result
+      } else {
+        const result = this.parseLocalization(categories)
+        return result
+      }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -69,6 +74,20 @@ export class CategoryService {
       const formattedObject = Object.assign(object, {
         category_name: JSON.parse(object.category_name)[language_code] as string,
         category_description: JSON.parse(object.category_description)[language_code] as string,
+      })
+
+      result.push(formattedObject)
+    }
+
+    return result
+  }
+
+  parseLocalization(data: Category[]): CategoryResponse[] {
+    const result = []
+    for (const object of data) {
+      const formattedObject = Object.assign(object, {
+        category_name: JSON.parse(object.category_name) as string,
+        category_description: JSON.parse(object.category_description) as string,
       })
 
       result.push(formattedObject)

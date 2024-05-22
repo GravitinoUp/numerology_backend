@@ -9,6 +9,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseFilters,
   UseGuards,
@@ -63,14 +64,18 @@ export class FormulaResultController {
   @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
   @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
   @Get('all/:type')
-  async findAllByType(@Param('type') type: number, @Req() request) {
-    const key = `${CacheRoutes.RESULTS}/all/${type}-${request.i18nLang}`
+  async findAllByType(
+    @Param('type') type: number,
+    @Req() request,
+    @Query('format_names') format_names?: boolean,
+  ) {
+    const key = `${CacheRoutes.RESULTS}/all/${type}-${request.i18nLang}-${format_names}`
     let results: FormulaResultResponse[] = await this.cacheManager.get(key)
 
     if (results) {
       return results
     } else {
-      results = await this.formulaResultService.findAllByType(type, request.i18nLang)
+      results = await this.formulaResultService.findAllByType(type, request.i18nLang, format_names)
       await this.cacheManager.set(key, results)
       return results
     }

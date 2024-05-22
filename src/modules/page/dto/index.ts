@@ -27,7 +27,7 @@ export class UpdatePageDto {
   page_icon?: string
 
   @IsString()
-  @Length(6, 6)
+  @Length(7, 7)
   @IsOptional()
   @ApiProperty()
   color?: string

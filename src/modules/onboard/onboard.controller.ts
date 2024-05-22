@@ -63,7 +63,7 @@ export class OnboardController {
   })
   @Get('all')
   async findAll(@Req() request, @Query('format_names') format_names?: boolean) {
-    const key = `${CacheRoutes.ONBOARDS}/all-${request.i18nLang}`
+    const key = `${CacheRoutes.ONBOARDS}/all-${request.i18nLang}-${format_names}`
     let onboards: OnboardResponse[] = await this.cacheManager.get(key)
 
     if (onboards) {

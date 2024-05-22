@@ -7,6 +7,7 @@ import {
   Inject,
   Param,
   Patch,
+  Query,
   Req,
   UseFilters,
   UseGuards,
@@ -45,14 +46,14 @@ export class FormulaTypeController {
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('all')
-  async findAll(@Req() request) {
-    const key = `${CacheRoutes.FORMULA_TYPES}/all-${request.i18nLang}`
+  async findAll(@Req() request, @Query('format_names') format_names?: boolean) {
+    const key = `${CacheRoutes.FORMULA_TYPES}/all-${request.i18nLang}-${format_names}`
     let types: FormulaTypeResponse[] = await this.cacheManager.get(key)
 
     if (types) {
       return types
     } else {
-      types = await this.formulaTypeService.findAll(request.i18nLang)
+      types = await this.formulaTypeService.findAll(request.i18nLang, format_names)
       await this.cacheManager.set(key, types)
       return types
     }
@@ -68,14 +69,18 @@ export class FormulaTypeController {
   @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
   @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
   @Get('all/:type_key')
-  async findAllByType(@Param('type_key') type_key: string, @Req() request) {
-    const key = `${CacheRoutes.FORMULA_TYPES}/all-${type_key}-${request.i18nLang}`
+  async findAllByType(
+    @Param('type_key') type_key: string,
+    @Req() request,
+    @Query('format_names') format_names?: boolean,
+  ) {
+    const key = `${CacheRoutes.FORMULA_TYPES}/all-${type_key}-${request.i18nLang}-${format_names}`
     let types: FormulaTypeResponse[] = await this.cacheManager.get(key)
 
     if (types) {
       return types
     } else {
-      types = await this.formulaTypeService.findAllByType(type_key, request.i18nLang)
+      types = await this.formulaTypeService.findAllByType(type_key, request.i18nLang, format_names)
       await this.cacheManager.set(key, types)
       return types
     }

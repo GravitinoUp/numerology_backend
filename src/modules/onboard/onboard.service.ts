@@ -33,11 +33,12 @@ export class OnboardService {
     try {
       const onboards = await this.onboardRepository.createQueryBuilder().select().getMany()
 
-      if (format_names) {
+      if (format_names == true) {
         const result = this.formatLocalization(onboards, language_code)
         return result
       } else {
-        return onboards
+        const result = this.parseLocalization(onboards)
+        return result
       }
     } catch (error) {
       console.log(error)
@@ -97,6 +98,20 @@ export class OnboardService {
       const formattedObject = Object.assign(object, {
         onboard_name: JSON.parse(object.onboard_name)[language_code] as string,
         onboard_description: JSON.parse(object.onboard_description)[language_code] as string,
+      })
+
+      result.push(formattedObject)
+    }
+
+    return result
+  }
+
+  parseLocalization(data: Onboard[]): OnboardResponse[] {
+    const result = []
+    for (const object of data) {
+      const formattedObject = Object.assign(object, {
+        onboard_name: JSON.parse(object.onboard_name) as string,
+        onboard_description: JSON.parse(object.onboard_description) as string,
       })
 
       result.push(formattedObject)

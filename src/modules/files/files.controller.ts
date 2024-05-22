@@ -71,7 +71,7 @@ export class FilesController {
   }
 
   @Get('uploads')
-  @Throttle({ default: { limit: 100, ttl: 1000 } })
+  @Throttle({ default: { limit: 10000, ttl: 1000 } })
   async findUpload(@Query('path') path: string, @Req() request, @Res() res) {
     return res.sendFile(path, { root: './' })
   }

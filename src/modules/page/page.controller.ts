@@ -7,6 +7,7 @@ import {
   Inject,
   Param,
   Patch,
+  Query,
   Req,
   UseFilters,
   UseGuards,
@@ -45,14 +46,14 @@ export class PageController {
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('all')
-  async findAll(@Req() request) {
-    const key = `${CacheRoutes.PAGES}/all-${request.i18nLang}`
+  async findAll(@Req() request, @Query('format_names') format_names?: boolean) {
+    const key = `${CacheRoutes.PAGES}/all-${request.i18nLang}-${format_names}`
     let result: PageResponse[] = await this.cacheManager.get(key)
 
     if (result) {
       return result
     } else {
-      result = await this.pageService.findAll(request.i18nLang)
+      result = await this.pageService.findAll(request.i18nLang, format_names)
       await this.cacheManager.set(key, result)
       return result
     }
@@ -67,14 +68,18 @@ export class PageController {
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('all/:category_id')
-  async findByCategory(@Param('category_id') categoryId: number, @Req() request) {
-    const key = `${CacheRoutes.PAGES}/all/${categoryId}-${request.i18nLang}`
+  async findByCategory(
+    @Param('category_id') categoryId: number,
+    @Req() request,
+    @Query('format_names') format_names?: boolean,
+  ) {
+    const key = `${CacheRoutes.PAGES}/all/${categoryId}-${request.i18nLang}-${format_names}`
     let result: PageResponse[] = await this.cacheManager.get(key)
 
     if (result) {
       return result
     } else {
-      result = await this.pageService.findByCategory(categoryId, request.i18nLang)
+      result = await this.pageService.findByCategory(categoryId, request.i18nLang, format_names)
       await this.cacheManager.set(key, result)
       return result
     }
