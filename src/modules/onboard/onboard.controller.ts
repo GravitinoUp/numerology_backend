@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpStatus,
+  Inject,
   NotFoundException,
   Param,
   Patch,
@@ -21,9 +22,10 @@ import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { CreateOnboardDto, UpdateOnboardDto } from './dto'
 import { I18nService } from 'nestjs-i18n'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
-import { RolesEnum } from 'src/common/constants/constants'
+import { CacheRoutes, RolesEnum } from 'src/common/constants/constants'
 import { Roles } from '../role/guards/decorators/role.decorator'
 import { RolesGuard } from '../role/guards/roles.guard'
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 
 @ApiBearerAuth()
 @ApiTags('Onboards')
@@ -33,6 +35,7 @@ export class OnboardController {
   constructor(
     private readonly onboardService: OnboardService,
     private readonly i18n: I18nService,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   @ApiOperation({ summary: AppStrings.ONBOARD_CREATE_OPERATION })
@@ -46,6 +49,7 @@ export class OnboardController {
   @Post()
   async create(@Body() createOnboardDto: CreateOnboardDto) {
     const result = await this.onboardService.create(createOnboardDto)
+    await this.clearCache()
     return result
   }
 
@@ -58,9 +62,16 @@ export class OnboardController {
   })
   @Get('all')
   async findAll(@Req() request) {
-    const result = await this.onboardService.findAll(request.i18nLang)
+    const key = `${CacheRoutes.ONBOARDS}/all-${request.i18nLang}`
+    let onboards: OnboardResponse[] = await this.cacheManager.get(key)
 
-    return result
+    if (onboards) {
+      return onboards
+    } else {
+      onboards = await this.onboardService.findAll(request.i18nLang)
+      await this.cacheManager.set(key, onboards)
+      return onboards
+    }
   }
 
   @ApiOperation({ summary: AppStrings.ONBOARD_UPDATE_OPERATION })
@@ -80,6 +91,7 @@ export class OnboardController {
     }
 
     const result = await this.onboardService.update(updateOnboardDto)
+    await this.clearCache()
     return result
   }
 
@@ -100,6 +112,14 @@ export class OnboardController {
     }
 
     const result = await this.onboardService.delete(onboard_id)
+    await this.clearCache()
     return result
+  }
+
+  async clearCache() {
+    const keys = await this.cacheManager.store.keys(`${CacheRoutes.ONBOARDS}*`) // Удаление кэша
+    for (const key of keys) {
+      await this.cacheManager.del(key)
+    }
   }
 }

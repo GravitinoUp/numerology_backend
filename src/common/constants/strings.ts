@@ -8,6 +8,17 @@ export const AppStrings = {
   CATEGORY_UPDATE_OPERATION: 'Изменение категории',
   CATEGORY_UPDATE_RESPONSE: 'Категория успешно изменена',
 
+  FORMULA_RESULT_CREATE_OPERATION: 'Создание трактовки',
+  FORMULA_RESULT_CREATE_RESPONSE: 'Трактовка успешно создана',
+  FORMULA_RESULT_GET_ALL_OPERATION: 'Получение списка всех трактовок',
+  FORMULA_RESULT_GET_ALL_RESPONSE: 'Трактовки успешно получены',
+  FORMULA_RESULT_GET_BY_TYPE_OPERATION: 'Получение списка всех трактовок по типу',
+  FORMULA_RESULT_GET_BY_TYPE_RESPONSE: 'Трактовки по типу успешно получены',
+  FORMULA_RESULT_UPDATE_OPERATION: 'Изменение трактовки',
+  FORMULA_RESULT_UPDATE_RESPONSE: 'Трактовка успешно изменена',
+  FORMULA_RESULT_DELETE_OPERATION: 'Удаление трактовки',
+  FORMULA_RESULT_DELETE_RESPONSE: 'Трактовка успешно удалена',
+
   LANGUAGE_CREATE_OPERATION: 'Создание нового языка',
   LANGUAGE_CREATE_RESPONSE: 'Язык успешно создан',
   LANGUAGE_GET_ALL_OPERATION: 'Получение списка всех языков',

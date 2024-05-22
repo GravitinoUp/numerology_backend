@@ -41,6 +41,18 @@ export const FormulaTypesEnum = {
   RUNIC_FORMULAS: 32,
 }
 
+export const CacheRoutes = {
+  CATEGORIES: 'category',
+  PAGES: 'page',
+  RESULTS: 'formula-result',
+  FORMULA_TYPES: 'formula-type',
+  LANGUAGES: 'language',
+  NOTIFICATIONS: 'notification',
+  NUMBERS: 'number',
+  ONBOARDS: 'onboard',
+  USERS: 'user',
+}
+
 export const RuVowelLetters = ['а', 'о', 'э', 'е', 'и', 'ы', 'у', 'ё', 'ю', 'я']
 export const EnVowelLetters = ['a', 'e', 'i', 'o', 'u', 'y']
 

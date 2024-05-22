@@ -4,6 +4,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Inject,
   Patch,
   Req,
   UseFilters,
@@ -20,7 +21,8 @@ import { UpdateCategoryDto } from './dto'
 import { I18nService } from 'nestjs-i18n'
 import { RolesGuard } from '../role/guards/roles.guard'
 import { Roles } from '../role/guards/decorators/role.decorator'
-import { RolesEnum } from 'src/common/constants/constants'
+import { CacheRoutes, RolesEnum } from 'src/common/constants/constants'
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 
 @ApiBearerAuth()
 @ApiTags('Categories')
@@ -30,6 +32,7 @@ export class CategoryController {
   constructor(
     private readonly categoryService: CategoryService,
     private readonly i18n: I18nService,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   @ApiOperation({ summary: AppStrings.CATEGORY_GET_ALL_OPERATION })
@@ -42,8 +45,16 @@ export class CategoryController {
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('all')
   async findAll(@Req() request) {
-    const result = await this.categoryService.findAll(request.i18nLang)
-    return result
+    const key = `${CacheRoutes.CATEGORIES}/all-${request.i18nLang}`
+    let categories: CategoryResponse[] = await this.cacheManager.get(key)
+
+    if (categories) {
+      return categories
+    } else {
+      categories = await this.categoryService.findAll(request.i18nLang)
+      await this.cacheManager.set(key, categories)
+      return categories
+    }
   }
 
   @ApiOperation({ summary: AppStrings.CATEGORY_UPDATE_OPERATION })
@@ -62,6 +73,19 @@ export class CategoryController {
     }
 
     const result = await this.categoryService.update(updateCategory)
+    await this.clearCache()
     return result
+  }
+
+  async clearCache() {
+    const keys = await this.cacheManager.store.keys(`${CacheRoutes.CATEGORIES}*`) // Удаление кэша
+    for (const key of keys) {
+      await this.cacheManager.del(key)
+    }
+
+    const pageKeys = await this.cacheManager.store.keys(`${CacheRoutes.PAGES}*`) // Удаление кэша страниц
+    for (const key of pageKeys) {
+      await this.cacheManager.del(key)
+    }
   }
 }

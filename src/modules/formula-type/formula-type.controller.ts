@@ -4,6 +4,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Inject,
   Param,
   Patch,
   Req,
@@ -19,9 +20,10 @@ import { FormulaTypeResponse, StatusFormulaTypeResponse } from './response'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { UpdateFormulaTypeDto } from './dto'
-import { RolesEnum } from 'src/common/constants/constants'
+import { CacheRoutes, RolesEnum } from 'src/common/constants/constants'
 import { Roles } from '../role/guards/decorators/role.decorator'
 import { RolesGuard } from '../role/guards/roles.guard'
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 
 @ApiBearerAuth()
 @ApiTags('Formula Types')
@@ -31,6 +33,7 @@ export class FormulaTypeController {
   constructor(
     private readonly formulaTypeService: FormulaTypeService,
     private readonly i18n: I18nService,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   @ApiOperation({ summary: AppStrings.FORMULA_TYPE_GET_ALL_OPERATION })
@@ -43,8 +46,16 @@ export class FormulaTypeController {
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('all')
   async findAll(@Req() request) {
-    const result = await this.formulaTypeService.findAll(request.i18nLang)
-    return result
+    const key = `${CacheRoutes.FORMULA_TYPES}/all-${request.i18nLang}`
+    let types: FormulaTypeResponse[] = await this.cacheManager.get(key)
+
+    if (types) {
+      return types
+    } else {
+      types = await this.formulaTypeService.findAll(request.i18nLang)
+      await this.cacheManager.set(key, types)
+      return types
+    }
   }
 
   @ApiOperation({ summary: AppStrings.FORMULA_TYPE_GET_ONE_OPERATION })
@@ -56,8 +67,16 @@ export class FormulaTypeController {
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get(':id')
   async findOne(@Param('id') formula_type_id: number, @Req() request) {
-    const result = await this.formulaTypeService.findOne(formula_type_id, request.i18nLang)
-    return result
+    const key = `${CacheRoutes.FORMULA_TYPES}/${formula_type_id}-${request.i18nLang}`
+    let type: FormulaTypeResponse = await this.cacheManager.get(key)
+
+    if (type) {
+      return type
+    } else {
+      type = await this.formulaTypeService.findOne(formula_type_id, request.i18nLang)
+      await this.cacheManager.set(key, type)
+      return type
+    }
   }
 
   @ApiOperation({ summary: AppStrings.FORMULA_TYPE_UPDATE_OPERATION })
@@ -79,6 +98,19 @@ export class FormulaTypeController {
     }
 
     const result = await this.formulaTypeService.update(updateFormulaTypeDto)
+    await this.clearCache()
     return result
+  }
+
+  async clearCache() {
+    const keys = await this.cacheManager.store.keys(`${CacheRoutes.FORMULA_TYPES}*`) // Удаление кэша
+    for (const key of keys) {
+      await this.cacheManager.del(key)
+    }
+
+    const resultKeys = await this.cacheManager.store.keys(`${CacheRoutes.RESULTS}*`) // Удаление кэша результатов
+    for (const key of resultKeys) {
+      await this.cacheManager.del(key)
+    }
   }
 }

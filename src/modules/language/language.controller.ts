@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpStatus,
+  Inject,
   NotFoundException,
   Param,
   Patch,
@@ -20,9 +21,10 @@ import { CreateLanguageDto, UpdateLanguageDto } from './dto'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { I18nService } from 'nestjs-i18n'
-import { RolesEnum } from 'src/common/constants/constants'
+import { CacheRoutes, RolesEnum } from 'src/common/constants/constants'
 import { Roles } from '../role/guards/decorators/role.decorator'
 import { RolesGuard } from '../role/guards/roles.guard'
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 
 @ApiBearerAuth()
 @ApiTags('Languages')
@@ -32,6 +34,7 @@ export class LanguageController {
   constructor(
     private readonly languageService: LanguageService,
     private readonly i18n: I18nService,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   @ApiOperation({ summary: AppStrings.LANGUAGE_CREATE_OPERATION })
@@ -45,6 +48,7 @@ export class LanguageController {
   @Post()
   async create(@Body() createLanguageDto: CreateLanguageDto) {
     const result = await this.languageService.create(createLanguageDto)
+    await this.clearCache()
     return result
   }
 
@@ -57,9 +61,16 @@ export class LanguageController {
   })
   @Get('all')
   async findAll() {
-    const result = await this.languageService.findAll()
+    const key = `${CacheRoutes.LANGUAGES}/all`
+    let languages: LanguageResponse[] = await this.cacheManager.get(key)
 
-    return result
+    if (languages) {
+      return languages
+    } else {
+      languages = await this.languageService.findAll()
+      await this.cacheManager.set(key, languages)
+      return languages
+    }
   }
 
   @ApiOperation({ summary: AppStrings.LANGUAGE_UPDATE_OPERATION })
@@ -81,6 +92,7 @@ export class LanguageController {
     }
 
     const result = await this.languageService.update(updateLanguageDto)
+    await this.clearCache()
     return result
   }
 
@@ -101,6 +113,14 @@ export class LanguageController {
     }
 
     const result = await this.languageService.delete(language_code)
+    await this.clearCache()
     return result
+  }
+
+  async clearCache() {
+    const keys = await this.cacheManager.store.keys(`${CacheRoutes.LANGUAGES}*`) // Удаление кэша
+    for (const key of keys) {
+      await this.cacheManager.del(key)
+    }
   }
 }

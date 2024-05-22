@@ -30,7 +30,7 @@ export class CreateFormulaResultDto {
   language_code: string
 }
 
-export class UpdateFormulaDto {
+export class UpdateFormulaResultDto {
   @IsUUID()
   @ApiProperty()
   result_uuid: string

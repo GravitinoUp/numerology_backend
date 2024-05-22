@@ -10,6 +10,7 @@ import {
   UseGuards,
   Patch,
   Delete,
+  Inject,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import {
@@ -22,14 +23,15 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { I18nService } from 'nestjs-i18n'
-import { StatusUserResponse } from './response'
+import { StatusUserResponse, UserResponse } from './response'
 import { AppStrings } from 'src/common/constants/strings'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { ActiveGuard } from '../auth/guards/active.guard'
-import { User } from './entities/user.entity'
 import { AuthCodeService } from '../auth_code/auth_code.service'
 import { CreateAuthCodeDto } from '../auth_code/dto'
 import { Throttle } from '@nestjs/throttler'
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
+import { CacheRoutes } from 'src/common/constants/constants'
 
 @ApiBearerAuth()
 @ApiTags('Users')
@@ -40,6 +42,7 @@ export class UserController {
     private readonly userService: UserService,
     private readonly authCodeService: AuthCodeService,
     private readonly i18n: I18nService,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   @ApiOperation({ summary: AppStrings.USERS_CREATE_OPERATION })
@@ -68,6 +71,7 @@ export class UserController {
     const codeExists = await this.authCodeService.activateCode(authCodeDto, false)
     if (codeExists) {
       const result = await this.userService.create(createUserDto, authCodeDto)
+      await this.clearCache()
       return result
     } else {
       throw new HttpException(await this.i18n.t('errors.invalid_code'), HttpStatus.BAD_REQUEST)
@@ -85,7 +89,6 @@ export class UserController {
     const isUserExists = await this.userService.isUserExists({
       phone: userData.phone,
     })
-
     return { status: isUserExists }
   }
 
@@ -93,14 +96,21 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: AppStrings.USERS_GET_CURRENT_RESPONSE,
-    type: User,
+    type: UserResponse,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get()
   async getCurrent(@Req() request) {
-    const result = await this.userService.findByUuid(request.user.user_uuid)
+    const key = `${CacheRoutes.USERS}/my/${request.user.user_uuid}-${request.i18nLang}`
+    let result: UserResponse = await this.cacheManager.get(key)
 
-    return result
+    if (result) {
+      return result
+    } else {
+      result = await this.userService.findByUuid(request.user.user_uuid)
+      await this.cacheManager.set(key, result)
+      return result
+    }
   }
 
   @ApiOperation({ summary: AppStrings.USERS_UPDATE_CURRENT_OPERATION })
@@ -118,6 +128,7 @@ export class UserController {
     }
 
     const result = await this.userService.update(user, request.user.user_uuid)
+    await this.clearCache()
     return result
   }
 
@@ -134,6 +145,7 @@ export class UserController {
       updateUserPasswordDto,
       request.user.user_uuid,
     )
+    await this.clearCache()
     return result
   }
 
@@ -147,6 +159,7 @@ export class UserController {
   @Patch('password/reset')
   async resetPassword(@Body() resetUserPasswordDto: ResetUserPasswordDto) {
     const result = await this.userService.resetPassword(resetUserPasswordDto)
+    await this.clearCache()
     return result
   }
 
@@ -160,6 +173,14 @@ export class UserController {
   @Delete('my')
   async deleteCurrent(@Req() request) {
     const result = await this.userService.delete(request.user.user_uuid)
+    await this.clearCache()
     return result
+  }
+
+  async clearCache() {
+    const keys = await this.cacheManager.store.keys(`${CacheRoutes.PAGES}*`) // Удаление кэша
+    for (const key of keys) {
+      await this.cacheManager.del(key)
+    }
   }
 }
