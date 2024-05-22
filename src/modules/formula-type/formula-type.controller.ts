@@ -58,6 +58,29 @@ export class FormulaTypeController {
     }
   }
 
+  @ApiOperation({ summary: AppStrings.FORMULA_TYPE_GET_BY_KEY_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.FORMULA_TYPE_GET_BY_KEY_RESPONSE,
+    type: FormulaTypeResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
+  @Get('all/:type_key')
+  async findAllByType(@Param('type_key') type_key: string, @Req() request) {
+    const key = `${CacheRoutes.FORMULA_TYPES}/all-${type_key}-${request.i18nLang}`
+    let types: FormulaTypeResponse[] = await this.cacheManager.get(key)
+
+    if (types) {
+      return types
+    } else {
+      types = await this.formulaTypeService.findAllByType(type_key, request.i18nLang)
+      await this.cacheManager.set(key, types)
+      return types
+    }
+  }
+
   @ApiOperation({ summary: AppStrings.FORMULA_TYPE_GET_ONE_OPERATION })
   @ApiResponse({
     status: HttpStatus.OK,

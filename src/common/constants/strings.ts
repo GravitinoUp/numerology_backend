@@ -106,6 +106,8 @@ export const AppStrings = {
 
   FORMULA_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   FORMULA_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',
+  FORMULA_TYPE_GET_BY_KEY_OPERATION: 'Получение списка всех типов страниц по ключу',
+  FORMULA_TYPE_GET_BY_KEY_RESPONSE: 'Типы страниц по ключу успешно получены',
   FORMULA_TYPE_GET_ONE_OPERATION: 'Получение типа страницы',
   FORMULA_TYPE_GET_ONE_RESPONSE: 'Тип страницы успешно получены',
   FORMULA_TYPE_UPDATE_OPERATION: 'Изменение типа страницы',

@@ -60,6 +60,8 @@ export class FormulaResultController {
     type: FormulaResultResponse,
     isArray: true,
   })
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
   @Get('all/:type')
   async findAllByType(@Param('type') type: number, @Req() request) {
     const key = `${CacheRoutes.RESULTS}/all/${type}-${request.i18nLang}`

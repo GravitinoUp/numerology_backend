@@ -28,6 +28,26 @@ export class FormulaTypeService {
     }
   }
 
+  async findAllByType(
+    formula_type_key: string,
+    language_code: string,
+  ): Promise<FormulaTypeResponse[]> {
+    try {
+      const formulaTypes = await this.formulaTypeRepository
+        .createQueryBuilder()
+        .select()
+        .where({ formula_type_key })
+        .orderBy('formula_type_id', 'ASC')
+        .getMany()
+
+      const result = this.formatLocalization(formulaTypes, language_code)
+      return result
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
   async findOne(formula_type_id: number, language_code: string): Promise<FormulaTypeResponse> {
     try {
       const formulaType = await this.formulaTypeRepository
