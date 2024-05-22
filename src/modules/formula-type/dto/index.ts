@@ -5,6 +5,10 @@ export class CreateFormulaTypeDto {
   @IsString()
   @ApiProperty()
   formula_type_name: string
+
+  @IsString()
+  @ApiProperty()
+  formula_type_key: string
 }
 
 export class UpdateFormulaTypeDto {
@@ -21,4 +25,9 @@ export class UpdateFormulaTypeDto {
   @IsOptional()
   @ApiProperty({ required: false })
   formula_type_description?: string
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  formula_type_key?: string
 }

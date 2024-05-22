@@ -13,6 +13,10 @@ export class FormulaTypeResponse {
   @IsString()
   @ApiProperty()
   formula_type_description: string
+
+  @IsString()
+  @ApiProperty()
+  formula_type_key: string
 }
 
 export class StatusFormulaTypeResponse {

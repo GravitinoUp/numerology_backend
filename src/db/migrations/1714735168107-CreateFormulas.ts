@@ -23,6 +23,10 @@ export class CreateFormulas1714735168107 implements MigrationInterface {
             default: `to_json('{\"ru\":\"\",\"en\":\"\"}'::text)`,
           },
           {
+            name: 'formula_type_key',
+            type: 'varchar',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
