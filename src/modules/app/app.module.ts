@@ -12,7 +12,6 @@ import { RoleModule } from '../role/role.module'
 import { UserModule } from '../user/user.module'
 import { ScheduleModule } from '@nestjs/schedule'
 import { AuthCodeModule } from '../auth_code/auth_code.module'
-import { LanguageModule } from '../language/language.module'
 import { OnboardModule } from '../onboard/onboard.module'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
@@ -93,7 +92,6 @@ import { redisStore } from 'cache-manager-redis-yet'
     FormulaResultModule,
     FormulaTypeModule,
     FilesModule,
-    LanguageModule,
     NotificationsModule,
     NumberModule,
     OnboardModule,

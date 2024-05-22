@@ -20,19 +20,8 @@ export class FormulaTypeService {
         .orderBy('formula_type_id', 'ASC')
         .getMany()
 
-      const result = []
-      for (const formulaType of formulaTypes) {
-        const formattedFormulaType = Object.assign(formulaType, {
-          formula_type_name: JSON.parse(formulaType.formula_type_name)[language_code] as string,
-          formula_type_description: JSON.parse(formulaType.formula_type_description)[
-            language_code
-          ] as string,
-        })
-
-        result.push(formattedFormulaType)
-      }
-
-      return formulaTypes
+      const result = this.formatLocalization(formulaTypes, language_code)
+      return result
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -99,5 +88,21 @@ export class FormulaTypeService {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
+  }
+
+  formatLocalization(data: FormulaType[], language_code: string): FormulaTypeResponse[] {
+    const result = []
+    for (const object of data) {
+      const formattedObject = Object.assign(object, {
+        formula_type_name: JSON.parse(object.formula_type_name)[language_code] as string,
+        formula_type_description: JSON.parse(object.formula_type_description)[
+          language_code
+        ] as string,
+      })
+
+      result.push(formattedObject)
+    }
+
+    return result
   }
 }

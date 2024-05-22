@@ -58,20 +58,17 @@ export class CreateFormulas1714735168107 implements MigrationInterface {
           },
           {
             name: 'result_name',
-            type: 'varchar',
+            type: 'json',
           },
           {
             name: 'result_content',
-            type: 'text',
+            type: 'json',
+            default: `to_json('{\"ru\":\"\",\"en\":\"\"}'::text)`,
           },
           {
             name: 'result_image',
             type: 'text',
             default: `''`,
-          },
-          {
-            name: 'language_code',
-            type: 'varchar',
           },
           {
             name: 'created_at',
@@ -94,17 +91,6 @@ export class CreateFormulas1714735168107 implements MigrationInterface {
         columnNames: ['formula_type_id'],
         referencedColumnNames: ['formula_type_id'],
         referencedTableName: 'FormulaTypes',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      }),
-    )
-
-    await queryRunner.createForeignKey(
-      'FormulaResults',
-      new TableForeignKey({
-        columnNames: ['language_code'],
-        referencedColumnNames: ['language_code'],
-        referencedTableName: 'Languages',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),

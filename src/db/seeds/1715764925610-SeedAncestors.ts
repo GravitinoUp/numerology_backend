@@ -10,16 +10,8 @@ export class SeedAncestors1715764925610 implements MigrationInterface {
         {
           formula_type_id: FormulaTypesEnum.ANCESTORS,
           result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'ru',
-        },
-        {
-          formula_type_id: FormulaTypesEnum.ANCESTORS,
-          result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'en',
+          result_name: JSON.stringify({ ru: index.toString(), en: index.toString() }),
+          result_content: JSON.stringify({ ru: '', en: '' }),
         },
       ])
     }

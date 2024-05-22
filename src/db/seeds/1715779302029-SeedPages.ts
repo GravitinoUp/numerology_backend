@@ -14,7 +14,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#0085FF',
         key: 'destiny-program',
-        language_code: 'ru',
         category_id: 1,
       },
       {
@@ -24,7 +23,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#4B3DAA',
         key: 'strong-qualities',
-        language_code: 'ru',
         category_id: 1,
       },
       {
@@ -34,7 +32,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#796095',
         key: 'fate-card',
-        language_code: 'ru',
         category_id: 1,
       },
       {
@@ -44,7 +41,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#667176',
         key: 'weak-qualities',
-        language_code: 'ru',
         category_id: 1,
       },
       {
@@ -54,7 +50,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#4F3F39',
         key: 'planets',
-        language_code: 'ru',
         category_id: 1,
       },
       {
@@ -64,7 +59,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#004F6C',
         key: 'karma',
-        language_code: 'ru',
         category_id: 2,
       },
       {
@@ -74,7 +68,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#2BB986',
         key: 'health',
-        language_code: 'ru',
         category_id: 3,
       },
       {
@@ -84,7 +77,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#D32F31',
         key: 'blood-type',
-        language_code: 'ru',
         category_id: 3,
       },
       {
@@ -94,7 +86,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#F05191',
         key: 'aromatherapy',
-        language_code: 'ru',
         category_id: 3,
       },
       {
@@ -104,7 +95,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#5669CD',
         key: 'graph',
-        language_code: 'ru',
         category_id: 4,
       },
       {
@@ -114,7 +104,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#0085FF',
         key: 'phone-calculation',
-        language_code: 'ru',
         category_id: 5,
       },
       {
@@ -124,7 +113,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#4B3DAA',
         key: 'house-calculation',
-        language_code: 'ru',
         category_id: 5,
       },
       {
@@ -134,7 +122,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#F29F15',
         key: 'prediction',
-        language_code: 'ru',
         category_id: 5,
       },
       {
@@ -144,7 +131,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#F05191',
         key: 'birthday-style',
-        language_code: 'ru',
         category_id: 6,
       },
       {
@@ -154,7 +140,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#00969F',
         key: 'compatibility',
-        language_code: 'ru',
         category_id: 7,
       },
       {
@@ -164,7 +149,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#0091FB',
         key: 'color-graph',
-        language_code: 'ru',
         category_id: 8,
       },
       {
@@ -174,7 +158,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#0085FF',
         key: 'runic-formulas',
-        language_code: 'ru',
         category_id: 9,
       },
       {
@@ -184,7 +167,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#CE5A51',
         key: 'fate-number-gifts',
-        language_code: 'ru',
         category_id: 9,
       },
       {
@@ -194,7 +176,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#00A692',
         key: 'totemic-animals',
-        language_code: 'ru',
         category_id: 9,
       },
       {
@@ -204,7 +185,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#F29F15',
         key: 'lucky-numbers',
-        language_code: 'ru',
         category_id: 9,
       },
       {
@@ -214,7 +194,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#5EBBFF',
         key: 'angelic-numerology',
-        language_code: 'ru',
         category_id: 9,
       },
       {
@@ -224,7 +203,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#4B3016',
         key: 'professions',
-        language_code: 'ru',
         category_id: 9,
       },
       {
@@ -234,7 +212,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#4B3DAA',
         key: 'guessing-number',
-        language_code: 'ru',
         category_id: 9,
       },
       {
@@ -244,7 +221,6 @@ export class SeedPages1715779302029 implements MigrationInterface {
         page_icon: '',
         color: '#FF7C7C',
         key: 'ancestors',
-        language_code: 'ru',
         category_id: 9,
       },
     ])

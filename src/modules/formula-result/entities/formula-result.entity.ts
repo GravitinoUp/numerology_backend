@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
 import BaseModel from 'src/common/model'
-import { Language } from 'src/modules/language/entities/language.entity'
 import { FormulaType } from 'src/modules/formula-type/entities/formula-type.entity'
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm'
 
@@ -23,24 +22,15 @@ export class FormulaResult extends BaseModel {
   @ApiProperty()
   result_keys: string[]
 
-  @Column()
+  @Column({ type: 'json', default: { en: '', ru: '' } })
   @ApiProperty()
   result_name: string
 
-  @Column({ type: 'text' })
+  @Column({ type: 'json', default: { en: '', ru: '' } })
   @ApiProperty()
   result_content: string
 
   @Column({ default: '' })
   @ApiProperty()
   result_image: string
-
-  @Column()
-  @ApiProperty()
-  language_code: string
-
-  @ManyToOne(() => Language, (lang) => lang.language_code)
-  @JoinColumn({ name: 'language_code', referencedColumnName: 'language_code' })
-  @ApiProperty()
-  language: Language
 }

@@ -10,16 +10,8 @@ export class SeedCompatibility1716195076795 implements MigrationInterface {
         {
           formula_type_id: FormulaTypesEnum.ARCANE_COMPATIBILITY,
           result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'ru',
-        },
-        {
-          formula_type_id: FormulaTypesEnum.ARCANE_COMPATIBILITY,
-          result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'en',
+          result_name: JSON.stringify({ ru: index.toString(), en: index.toString() }),
+          result_content: JSON.stringify({ ru: '', en: '' }),
         },
       ])
     }
@@ -30,16 +22,8 @@ export class SeedCompatibility1716195076795 implements MigrationInterface {
         {
           formula_type_id: FormulaTypesEnum.SOUL_NUMBER_COMPATIBILITY,
           result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'ru',
-        },
-        {
-          formula_type_id: FormulaTypesEnum.SOUL_NUMBER_COMPATIBILITY,
-          result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'en',
+          result_name: JSON.stringify({ ru: index.toString(), en: index.toString() }),
+          result_content: JSON.stringify({ ru: '', en: '' }),
         },
       ])
     }
@@ -50,16 +34,8 @@ export class SeedCompatibility1716195076795 implements MigrationInterface {
         {
           formula_type_id: FormulaTypesEnum.JOINT_TASKS_COMPATIBILITY,
           result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'ru',
-        },
-        {
-          formula_type_id: FormulaTypesEnum.JOINT_TASKS_COMPATIBILITY,
-          result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'en',
+          result_name: JSON.stringify({ ru: index.toString(), en: index.toString() }),
+          result_content: JSON.stringify({ ru: '', en: '' }),
         },
       ])
     }
@@ -70,16 +46,8 @@ export class SeedCompatibility1716195076795 implements MigrationInterface {
         {
           formula_type_id: FormulaTypesEnum.DIFFICULTIES_COMPATIBILITY,
           result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'ru',
-        },
-        {
-          formula_type_id: FormulaTypesEnum.DIFFICULTIES_COMPATIBILITY,
-          result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'en',
+          result_name: JSON.stringify({ ru: index.toString(), en: index.toString() }),
+          result_content: JSON.stringify({ ru: '', en: '' }),
         },
       ])
     }

@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
+import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
 export class CreateOnboards1714213696571 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -15,7 +15,7 @@ export class CreateOnboards1714213696571 implements MigrationInterface {
           },
           {
             name: 'onboard_name',
-            type: 'varchar',
+            type: 'json',
           },
           {
             name: 'onboard_image',
@@ -23,11 +23,8 @@ export class CreateOnboards1714213696571 implements MigrationInterface {
           },
           {
             name: 'onboard_description',
-            type: 'text',
-          },
-          {
-            name: 'language_code',
-            type: 'varchar',
+            type: 'json',
+            default: `to_json('{\"ru\":\"\",\"en\":\"\"}'::text)`,
           },
           {
             name: 'created_at',
@@ -42,17 +39,6 @@ export class CreateOnboards1714213696571 implements MigrationInterface {
         ],
       }),
       true,
-    )
-
-    await queryRunner.createForeignKey(
-      'Onboards',
-      new TableForeignKey({
-        columnNames: ['language_code'],
-        referencedColumnNames: ['language_code'],
-        referencedTableName: 'Languages',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      }),
     )
   }
 

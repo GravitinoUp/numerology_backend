@@ -1,17 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsInt, IsOptional, IsString, IsUUID, Length } from 'class-validator'
+import { IsInt, IsJSON, IsOptional, IsString, IsUUID, Length } from 'class-validator'
 
 export class UpdatePageDto {
   @IsUUID()
   @ApiProperty()
   page_uuid: string
 
-  @IsString()
+  @IsJSON()
   @IsOptional()
   @ApiProperty()
   page_name?: string
 
-  @IsString()
+  @IsJSON()
   @IsOptional()
   @ApiProperty()
   page_description?: string
@@ -41,9 +41,4 @@ export class UpdatePageDto {
   @IsOptional()
   @ApiProperty({ default: 1 })
   category_id?: number
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  language_code?: string
 }

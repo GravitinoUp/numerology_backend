@@ -9,6 +9,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseFilters,
   UseGuards,
@@ -61,14 +62,14 @@ export class OnboardController {
     isArray: true,
   })
   @Get('all')
-  async findAll(@Req() request) {
+  async findAll(@Req() request, @Query('format_names') format_names?: boolean) {
     const key = `${CacheRoutes.ONBOARDS}/all-${request.i18nLang}`
     let onboards: OnboardResponse[] = await this.cacheManager.get(key)
 
     if (onboards) {
       return onboards
     } else {
-      onboards = await this.onboardService.findAll(request.i18nLang)
+      onboards = await this.onboardService.findAll(request.i18nLang, format_names)
       await this.cacheManager.set(key, onboards)
       return onboards
     }

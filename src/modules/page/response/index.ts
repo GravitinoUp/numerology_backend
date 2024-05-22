@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsBoolean, IsInt, IsOptional, IsString, IsUUID } from 'class-validator'
+import { IsBoolean, IsInt, IsJSON, IsOptional, IsString, IsUUID } from 'class-validator'
 
 export class PageResponse {
   @IsUUID()
   @ApiProperty()
   page_uuid: string
 
-  @IsString()
+  @IsJSON()
   @ApiProperty()
   page_name: string
 
-  @IsString()
+  @IsJSON()
   @ApiProperty()
   page_description: string
 
@@ -33,10 +33,6 @@ export class PageResponse {
   @IsInt()
   @ApiProperty()
   category_id: number
-
-  @IsString()
-  @ApiProperty()
-  language_code: string
 }
 
 export class StatusPageResponse {

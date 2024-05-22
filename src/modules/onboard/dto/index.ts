@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsInt, IsOptional, IsString } from 'class-validator'
+import { IsInt, IsJSON, IsOptional, IsString } from 'class-validator'
 
 export class CreateOnboardDto {
-  @IsString()
+  @IsJSON()
   @ApiProperty()
   onboard_name: string
 
@@ -10,13 +10,9 @@ export class CreateOnboardDto {
   @ApiProperty()
   onboard_image: string
 
-  @IsString()
+  @IsJSON()
   @ApiProperty()
   onboard_description: string
-
-  @IsString()
-  @ApiProperty()
-  language_code: string
 }
 
 export class UpdateOnboardDto {
@@ -24,7 +20,7 @@ export class UpdateOnboardDto {
   @ApiProperty()
   onboard_id: number
 
-  @IsString()
+  @IsJSON()
   @IsOptional()
   @ApiProperty({ required: false })
   onboard_name?: string
@@ -34,13 +30,8 @@ export class UpdateOnboardDto {
   @ApiProperty({ required: false })
   onboard_image?: string
 
-  @IsString()
+  @IsJSON()
   @IsOptional()
   @ApiProperty({ required: false })
   onboard_description?: string
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty({ required: false })
-  language_code?: string
 }

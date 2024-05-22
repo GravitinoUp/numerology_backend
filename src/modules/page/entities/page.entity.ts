@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
 import BaseModel from 'src/common/model'
-import { Language } from 'src/modules/language/entities/language.entity'
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm'
 import { Category } from 'src/modules/category/entities/category.entity'
 
@@ -10,11 +9,11 @@ export class Page extends BaseModel {
   @ApiProperty()
   page_uuid: string
 
-  @Column()
+  @Column({ type: 'json', default: { en: '', ru: '' } })
   @ApiProperty()
   page_name: string
 
-  @Column({ type: 'text' })
+  @Column({ type: 'json', default: { en: '', ru: '' } })
   @ApiProperty()
   page_description: string
 
@@ -42,13 +41,4 @@ export class Page extends BaseModel {
   @JoinColumn({ name: 'category_id', referencedColumnName: 'category_id' })
   @ApiProperty()
   category: Category
-
-  @Column()
-  @ApiProperty()
-  language_code: string
-
-  @ManyToOne(() => Language, (lang) => lang.language_code)
-  @JoinColumn({ name: 'language_code', referencedColumnName: 'language_code' })
-  @ApiProperty()
-  language: Language
 }

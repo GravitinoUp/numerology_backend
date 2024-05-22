@@ -35,10 +35,10 @@ export class FormulaResultService {
         .createQueryBuilder()
         .select()
         .leftJoinAndSelect('result.formula_type', 'formula_type')
-        .where('language_code = :language_code', { language_code })
         .getMany()
 
-      return results
+      const result = this.formatLocalization(results, language_code)
+      return result
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -59,10 +59,14 @@ export class FormulaResultService {
           key,
           type_id,
         })
-        .andWhere('result.language_code = :language_code', { language_code })
         .getOne()
 
-      return formulaResult
+      const formattedResult = Object.assign(formulaResult, {
+        result_name: JSON.parse(formulaResult.result_name)[language_code] as string,
+        result_content: JSON.parse(formulaResult.result_content)[language_code] as string,
+      })
+
+      return formattedResult
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -75,7 +79,7 @@ export class FormulaResultService {
     language_code: string,
   ): Promise<FormulaResultResponse[]> {
     try {
-      const result = await this.formulaResultRepository
+      const data = await this.formulaResultRepository
         .createQueryBuilder('result')
         .select()
         .leftJoinAndSelect('result.formula_type', 'formula_type')
@@ -83,9 +87,9 @@ export class FormulaResultService {
           keys,
           type_id,
         })
-        .andWhere('result.language_code = :language_code', { language_code })
         .getMany()
 
+      const result = this.formatLocalization(data, language_code)
       return result
     } catch (error) {
       console.log(error)
@@ -95,16 +99,16 @@ export class FormulaResultService {
 
   async findAllByType(type_id: number, language_code: string): Promise<FormulaResultResponse[]> {
     try {
-      const result = await this.formulaResultRepository
+      const data = await this.formulaResultRepository
         .createQueryBuilder('result')
         .select()
         .leftJoinAndSelect('result.formula_type', 'formula_type')
         .where('result.formula_type_id = :type_id', {
           type_id,
         })
-        .andWhere('result.language_code = :language_code', { language_code })
         .getMany()
 
+      const result = this.formatLocalization(data, language_code)
       return result
     } catch (error) {
       console.log(error)
@@ -156,5 +160,19 @@ export class FormulaResultService {
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
+  }
+
+  formatLocalization(data: FormulaResult[], language_code: string): FormulaResultResponse[] {
+    const result = []
+    for (const object of data) {
+      const formattedObject = Object.assign(object, {
+        result_name: JSON.parse(object.result_name)[language_code] as string,
+        result_content: JSON.parse(object.result_content)[language_code] as string,
+      })
+
+      result.push(formattedObject)
+    }
+
+    return result
   }
 }

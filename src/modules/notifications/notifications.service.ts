@@ -46,22 +46,25 @@ export class NotificationsService {
         })
         .getMany()
 
-      const result = []
-      for (const notification of notifications) {
-        const formattedNotification = Object.assign(notification, {
-          notification_name: JSON.parse(notification.notification_name)[language_code] as string,
-          notification_content: JSON.parse(notification.notification_content)[
-            language_code
-          ] as string,
-        })
-
-        result.push(formattedNotification)
-      }
-
+      const result = this.formatLocalization(notifications, language_code)
       return result
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
+  }
+
+  formatLocalization(data: Notification[], language_code: string): NotificationResponse[] {
+    const result = []
+    for (const object of data) {
+      const formattedObject = Object.assign(object, {
+        notification_name: JSON.parse(object.notification_name)[language_code] as string,
+        notification_content: JSON.parse(object.notification_content)[language_code] as string,
+      })
+
+      result.push(formattedObject)
+    }
+
+    return result
   }
 }

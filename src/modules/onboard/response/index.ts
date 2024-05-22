@@ -17,10 +17,6 @@ export class OnboardResponse {
   @IsString()
   @ApiProperty()
   onboard_description: string
-
-  @IsString()
-  @ApiProperty()
-  language_code: string
 }
 
 export class StatusOnboardResponse {

@@ -14,15 +14,10 @@ export class PageService {
 
   async findAll(language_code: string): Promise<PageResponse[]> {
     try {
-      const pages = await this.pageRepository
-        .createQueryBuilder()
-        .select()
-        .where('language_code = :language_code', {
-          language_code,
-        })
-        .getMany()
+      const pages = await this.pageRepository.createQueryBuilder().select().getMany()
 
-      return pages
+      const result = await this.formatLocalization(pages, language_code)
+      return result
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -34,13 +29,13 @@ export class PageService {
       const pages = await this.pageRepository
         .createQueryBuilder()
         .select()
-        .where('language_code = :language_code AND category_id = :category_id', {
-          language_code,
+        .where('category_id = :category_id', {
           category_id,
         })
         .getMany()
 
-      return pages
+      const result = await this.formatLocalization(pages, language_code)
+      return result
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -80,5 +75,19 @@ export class PageService {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
+  }
+
+  formatLocalization(data: Page[], language_code: string): PageResponse[] {
+    const result = []
+    for (const object of data) {
+      const formattedObject = Object.assign(object, {
+        page_name: JSON.parse(object.page_name)[language_code] as string,
+        page_description: JSON.parse(object.page_description)[language_code] as string,
+      })
+
+      result.push(formattedObject)
+    }
+
+    return result
   }
 }

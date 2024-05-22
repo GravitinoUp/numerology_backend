@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsArray, IsInt, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator'
+import { IsArray, IsInt, IsJSON, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator'
 
 export class CreateFormulaResultDto {
   @IsInt()
@@ -12,11 +12,11 @@ export class CreateFormulaResultDto {
   @ApiProperty()
   result_keys: string[]
 
-  @IsString()
+  @IsJSON()
   @ApiProperty()
   result_name: string
 
-  @IsString()
+  @IsJSON()
   @ApiProperty()
   result_content: string
 
@@ -24,10 +24,6 @@ export class CreateFormulaResultDto {
   @IsOptional()
   @ApiProperty()
   result_image?: string
-
-  @IsString()
-  @ApiProperty()
-  language_code: string
 }
 
 export class UpdateFormulaResultDto {
@@ -45,12 +41,12 @@ export class UpdateFormulaResultDto {
   @ApiProperty()
   result_keys?: string[]
 
-  @IsString()
+  @IsJSON()
   @IsOptional()
   @ApiProperty()
   result_name?: string
 
-  @IsString()
+  @IsJSON()
   @IsOptional()
   @ApiProperty()
   result_content?: string
@@ -59,9 +55,4 @@ export class UpdateFormulaResultDto {
   @IsOptional()
   @ApiProperty()
   result_image?: string
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  language_code?: string
 }

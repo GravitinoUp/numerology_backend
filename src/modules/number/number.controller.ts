@@ -158,7 +158,7 @@ export class NumberController {
     isArray: true,
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
-  @Get('')
+  @Get('planets')
   async getPlanets(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/planets-${request.user.user_uuid}-${request.i18nLang}`
     let result: FormulaResultResponse[] = await this.cacheManager.get(key)

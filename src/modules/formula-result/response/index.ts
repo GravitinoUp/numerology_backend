@@ -3,6 +3,7 @@ import {
   IsArray,
   IsBoolean,
   IsInt,
+  IsJSON,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -27,21 +28,17 @@ export class FormulaResultResponse {
   @ApiProperty()
   result_keys: string[]
 
-  @IsString()
+  @IsJSON()
   @ApiProperty()
   result_name: string
 
-  @IsString()
+  @IsJSON()
   @ApiProperty()
   result_content: string
 
   @IsString()
   @ApiProperty()
   result_image: string
-
-  @IsString()
-  @ApiProperty()
-  language_code: string
 }
 
 export class StatusFormulaResultResponse {

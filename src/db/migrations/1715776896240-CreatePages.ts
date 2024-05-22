@@ -15,12 +15,12 @@ export class CreatePages1715776896240 implements MigrationInterface {
           },
           {
             name: 'page_name',
-            type: 'varchar',
+            type: 'json',
           },
           {
             name: 'page_description',
-            type: 'text',
-            default: `''`,
+            type: 'json',
+            default: `to_json('{\"ru\":\"\",\"en\":\"\"}'::text)`,
           },
           {
             name: 'page_image',
@@ -39,10 +39,6 @@ export class CreatePages1715776896240 implements MigrationInterface {
           },
           {
             name: 'key',
-            type: 'varchar',
-          },
-          {
-            name: 'language_code',
             type: 'varchar',
           },
           {
@@ -70,17 +66,6 @@ export class CreatePages1715776896240 implements MigrationInterface {
         columnNames: ['category_id'],
         referencedColumnNames: ['category_id'],
         referencedTableName: 'Categories',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      }),
-    )
-
-    await queryRunner.createForeignKey(
-      'Pages',
-      new TableForeignKey({
-        columnNames: ['language_code'],
-        referencedColumnNames: ['language_code'],
-        referencedTableName: 'Languages',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),

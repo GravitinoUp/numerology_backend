@@ -11,7 +11,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для удачи в работе и бизнесе',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/work.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -19,7 +18,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для карьерного роста',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/career.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -27,7 +25,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для усиления работоспособности',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/working-capacity.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -35,7 +32,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для удачных переговоров',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/negotiations.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -43,7 +39,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Поток клиентов для бизнеса',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/business-clients.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -51,7 +46,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для энергичных бизнесменов',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/energetic-businessmen.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -59,7 +53,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Реализация товаров и услуг в бизнесе',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/business-products.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -67,7 +60,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Творческая реализация',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/creative.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -75,7 +67,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула богатства',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/wealth.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -83,7 +74,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Денежная формула',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/money.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -91,7 +81,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для роста материального благосостояния',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/material-well-being.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -99,7 +88,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула притягивания денег в вашу жизнь',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/money-attraction.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -107,7 +95,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Защитная формула накопленных денег',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/money-protection.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -115,7 +102,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула удачи',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/lucky.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -123,7 +109,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Подключение к энергии денег',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/money-energy.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -131,7 +116,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для получения неожиданных денег',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/unexpected-money.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -139,7 +123,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Чистка финансовых потоков',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/finance-clear.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -147,7 +130,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для перодоления кризисного периода',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/overcomming-crisis.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -155,7 +137,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула материального достатка',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/material-wealth.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -163,7 +144,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для создания семьи',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/create-family.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -171,7 +151,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для гармонизации любых отношений',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/relation-harmony.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -179,7 +158,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для поиска партнера',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/partner-find.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -187,7 +165,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Защитная формула для отношений',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/relation-protection.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -195,7 +172,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Удача в отношениях и любви',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/lukcy-in-relation.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -203,7 +179,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для привлечения партнера для создания серьезных отношений',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/serious-relations.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -211,7 +186,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Вывод отношений из кризиса',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/crisis-relations.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -219,7 +193,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для общения с людьми',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/people-communication.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -227,7 +200,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Формула для защиты дома от недоброжелателей',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/house-protection.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -235,7 +207,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Восстановление',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/regeneration.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -243,7 +214,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Боремся с депрессией',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/depression.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -251,7 +221,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Чистый организм',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/clear-organizm.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -259,7 +228,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Убираем лишний вес',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/excess-weight.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -267,7 +235,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Жизненная сила',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/life-force.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -275,7 +242,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Устойчивая психика',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/psyhic.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -283,7 +249,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Чистка от негатива',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/negative-clear.jpg',
-        language_code: 'ru',
       },
       {
         formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
@@ -291,7 +256,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
         result_name: 'Исцеление организма',
         result_content: '',
         result_image: '/files/uploads?path=uploads/images/runic-formulas/healing.jpg',
-        language_code: 'ru',
       },
     ])
   }

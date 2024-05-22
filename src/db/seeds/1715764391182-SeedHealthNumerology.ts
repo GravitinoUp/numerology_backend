@@ -10,16 +10,8 @@ export class SeedHealthNumerology1715764391182 implements MigrationInterface {
         {
           formula_type_id: FormulaTypesEnum.NUMBER_OF_FATE,
           result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'ru',
-        },
-        {
-          formula_type_id: FormulaTypesEnum.NUMBER_OF_FATE,
-          result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'en',
+          result_name: JSON.stringify({ ru: index.toString(), en: index.toString() }),
+          result_content: JSON.stringify({ ru: '', en: '' }),
         },
       ])
     }
@@ -30,16 +22,8 @@ export class SeedHealthNumerology1715764391182 implements MigrationInterface {
         {
           formula_type_id: FormulaTypesEnum.CHRONIC_DISEASES,
           result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'ru',
-        },
-        {
-          formula_type_id: FormulaTypesEnum.CHRONIC_DISEASES,
-          result_keys: [index.toString()],
-          result_name: index.toString(),
-          result_content: '',
-          language_code: 'en',
+          result_name: JSON.stringify({ ru: index.toString(), en: index.toString() }),
+          result_content: JSON.stringify({ ru: '', en: '' }),
         },
       ])
     }

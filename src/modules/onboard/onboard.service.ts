@@ -29,15 +29,16 @@ export class OnboardService {
     }
   }
 
-  async findAll(language_code: string): Promise<OnboardResponse[]> {
+  async findAll(language_code: string, format_names: boolean = true): Promise<OnboardResponse[]> {
     try {
-      const onboards = await this.onboardRepository
-        .createQueryBuilder()
-        .select()
-        .where('language_code = :language_code', { language_code })
-        .getMany()
+      const onboards = await this.onboardRepository.createQueryBuilder().select().getMany()
 
-      return onboards
+      if (format_names) {
+        const result = this.formatLocalization(onboards, language_code)
+        return result
+      } else {
+        return onboards
+      }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -88,5 +89,19 @@ export class OnboardService {
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
+  }
+
+  formatLocalization(data: Onboard[], language_code: string): OnboardResponse[] {
+    const result = []
+    for (const object of data) {
+      const formattedObject = Object.assign(object, {
+        onboard_name: JSON.parse(object.onboard_name)[language_code] as string,
+        onboard_description: JSON.parse(object.onboard_description)[language_code] as string,
+      })
+
+      result.push(formattedObject)
+    }
+
+    return result
   }
 }

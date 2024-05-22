@@ -20,16 +20,7 @@ export class CategoryService {
         .orderBy('category_id', 'ASC')
         .getMany()
 
-      const result = []
-      for (const category of categories) {
-        const formattedCategory = Object.assign(category, {
-          category_name: JSON.parse(category.category_name)[language_code] as string,
-          category_description: JSON.parse(category.category_description)[language_code] as string,
-        })
-
-        result.push(formattedCategory)
-      }
-
+      const result = this.formatLocalization(categories, language_code)
       return result
     } catch (error) {
       console.log(error)
@@ -70,5 +61,19 @@ export class CategoryService {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
+  }
+
+  formatLocalization(data: Category[], language_code: string): CategoryResponse[] {
+    const result = []
+    for (const object of data) {
+      const formattedObject = Object.assign(object, {
+        category_name: JSON.parse(object.category_name)[language_code] as string,
+        category_description: JSON.parse(object.category_description)[language_code] as string,
+      })
+
+      result.push(formattedObject)
+    }
+
+    return result
   }
 }
