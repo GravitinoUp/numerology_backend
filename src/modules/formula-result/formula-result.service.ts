@@ -69,12 +69,16 @@ export class FormulaResultService {
         })
         .getOne()
 
-      const formattedResult = Object.assign(formulaResult, {
-        result_name: JSON.parse(formulaResult.result_name)[language_code] as string,
-        result_content: JSON.parse(formulaResult.result_content)[language_code] as string,
-      })
+      if (formulaResult) {
+        const formattedResult = Object.assign(formulaResult, {
+          result_name: JSON.parse(formulaResult.result_name)[language_code] as string,
+          result_content: JSON.parse(formulaResult.result_content)[language_code] as string,
+        })
 
-      return formattedResult
+        return formattedResult
+      } else {
+        return null
+      }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)

@@ -238,7 +238,7 @@ export class NumberService {
         type: FormulaTypesEnum.WEAK_TRAITS,
       }
       const nt3 = {
-        number: getArcane(monthArcane - yearArcane).toString(),
+        number: getArcane(Math.abs(monthArcane - yearArcane)).toString(),
         type: FormulaTypesEnum.WEAK_TRAITS,
       }
 
@@ -281,6 +281,8 @@ export class NumberService {
 
       return pages
     } catch (error) {
+      console.log(error)
+
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
