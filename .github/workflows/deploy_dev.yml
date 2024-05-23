@@ -24,8 +24,8 @@ jobs:
 
       - name: Copy Dockerfile to backend directory
         run: |
-          cp devops_numerology/docker_images/backend/Dockerfile gravitino-backend/
-          cp devops_numerology/docker_images/backend/startup.sh gravitino-backend/
+          cp devops_numerology/docker_images/backend/Dockerfile numerology-backend/
+          cp devops_numerology/docker_images/backend/startup.sh numerology-backend/
 
       - name: Import Secrets
         id: import-secrets
