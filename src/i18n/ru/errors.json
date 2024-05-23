@@ -6,11 +6,16 @@
   "invalid_code": "Код недействителен!",
   "password_mismatch": "Пароли не совпадают!",
   "user_exists": "Пользователь с таким E-Mail или номером телефона уже существует!",
+  "wrong_guessing_number": "Число должно состоять из 9 цифр!",
+  "self_status_change": "Вы не можете изменить свой статус!",
+
   "user_not_found": "Пользователь не найден!",
   "language_not_found": "Язык не найден!",
   "onboard_not_found": "Приветственный экран не найден!",
   "fate_card_not_found": "Карта судьбы экран не найден!",
   "page_not_found": "Страница не найдена!",
   "data_not_found": "Ошибка получения данных (404)!",
-  "wrong_guessing_number": "Число должно состоять из 9 цифр!"
+  "category_not_found": "Категория не найдена!",
+  "result_not_found": "Трактовка не найдена!",
+  "formula_type_not_found": "Тип формулы не найдена!"
 }

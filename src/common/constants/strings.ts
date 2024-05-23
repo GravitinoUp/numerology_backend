@@ -127,6 +127,8 @@ export const AppStrings = {
   USERS_UPDATE_CURRENT_RESPONSE: 'Данные успешно изменены',
   USERS_UPDATE_PASSWORD_OPERATION: 'Изменение пароля текущего пользователя',
   USERS_UPDATE_PASSWORD_RESPONSE: 'Пароль успешно изменен',
+  USERS_UPDATE_STATUS_OPERATION: 'Изменение статуса текущего пользователя',
+  USERS_UPDATE_STATUS_RESPONSE: 'Статус успешно изменен',
   USERS_RESET_PASSWORD_OPERATION: 'Сброс пароля текущего пользователя',
   USERS_RESET_PASSWORD_RESPONSE: 'Пароль успешно изменен',
   USERS_DELETE_CURRENT_OPERATION: 'Удаление текущего пользователя',

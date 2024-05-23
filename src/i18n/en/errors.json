@@ -6,11 +6,16 @@
   "invalid_code": "Invalid code!",
   "password_mismatch": "Passwords don't match!",
   "user_exists": "A user with such an E-Mail or phone number already exists!",
+  "wrong_guessing_number": "The number must consist of 9 digits!",
+  "self_status_change": "You cannot change your status!",
+
   "user_not_found": "User not found!",
   "language_not_found": "Language not found!",
   "onboard_not_found": "Onboard not found!",
   "fate_card_not_found": "Fate card not found!",
   "page_not_found": "Page not found!",
   "data_not_found": "Data not found!",
-  "wrong_guessing_number": "The number must consist of 9 digits!"
+  "category_not_found": "Category not found!",
+  "result_not_found": "Result not found!",
+  "formula_type_not_found": "Formula type not found!"
 }

@@ -57,6 +57,14 @@ export class CheckUserExistsDto {
   phone: string
 }
 
+export class UpdateUserStatusDto {
+  @ApiProperty()
+  user_uuid: string
+
+  @ApiProperty({ default: true })
+  is_active: boolean
+}
+
 export class UpdateUserDto {
   @IsString()
   @IsOptional()

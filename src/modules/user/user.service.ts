@@ -3,7 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { User } from './entities/user.entity'
 import { ArrayUserResponse, StatusUserResponse, UserResponse } from './response'
-import { CreateUserDto, ResetUserPasswordDto, UpdateUserDto, UpdateUserPasswordDto } from './dto'
+import {
+  CreateUserDto,
+  ResetUserPasswordDto,
+  UpdateUserDto,
+  UpdateUserPasswordDto,
+  UpdateUserStatusDto,
+} from './dto'
 import { CreatePersonDto } from '../person/dto'
 import { Person } from '../person/entities/person.entity'
 import * as bcrypt from 'bcrypt'
@@ -100,7 +106,7 @@ export class UserService {
       const filters = formatFilter(userFilter?.filter ?? {})
 
       const users = await this.usersRepository.findAndCount({
-        relations: { person: includeJoins },
+        relations: { role: includeJoins, person: includeJoins },
         where: filters,
         order: userFilter.sorts,
         skip: count * (page - 1),
@@ -230,6 +236,26 @@ export class UserService {
           await this.i18n.t('errors.password_mismatch'),
           HttpStatus.BAD_REQUEST,
         )
+      }
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async updateStatus(data: UpdateUserStatusDto): Promise<StatusUserResponse> {
+    try {
+      const updateUser = await this.usersRepository
+        .createQueryBuilder()
+        .update()
+        .set({ is_active: data.is_active })
+        .where('user_uuid = :user_uuid', { user_uuid: data.user_uuid })
+        .execute()
+
+      if (updateUser.affected > 0) {
+        return { status: true }
+      } else {
+        return { status: false }
       }
     } catch (error) {
       console.log(error)

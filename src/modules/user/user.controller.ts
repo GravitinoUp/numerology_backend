@@ -19,6 +19,7 @@ import {
   ResetUserPasswordDto,
   UpdateUserDto,
   UpdateUserPasswordDto,
+  UpdateUserStatusDto,
 } from './dto'
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
@@ -171,6 +172,24 @@ export class UserController {
       updateUserPasswordDto,
       request.user.user_uuid,
     )
+    await this.clearCache()
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.USERS_UPDATE_STATUS_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.USERS_UPDATE_STATUS_RESPONSE,
+    type: StatusUserResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
+  @Patch('status')
+  async updateStatus(@Body() updateUserStatusDto: UpdateUserStatusDto, @Req() request) {
+    if (request.user.user_uuid == updateUserStatusDto.user_uuid) {
+      throw new HttpException(await this.i18n.t('errors.self_status_change'), HttpStatus.NOT_FOUND)
+    }
+    const result = await this.userService.updateStatus(updateUserStatusDto)
     await this.clearCache()
     return result
   }
