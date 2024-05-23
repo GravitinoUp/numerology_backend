@@ -13,7 +13,7 @@ import { UserModule } from '../user/user.module'
 import { ScheduleModule } from '@nestjs/schedule'
 import { AuthCodeModule } from '../auth_code/auth_code.module'
 import { OnboardModule } from '../onboard/onboard.module'
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
+import { ThrottlerGuard, ThrottlerModule, ThrottlerModuleOptions } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
 import { FormulaTypeModule } from '../formula-type/formula-type.module'
 import { FormulaResultModule } from '../formula-result/formula-result.module'
@@ -59,18 +59,24 @@ import { redisStore } from 'cache-manager-redis-yet'
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        storage: new ThrottlerStorageRedisService({
-          host: config.get('redis_host'),
-          port: config.get('redis_port'),
-        }),
-        throttlers: [
-          {
-            ttl: config.get('throttle_ttl'),
-            limit: config.get('throttle_limit'),
-          },
-        ],
-      }),
+      useFactory: (config: ConfigService) => {
+        const options: ThrottlerModuleOptions = {
+          storage: new ThrottlerStorageRedisService({
+            host: config.get('redis_host'),
+            port: config.get('redis_port'),
+          }),
+          throttlers: [
+            {
+              ttl: config.get('throttle_ttl'),
+              limit: config.get('throttle_limit'),
+            },
+          ],
+        }
+
+        console.log(options.storage)
+
+        return options
+      },
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
