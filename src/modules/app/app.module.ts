@@ -60,7 +60,10 @@ import { redisStore } from 'cache-manager-redis-yet'
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        storage: new ThrottlerStorageRedisService(),
+        storage: new ThrottlerStorageRedisService({
+          host: config.get('redis_host'),
+          port: config.get('redis_port'),
+        }),
         throttlers: [
           {
             ttl: config.get('throttle_ttl'),
