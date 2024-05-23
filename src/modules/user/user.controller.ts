@@ -130,7 +130,7 @@ export class UserController {
     const key = `${CacheRoutes.USERS}/all-${request.i18nLang}-${JSON.stringify(userFilter)}`
     let result: ArrayUserResponse = await this.cacheManager.get(key)
 
-    if (result) {
+    if (false) {
       return result
     } else {
       result = await this.userService.findAll(userFilter)

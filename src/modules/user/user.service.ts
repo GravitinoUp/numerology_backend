@@ -12,6 +12,7 @@ import { CreateAuthCodeDto } from '../auth_code/dto'
 import { AuthCodeService } from '../auth_code/auth_code.service'
 import { I18nService } from 'nestjs-i18n'
 import { UserFilter } from './filter'
+import { formatFilter } from 'src/utils/format-filter'
 
 @Injectable()
 export class UserService {
@@ -96,20 +97,15 @@ export class UserService {
     try {
       const count = userFilter?.offset?.count ?? DefaultPagination.COUNT
       const page = userFilter?.offset?.page ?? DefaultPagination.PAGE
+      const filters = formatFilter(userFilter?.filter ?? {})
 
-      let query = this.usersRepository.createQueryBuilder('user').select()
-      if (includeJoins) {
-        query = query
-          .leftJoinAndSelect('user.role', 'role')
-          .leftJoinAndSelect('user.person', 'person')
-      }
-      query = query
-        .where({ ...userFilter.filter })
-        .orderBy({ ...userFilter.sorts })
-        .offset(count * (page - 1))
-        .limit(count)
-
-      const users = await query.getManyAndCount()
+      const users = await this.usersRepository.findAndCount({
+        relations: { person: includeJoins },
+        where: filters,
+        order: userFilter.sorts,
+        skip: count * (page - 1),
+        take: count,
+      })
 
       return { count: users[1], data: users[0] }
     } catch (error) {

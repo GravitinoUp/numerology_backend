@@ -33,6 +33,6 @@ export class Person extends BaseModel {
   @ApiProperty()
   birthday_year: number
 
-  @OneToMany(() => User, (user) => user.person, { cascade: true, eager: true })
+  @OneToMany(() => User, (user) => user.person, { cascade: true })
   users: User[]
 }

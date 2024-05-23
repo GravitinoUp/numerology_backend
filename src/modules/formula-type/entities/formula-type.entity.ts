@@ -21,6 +21,6 @@ export class FormulaType extends BaseModel {
   @ApiProperty()
   formula_type_key: string
 
-  @OneToMany(() => FormulaResult, (page) => page.formula_type, { cascade: true, eager: true })
+  @OneToMany(() => FormulaResult, (page) => page.formula_type, { cascade: true })
   pages: FormulaResult[]
 }

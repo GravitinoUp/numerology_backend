@@ -53,6 +53,6 @@ export class User extends BaseModel {
   @ApiProperty()
   notification_topics: string[]
 
-  @OneToMany(() => Auth, (auth) => auth.user, { cascade: true, eager: true })
+  @OneToMany(() => Auth, (auth) => auth.user, { cascade: true })
   auths: Auth[]
 }

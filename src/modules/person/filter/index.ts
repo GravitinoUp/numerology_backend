@@ -1,56 +1,60 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { FilterOffset } from 'src/common/classes/filter_offset'
 import { AppStrings } from 'src/common/constants/strings'
-import { PersonFilters, PersonSorts } from 'src/modules/person/filter'
-import { RoleFilters, RoleSorts } from 'src/modules/role/filter'
 
-export class UserSorts {
+export class PersonSorts {
   @ApiProperty({ default: AppStrings.ASC, required: false })
-  user_uuid?: 'ASC' | 'DESC'
+  person_uuid?: 'ASC' | 'DESC'
 
   @ApiProperty({ default: AppStrings.ASC, required: false })
-  person?: PersonSorts
+  last_name?: 'ASC' | 'DESC'
 
   @ApiProperty({ default: AppStrings.ASC, required: false })
-  role?: RoleSorts
+  first_name?: 'ASC' | 'DESC'
 
   @ApiProperty({ default: AppStrings.ASC, required: false })
-  is_active?: 'ASC' | 'DESC'
+  patronymic?: 'ASC' | 'DESC'
 
   @ApiProperty({ default: AppStrings.ASC, required: false })
-  email?: 'ASC' | 'DESC'
+  birthday_day?: 'ASC' | 'DESC'
 
   @ApiProperty({ default: AppStrings.ASC, required: false })
-  phone?: 'ASC' | 'DESC'
+  birthday_month?: 'ASC' | 'DESC'
+
+  @ApiProperty({ default: AppStrings.ASC, required: false })
+  birthday_year?: 'ASC' | 'DESC'
 }
 
-export class UserFilters {
+export class PersonFilters {
   @ApiProperty({ required: false })
-  user_uuid?: string
+  person_uuid?: string
 
   @ApiProperty({ required: false })
-  person?: PersonFilters
+  last_name?: string
 
   @ApiProperty({ required: false })
-  role?: RoleFilters
+  first_name?: string
 
   @ApiProperty({ required: false })
-  is_active?: boolean
+  patronymic?: string
 
   @ApiProperty({ required: false })
-  email?: string
+  birthday_day?: number
 
   @ApiProperty({ required: false })
-  phone?: string
+  birthday_month?: number
+
+  @ApiProperty({ required: false })
+  birthday_year?: number
 }
 
-export class UserFilter {
+export class PersonFilter {
   @ApiProperty({ required: false })
   offset?: FilterOffset
 
   @ApiProperty({ required: false })
-  filter?: UserFilters
+  filter?: PersonFilters
 
   @ApiProperty({ required: false })
-  sorts?: UserSorts
+  sorts?: PersonSorts
 }
