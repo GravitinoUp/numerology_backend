@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsArray, IsBoolean, IsOptional, IsString, IsUUID } from 'class-validator'
+import { IsArray, IsBoolean, IsInt, IsOptional, IsString, IsUUID } from 'class-validator'
 
 export class UserResponse {
   @IsUUID()
@@ -38,6 +38,16 @@ export class UserResponse {
   @IsArray()
   @ApiProperty()
   notification_topics: string[]
+}
+
+export class ArrayUserResponse {
+  @IsInt()
+  @ApiProperty()
+  count: number
+
+  @IsArray()
+  @ApiProperty({ required: false, type: UserResponse, isArray: true })
+  data: UserResponse[]
 }
 
 export class StatusUserResponse {

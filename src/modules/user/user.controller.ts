@@ -20,10 +20,10 @@ import {
   UpdateUserDto,
   UpdateUserPasswordDto,
 } from './dto'
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { I18nService } from 'nestjs-i18n'
-import { StatusUserResponse, UserResponse } from './response'
+import { ArrayUserResponse, StatusUserResponse, UserResponse } from './response'
 import { AppStrings } from 'src/common/constants/strings'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { ActiveGuard } from '../auth/guards/active.guard'
@@ -31,7 +31,10 @@ import { AuthCodeService } from '../auth_code/auth_code.service'
 import { CreateAuthCodeDto } from '../auth_code/dto'
 import { Throttle } from '@nestjs/throttler'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
-import { CacheRoutes } from 'src/common/constants/constants'
+import { CacheRoutes, RolesEnum } from 'src/common/constants/constants'
+import { RolesGuard } from '../role/guards/roles.guard'
+import { Roles } from '../role/guards/decorators/role.decorator'
+import { UserFilter } from './filter'
 
 @ApiBearerAuth()
 @ApiTags('Users')
@@ -108,6 +111,29 @@ export class UserController {
       return result
     } else {
       result = await this.userService.findByUuid(request.user.user_uuid)
+      await this.cacheManager.set(key, result)
+      return result
+    }
+  }
+
+  @ApiOperation({ summary: AppStrings.USERS_GET_ALL_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: AppStrings.USERS_GET_ALL_RESPONSE,
+    type: ArrayUserResponse,
+  })
+  @ApiBody({ type: UserFilter, required: false })
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
+  @Post('all')
+  async findAll(@Body() userFilter: UserFilter, @Req() request) {
+    const key = `${CacheRoutes.USERS}/all-${request.i18nLang}-${JSON.stringify(userFilter)}`
+    let result: ArrayUserResponse = await this.cacheManager.get(key)
+
+    if (result) {
+      return result
+    } else {
+      result = await this.userService.findAll(userFilter)
       await this.cacheManager.set(key, result)
       return result
     }

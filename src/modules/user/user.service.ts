@@ -2,15 +2,16 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { User } from './entities/user.entity'
-import { StatusUserResponse, UserResponse } from './response'
+import { ArrayUserResponse, StatusUserResponse, UserResponse } from './response'
 import { CreateUserDto, ResetUserPasswordDto, UpdateUserDto, UpdateUserPasswordDto } from './dto'
 import { CreatePersonDto } from '../person/dto'
 import { Person } from '../person/entities/person.entity'
 import * as bcrypt from 'bcrypt'
-import { RolesEnum } from 'src/common/constants/constants'
+import { DefaultPagination, RolesEnum } from 'src/common/constants/constants'
 import { CreateAuthCodeDto } from '../auth_code/dto'
 import { AuthCodeService } from '../auth_code/auth_code.service'
 import { I18nService } from 'nestjs-i18n'
+import { UserFilter } from './filter'
 
 @Injectable()
 export class UserService {
@@ -55,8 +56,6 @@ export class UserService {
 
       const result = newUser.raw[0]
       if (result) {
-        delete result['password']
-
         await this.authCodeService.deleteAuthCode(code, queryRunner, true)
 
         await queryRunner.commitTransaction()
@@ -85,9 +84,34 @@ export class UserService {
       query = query.where('user.user_uuid = :user_uuid', { user_uuid })
 
       const user = await query.getOne()
-      delete user['password']
 
       return user
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async findAll(userFilter: UserFilter, includeJoins: boolean = true): Promise<ArrayUserResponse> {
+    try {
+      const count = userFilter?.offset?.count ?? DefaultPagination.COUNT
+      const page = userFilter?.offset?.page ?? DefaultPagination.PAGE
+
+      let query = this.usersRepository.createQueryBuilder('user').select()
+      if (includeJoins) {
+        query = query
+          .leftJoinAndSelect('user.role', 'role')
+          .leftJoinAndSelect('user.person', 'person')
+      }
+      query = query
+        .where({ ...userFilter.filter })
+        .orderBy({ ...userFilter.sorts })
+        .offset(count * (page - 1))
+        .limit(count)
+
+      const users = await query.getManyAndCount()
+
+      return { count: users[1], data: users[0] }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)

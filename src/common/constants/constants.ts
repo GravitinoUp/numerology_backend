@@ -52,6 +52,11 @@ export const CacheRoutes = {
   USERS: 'user',
 }
 
+export const DefaultPagination = {
+  COUNT: 50,
+  PAGE: 1,
+}
+
 export const RuVowelLetters = ['а', 'о', 'э', 'е', 'и', 'ы', 'у', 'ё', 'ю', 'я']
 export const EnVowelLetters = ['a', 'e', 'i', 'o', 'u', 'y']
 
