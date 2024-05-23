@@ -24,7 +24,8 @@ import { PageModule } from '../page/page.module'
 import { FilesModule } from '../files/files.module'
 import { NotificationsModule } from '../notifications/notifications.module'
 import { CacheModule } from '@nestjs/cache-manager'
-import { redisStore } from 'cache-manager-redis-yet'
+import * as redisStore from 'cache-manager-redis-store'
+import { RedisClientOptions } from 'redis'
 
 @Module({
   imports: [
@@ -44,16 +45,22 @@ import { redisStore } from 'cache-manager-redis-yet'
       isGlobal: true,
       load: [configuration],
     }),
-    CacheModule.registerAsync({
+    CacheModule.registerAsync<RedisClientOptions>({
       imports: [ConfigModule],
       inject: [ConfigService],
       isGlobal: true,
-      useFactory: async (configService: ConfigService) => ({
-        store: redisStore,
-        host: configService.get('redis_host'),
-        port: configService.get('redis_port'),
-        ttl: configService.get('cache_ttl'),
-      }),
+      useFactory: async (configService: ConfigService) => {
+        const options = {
+          store: redisStore,
+          host: configService.get('redis_host'),
+          port: configService.get('redis_port'),
+          ttl: configService.get('cache_ttl'),
+        }
+
+        console.log(options)
+
+        return options
+      },
     }),
     ScheduleModule.forRoot(),
     ThrottlerModule.forRootAsync({
@@ -72,8 +79,6 @@ import { redisStore } from 'cache-manager-redis-yet'
             },
           ],
         }
-
-        console.log(options.storage)
 
         return options
       },
