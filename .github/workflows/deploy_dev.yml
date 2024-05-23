@@ -1,0 +1,79 @@
+name: Deploy dev
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Clone backend repository
+        run: git clone https://${{ secrets.TRIGGER }}@github.com/GravitinoUp/numerology_backend.git -b ${{ github.ref_name }} numerology-backend/
+
+      - name: Check files
+        run: ls -la numerology-backend/
+
+      - name: Clone devops-gravitino repository
+        run: git clone https://${{ secrets.TRIGGER }}@github.com/GravitinoUp/devops_numerology.git -b ${{ github.ref_name }}
+
+      - name: Copy Dockerfile to backend directory
+        run: |
+          cp devops_numerology/docker_images/backend/Dockerfile gravitino-backend/
+          cp devops_numerology/docker_images/backend/startup.sh gravitino-backend/
+
+      - name: Import Secrets
+        id: import-secrets
+        uses: hashicorp/vault-action@v3
+        with:
+          url: https://vault.devops.gravitino.ru
+          token: ${{ secrets.VAULT_GITHUB_SECRET }}
+          secrets: |
+            secret/numerology-backend/dev REFRESH_SECRET | REFRESH_SECRET ;
+            secret/numerology-backend/dev ACCESS_SECRET | ACCESS_SECRET ;
+            secret/numerology-backend/dev PORT | PORT ;
+            secret/numerology-backend/dev DIALECT | DIALECT ;
+            secret/numerology-backend/dev DB_HOST | DB_HOST ;
+            secret/numerology-backend/dev DB_PORT | DB_PORT ;
+            secret/numerology-backend/dev DB_USERNAME | DB_USERNAME ;
+            secret/numerology-backend/dev DB_PASSWORD | DB_PASSWORD ;
+            secret/numerology-backend/dev DB_NAME | DB_NAME ;
+            secret/numerology-backend/dev REDIS_HOST | REDIS_HOST ;
+            secret/numerology-backend/dev REDIS_PORT | REDIS_PORT ;
+            secret/numerology-backend/dev CACHE_TTL | CACHE_TTL ;
+            secret/numerology-backend/dev THROTTLE_TTL | THROTTLE_TTL ;
+            secret/numerology-backend/dev THROTTLE_LIMIT | THROTTLE_LIMIT ;
+
+      - name: Build Docker image
+        run: |
+          cd gravitino-backend/
+          docker build --build-arg REFRESH_SECRET="${{ env.REFRESH_SECRET }}" --build-arg ACCESS_SECRET="${{ env.ACCESS_SECRET }}" --build-arg PORT="${{ env.PORT }}" --build-arg DIALECT="${{ env.DIALECT }}" --build-arg DB_HOST="${{ env.DB_HOST }}" --build-arg DB_PORT="${{ env.DB_PORT }}" --build-arg DB_USERNAME="${{ env.DB_USERNAME }}" --build-arg DB_PASSWORD="${{ env.DB_PASSWORD }}" --build-arg DB_NAME="${{ env.DB_NAME }}" --build-arg REDIS_HOST="${{ env.REDIS_HOST }}" --build-arg REDIS_PORT="${{ env.REDIS_PORT }}" --build-arg CACHE_TTL="${{ env.CACHE_TTL }}" --build-arg THROTTLE_TTL="${{ env.THROTTLE_TTL }}" --build-arg THROTTLE_LIMIT="${{ env.THROTTLE_LIMIT }}" -t numerology_backend_${{ github.ref_name }} .
+  
+      - name: Docker Login
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u del98 --password-stdin
+
+      - name: Tag Docker image
+        run: docker tag numerology_backend_${{ github.ref_name }} del98/numerology_backend_${{ github.ref_name }}:${{ github.sha }}
+
+      - name: Push Docker image
+        run: docker push del98/numerology_backend_${{ github.ref_name }}:${{ github.sha }}
+
+      - name: Trigger devops workflow
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.TRIGGER }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'GravitinoUp',
+              repo: 'devops_numerology',
+              workflow_id: 'backend_workflow.yml',
+              ref: 'develop',
+              inputs: {
+                imageTag: "${{ github.sha }}"
+              }
+            });
