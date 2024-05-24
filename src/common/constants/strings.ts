@@ -105,6 +105,8 @@ export const AppStrings = {
   AROMATHERAPY_GET_RESPONSE: 'Данные успешно получены',
   RUNIC_FORMULAS_GET_OPERATION: 'Получение рунических формул',
   RUNIC_FORMULAS_GET_RESPONSE: 'Данные успешно получены',
+  GRAPHS_GET_OPERATION: 'Получение графиков',
+  GRAPHS_GET_RESPONSE: 'Графики успешно получены',
 
   FORMULA_TYPE_GET_ALL_OPERATION: 'Получение списка всех типов страниц',
   FORMULA_TYPE_GET_ALL_RESPONSE: 'Типы страниц успешно получены',

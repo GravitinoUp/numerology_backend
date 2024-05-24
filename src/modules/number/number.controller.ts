@@ -22,6 +22,7 @@ import { I18nService } from 'nestjs-i18n'
 import { GetCompatibilityDto } from './dto'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 import { CacheRoutes } from 'src/common/constants/constants'
+import { GraphResponse } from './response'
 
 @ApiBearerAuth()
 @ApiTags('Numbers')
@@ -500,6 +501,28 @@ export class NumberController {
       return result
     } else {
       result = await this.numberService.getRunicFormulas(request.i18nLang)
+      await this.cacheManager.set(key, result)
+      return result
+    }
+  }
+
+  @ApiOperation({ summary: AppStrings.GRAPHS_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.GRAPHS_GET_RESPONSE,
+    type: GraphResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('graphs')
+  async getGraphs(@Req() request) {
+    const key = `${CacheRoutes.NUMBERS}/graphs-${request.user.user_uuid}-${request.i18nLang}`
+    let result: GraphResponse[] = await this.cacheManager.get(key)
+
+    if (false) {
+      return result
+    } else {
+      result = await this.numberService.getGrahps(request.user.user_uuid)
       await this.cacheManager.set(key, result)
       return result
     }

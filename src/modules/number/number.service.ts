@@ -15,6 +15,7 @@ import {
 } from 'src/common/utils/numbers'
 import { UserService } from '../user/user.service'
 import getLocalizedFormulaType from 'src/common/utils/get_localized_formula_type'
+import { GraphResponse } from './response'
 
 @Injectable()
 export class NumberService {
@@ -956,6 +957,37 @@ export class NumberService {
         throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
       }
       return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getGrahps(user_uuid: string): Promise<GraphResponse[]> {
+    try {
+      const userData = await this.personService.getPersonData(user_uuid)
+      const userDayMonth = `${userData.birthday_day}${userData.birthday_month}`
+      const userYear = `${userData.birthday_year}`
+
+      const xCoords = ['0', '12', '24', '36', '48', '60', '72']
+
+      let destinyKey = (Number(userDayMonth) * Number(userYear)).toString()
+      if (Number(destinyKey) < 1000000) destinyKey = `0${destinyKey}`
+      let volitionKey = destinyKey.replaceAll('0', '1')
+      if (Number(volitionKey) < 1000000) volitionKey = `0${volitionKey}`
+
+      const destinyResponse = new GraphResponse()
+      destinyResponse.y_coords = destinyKey.split('')
+      destinyResponse.x_coords = xCoords
+      destinyResponse.graph_name = this.i18n.t('titles.destiny_graph')
+
+      const volitionResponse = new GraphResponse()
+      volitionResponse.y_coords = volitionKey.split('')
+      volitionResponse.x_coords = xCoords
+      volitionResponse.graph_name = this.i18n.t('titles.volition_graph')
+
+      console.log(destinyKey, volitionKey)
+
+      return [destinyResponse, volitionResponse]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
