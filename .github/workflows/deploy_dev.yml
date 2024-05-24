@@ -19,7 +19,7 @@ jobs:
       - name: Check files
         run: ls -la numerology-backend/
 
-      - name: Clone devops-gravitino repository
+      - name: Clone devops_gravitino repository
         run: git clone https://${{ secrets.TRIGGER }}@github.com/GravitinoUp/devops_numerology.git -b ${{ github.ref_name }}
 
       - name: Copy Dockerfile to backend directory
