@@ -49,7 +49,7 @@ export class CategoryController {
     const key = `${CacheRoutes.CATEGORIES}/all-${request.i18nLang}-${format_names}`
     let categories: CategoryResponse[] = await this.cacheManager.get(key)
 
-    if (false) {
+    if (categories) {
       return categories
     } else {
       categories = await this.categoryService.findAll(request.i18nLang, format_names)

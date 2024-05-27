@@ -519,7 +519,7 @@ export class NumberController {
     const key = `${CacheRoutes.NUMBERS}/graphs-${request.user.user_uuid}-${request.i18nLang}`
     let result: GraphResponse[] = await this.cacheManager.get(key)
 
-    if (false) {
+    if (result) {
       return result
     } else {
       result = await this.numberService.getGrahps(request.user.user_uuid)
