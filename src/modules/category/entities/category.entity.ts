@@ -19,4 +19,12 @@ export class Category extends BaseModel {
   @Column({ type: 'json', default: { ru: '', en: '' } })
   @ApiProperty()
   category_description: string
+
+  @Column()
+  @ApiProperty()
+  is_active: boolean
+
+  @Column({ nullable: true })
+  @ApiProperty({ required: false })
+  position?: number
 }

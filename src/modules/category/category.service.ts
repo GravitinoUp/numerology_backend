@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { Category } from './entities/category.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { UpdateCategoryDto } from './dto'
+import { UpdateCategoryDto, UpdateCategoryStatusDto } from './dto'
 import { CategoryResponse, StatusCategoryResponse } from './response'
 
 @Injectable()
@@ -42,6 +42,26 @@ export class CategoryService {
         .getExists()
 
       return categoryExists
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async updateStatus(data: UpdateCategoryStatusDto): Promise<StatusCategoryResponse> {
+    try {
+      const updateUser = await this.categoryRepository
+        .createQueryBuilder()
+        .update()
+        .set({ is_active: data.is_active })
+        .where({ category_id: data.category_id })
+        .execute()
+
+      if (updateUser.affected > 0) {
+        return { status: true }
+      } else {
+        return { status: false }
+      }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)

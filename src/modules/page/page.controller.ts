@@ -23,7 +23,7 @@ import { Roles } from '../role/guards/decorators/role.decorator'
 import { RolesGuard } from '../role/guards/roles.guard'
 import { PageResponse, StatusPageResponse } from './response'
 import { I18nService } from 'nestjs-i18n'
-import { UpdatePageDto } from './dto'
+import { UpdatePageDto, UpdatePageStatusDto } from './dto'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 
 @ApiBearerAuth()
@@ -83,6 +83,26 @@ export class PageController {
       await this.cacheManager.set(key, result)
       return result
     }
+  }
+
+  @ApiOperation({ summary: AppStrings.PAGE_UPDATE_STATUS_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.PAGE_UPDATE_STATUS_RESPONSE,
+    type: StatusPageResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
+  @Patch('status')
+  async updateStatus(@Body() pageStatus: UpdatePageStatusDto) {
+    const isCategoryExists = await this.pageService.isExists(pageStatus.page_uuid)
+    if (!isCategoryExists) {
+      throw new HttpException(await this.i18n.t('errors.page_not_found'), HttpStatus.NOT_FOUND)
+    }
+
+    const result = await this.pageService.updateStatus(pageStatus)
+    await this.clearCache()
+    return result
   }
 
   @ApiOperation({ summary: AppStrings.PAGE_UPDATE_OPERATION })

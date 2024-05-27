@@ -3,7 +3,7 @@ import { Page } from './entities/page.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { PageResponse, StatusPageResponse } from './response'
-import { UpdatePageDto } from './dto'
+import { UpdatePageDto, UpdatePageStatusDto } from './dto'
 
 @Injectable()
 export class PageService {
@@ -65,6 +65,26 @@ export class PageService {
         .getExists()
 
       return pageExists
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async updateStatus(data: UpdatePageStatusDto): Promise<StatusPageResponse> {
+    try {
+      const updateUser = await this.pageRepository
+        .createQueryBuilder()
+        .update()
+        .set({ is_active: data.is_active })
+        .where({ page_uuid: data.page_uuid })
+        .execute()
+
+      if (updateUser.affected > 0) {
+        return { status: true }
+      } else {
+        return { status: false }
+      }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
