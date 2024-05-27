@@ -223,7 +223,7 @@ export class UserController {
   }
 
   async clearCache() {
-    const keys = await this.cacheManager.store.keys(`${CacheRoutes.PAGES}*`) // Удаление кэша
+    const keys = await this.cacheManager.store.keys(`${CacheRoutes.USERS}*`) // Удаление кэша
     for (const key of keys) {
       await this.cacheManager.del(key)
     }

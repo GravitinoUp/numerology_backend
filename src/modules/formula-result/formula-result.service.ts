@@ -38,6 +38,7 @@ export class FormulaResultService {
         .createQueryBuilder()
         .select()
         .leftJoinAndSelect('result.formula_type', 'formula_type')
+        .orderBy('result_keys', 'ASC')
         .getMany()
 
       if (format_names == true) {
@@ -67,6 +68,7 @@ export class FormulaResultService {
           key,
           type_id,
         })
+        .orderBy('result_keys', 'ASC')
         .getOne()
 
       if (formulaResult) {
@@ -100,6 +102,7 @@ export class FormulaResultService {
           keys,
           type_id,
         })
+        .orderBy('result_keys', 'ASC')
         .getMany()
 
       if (format_names == true) {
@@ -121,6 +124,8 @@ export class FormulaResultService {
     format_names: boolean = true,
   ): Promise<FormulaResultResponse[]> {
     try {
+      console.log(111)
+
       const data = await this.formulaResultRepository
         .createQueryBuilder('result')
         .select()
@@ -128,6 +133,7 @@ export class FormulaResultService {
         .where('result.formula_type_id = :type_id', {
           type_id,
         })
+        .orderBy('result_keys', 'ASC')
         .getMany()
 
       if (format_names == true) {
