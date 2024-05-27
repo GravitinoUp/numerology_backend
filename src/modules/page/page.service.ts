@@ -41,6 +41,7 @@ export class PageService {
         .where('category_id = :category_id', {
           category_id,
         })
+        .orderBy('page_uuid', 'ASC')
         .getMany()
 
       if (format_names == true) {

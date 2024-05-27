@@ -985,8 +985,6 @@ export class NumberService {
       volitionResponse.x_coords = xCoords
       volitionResponse.graph_name = this.i18n.t('titles.volition_graph')
 
-      console.log(destinyKey, volitionKey)
-
       return [destinyResponse, volitionResponse]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)

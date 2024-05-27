@@ -32,7 +32,7 @@ export class FilesController {
     FilesInterceptor('files', 1, {
       storage: diskStorage({
         destination: (req, file, cb) => {
-          const destination = `./uploads/${req.query.directory}`
+          const destination = `./uploads/images/${req.query.directory}`
           cb(null, `${destination}`)
         },
         filename: (req, file, cb) => {
