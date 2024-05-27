@@ -50,12 +50,15 @@ import { RedisClientOptions } from 'redis'
       inject: [ConfigService],
       isGlobal: true,
       useFactory: async (configService: ConfigService) => {
-        const options: CacheOptions = {
-          store: redisStore,
-          host: configService.get('redis_host'),
-          port: configService.get('redis_port'),
-          ttl: configService.get('cache_ttl'),
-        }
+        const options: CacheOptions =
+          configService.get('disable_cache') == 'true'
+            ? {}
+            : {
+                store: redisStore,
+                host: configService.get('redis_host'),
+                port: configService.get('redis_port'),
+                ttl: configService.get('cache_ttl'),
+              }
 
         return options
       },
