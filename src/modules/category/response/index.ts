@@ -18,6 +18,15 @@ export class CategoryResponse {
   @IsJSON()
   @ApiProperty()
   category_description: string
+
+  @IsBoolean()
+  @ApiProperty()
+  is_active: boolean
+
+  @IsInt()
+  @IsOptional()
+  @ApiProperty()
+  position?: number
 }
 
 export class StatusCategoryResponse {

@@ -37,6 +37,10 @@ export class Page extends BaseModel {
   @ApiProperty()
   category_id: number
 
+  @Column()
+  @ApiProperty()
+  is_active: boolean
+
   @ManyToOne(() => Category, (category) => category.category_id)
   @JoinColumn({ name: 'category_id', referencedColumnName: 'category_id' })
   @ApiProperty()

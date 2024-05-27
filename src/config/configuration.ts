@@ -18,4 +18,5 @@ export default () => ({
   throttle_ttl: process.env.THROTTLE_TTL,
   throttle_limit: process.env.THROTTLE_LIMIT,
   disable_ssl: process.env.DISABLE_SSL,
+  disable_cache: process.env.DISABLE_CACHE,
 })

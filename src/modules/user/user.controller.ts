@@ -131,7 +131,7 @@ export class UserController {
     const key = `${CacheRoutes.USERS}/all-${request.i18nLang}-${JSON.stringify(userFilter)}`
     let result: ArrayUserResponse = await this.cacheManager.get(key)
 
-    if (false) {
+    if (result) {
       return result
     } else {
       result = await this.userService.findAll(userFilter)
@@ -223,7 +223,7 @@ export class UserController {
   }
 
   async clearCache() {
-    const keys = await this.cacheManager.store.keys(`${CacheRoutes.PAGES}*`) // Удаление кэша
+    const keys = await this.cacheManager.store.keys(`${CacheRoutes.USERS}*`) // Удаление кэша
     for (const key of keys) {
       await this.cacheManager.del(key)
     }

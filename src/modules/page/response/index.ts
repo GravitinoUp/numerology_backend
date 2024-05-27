@@ -33,6 +33,10 @@ export class PageResponse {
   @IsInt()
   @ApiProperty()
   category_id: number
+
+  @IsBoolean()
+  @ApiProperty()
+  is_active: boolean
 }
 
 export class StatusPageResponse {

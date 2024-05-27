@@ -11,19 +11,19 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common'
-import { CategoryService } from './category.service'
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { AppStrings } from 'src/common/constants/strings'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { CategoryResponse, StatusCategoryResponse } from './response'
-import { UpdateCategoryDto } from './dto'
+import { UpdateCategoryDto, UpdateCategoryStatusDto } from './dto'
 import { I18nService } from 'nestjs-i18n'
 import { RolesGuard } from '../role/guards/roles.guard'
 import { Roles } from '../role/guards/decorators/role.decorator'
 import { CacheRoutes, RolesEnum } from 'src/common/constants/constants'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
+import { CategoryService } from './category.service'
 
 @ApiBearerAuth()
 @ApiTags('Categories')
@@ -49,7 +49,7 @@ export class CategoryController {
     const key = `${CacheRoutes.CATEGORIES}/all-${request.i18nLang}-${format_names}`
     let categories: CategoryResponse[] = await this.cacheManager.get(key)
 
-    if (false) {
+    if (categories) {
       return categories
     } else {
       categories = await this.categoryService.findAll(request.i18nLang, format_names)
@@ -74,6 +74,26 @@ export class CategoryController {
     }
 
     const result = await this.categoryService.update(updateCategory)
+    await this.clearCache()
+    return result
+  }
+
+  @ApiOperation({ summary: AppStrings.CATEGORY_UPDATE_STATUS_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.CATEGORY_UPDATE_STATUS_RESPONSE,
+    type: StatusCategoryResponse,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
+  @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
+  @Patch('status')
+  async updateStatus(@Body() categoryStatus: UpdateCategoryStatusDto) {
+    const isCategoryExists = await this.categoryService.isCategoryExists(categoryStatus.category_id)
+    if (!isCategoryExists) {
+      throw new HttpException(await this.i18n.t('errors.category_not_found'), HttpStatus.NOT_FOUND)
+    }
+
+    const result = await this.categoryService.updateStatus(categoryStatus)
     await this.clearCache()
     return result
   }

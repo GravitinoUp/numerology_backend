@@ -9,6 +9,8 @@ export const AppStrings = {
   CATEGORY_GET_ALL_RESPONSE: 'Категории успешно получены',
   CATEGORY_UPDATE_OPERATION: 'Изменение категории',
   CATEGORY_UPDATE_RESPONSE: 'Категория успешно изменена',
+  CATEGORY_UPDATE_STATUS_OPERATION: 'Изменение статуса категории',
+  CATEGORY_UPDATE_STATUS_RESPONSE: 'Статус категории успешно изменен',
 
   FORMULA_RESULT_CREATE_OPERATION: 'Создание трактовки',
   FORMULA_RESULT_CREATE_RESPONSE: 'Трактовка успешно создана',
@@ -56,6 +58,8 @@ export const AppStrings = {
   PAGE_GET_BY_CATEGORY_RESPONSE: 'Страницы успешно получены',
   PAGE_UPDATE_OPERATION: 'Изменение страницы',
   PAGE_UPDATE_RESPONSE: 'Страница успешно изменен',
+  PAGE_UPDATE_STATUS_OPERATION: 'Изменение статуса страницы',
+  PAGE_UPDATE_STATUS_RESPONSE: 'Статус страницы успешно изменен',
   PAGE_DELETE_OPERATION: 'Удаление страницы',
   PAGE_DELETE_RESPONSE: 'Страница успешно удален',
 

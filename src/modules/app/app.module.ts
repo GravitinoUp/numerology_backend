@@ -23,7 +23,7 @@ import { CategoryModule } from '../category/category.module'
 import { PageModule } from '../page/page.module'
 import { FilesModule } from '../files/files.module'
 import { NotificationsModule } from '../notifications/notifications.module'
-import { CacheModule } from '@nestjs/cache-manager'
+import { CacheModule, CacheOptions } from '@nestjs/cache-manager'
 import * as redisStore from 'cache-manager-redis-store'
 import { RedisClientOptions } from 'redis'
 
@@ -50,14 +50,15 @@ import { RedisClientOptions } from 'redis'
       inject: [ConfigService],
       isGlobal: true,
       useFactory: async (configService: ConfigService) => {
-        const options = {
-          store: redisStore,
-          host: configService.get('redis_host'),
-          port: configService.get('redis_port'),
-          ttl: configService.get('cache_ttl'),
-        }
-
-        console.log(options)
+        const options: CacheOptions =
+          configService.get('disable_cache') == 'true'
+            ? {}
+            : {
+                store: redisStore,
+                host: configService.get('redis_host'),
+                port: configService.get('redis_port'),
+                ttl: configService.get('cache_ttl'),
+              }
 
         return options
       },
@@ -97,7 +98,7 @@ import { RedisClientOptions } from 'redis'
         autoLoadEntities: false,
         synchronize: false,
         migrationsRun: false,
-        logging: true,
+        logging: false,
       }),
     }),
     AuthModule,
