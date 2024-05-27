@@ -23,6 +23,8 @@ async function bootstrap() {
       'http://backend.numerology-dev.gravitino.ru',
       'https://matrix-77.com',
       'http://matrix-77.com',
+      'https://admin.matrix-77.com',
+      'http://admin.matrix-77.com',
       'https://backend.matrix-77.com',
       'http://backend.matrix-77.com',
     ],
