@@ -98,7 +98,7 @@ import { RedisClientOptions } from 'redis'
         autoLoadEntities: false,
         synchronize: false,
         migrationsRun: false,
-        logging: true,
+        logging: false,
       }),
     }),
     AuthModule,

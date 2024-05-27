@@ -18,11 +18,6 @@ export class CreateCategoryDto {
   @IsOptional()
   @ApiProperty({ required: false, default: true })
   is_active?: boolean
-
-  @IsInt()
-  @IsOptional()
-  @ApiProperty({ required: false, default: null })
-  position?: number
 }
 
 export class UpdateCategoryDto {
@@ -54,6 +49,11 @@ export class UpdateCategoryDto {
   @IsOptional()
   @ApiProperty({ required: false, default: null })
   position?: number
+
+  @IsInt()
+  @IsOptional()
+  @ApiProperty({ required: false, default: null })
+  old_position?: number
 }
 
 export class UpdateCategoryStatusDto {

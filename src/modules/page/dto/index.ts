@@ -46,11 +46,6 @@ export class UpdatePageDto {
   @IsOptional()
   @ApiProperty({ default: true })
   is_active?: boolean
-
-  @IsInt()
-  @IsOptional()
-  @ApiProperty({ default: null })
-  position?: number
 }
 
 export class UpdatePageStatusDto {

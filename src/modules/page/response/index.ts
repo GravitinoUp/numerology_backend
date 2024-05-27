@@ -37,11 +37,6 @@ export class PageResponse {
   @IsBoolean()
   @ApiProperty()
   is_active: boolean
-
-  @IsInt()
-  @IsOptional()
-  @ApiProperty({ required: false })
-  position?: number
 }
 
 export class StatusPageResponse {

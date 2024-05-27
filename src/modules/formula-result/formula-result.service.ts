@@ -124,8 +124,6 @@ export class FormulaResultService {
     format_names: boolean = true,
   ): Promise<FormulaResultResponse[]> {
     try {
-      console.log(111)
-
       const data = await this.formulaResultRepository
         .createQueryBuilder('result')
         .select()

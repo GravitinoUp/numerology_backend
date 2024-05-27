@@ -11,7 +11,6 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common'
-import { CategoryService } from './category.service'
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { AppStrings } from 'src/common/constants/strings'
@@ -24,6 +23,7 @@ import { RolesGuard } from '../role/guards/roles.guard'
 import { Roles } from '../role/guards/decorators/role.decorator'
 import { CacheRoutes, RolesEnum } from 'src/common/constants/constants'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
+import { CategoryService } from './category.service'
 
 @ApiBearerAuth()
 @ApiTags('Categories')
