@@ -5,7 +5,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import configuration from 'src/config/configuration'
 import { AcceptLanguageResolver, I18nModule } from 'nestjs-i18n'
-import { join } from 'path'
 import { AuthModule } from '../auth/auth.module'
 import { PersonModule } from '../person/person.module'
 import { RoleModule } from '../role/role.module'
@@ -36,7 +35,7 @@ import { RedisClientOptions } from 'redis'
         'en-*': 'en',
       },
       loaderOptions: {
-        path: join(__dirname.split('src')[0], '/i18n/'),
+        path: './dist/i18n/',
         watch: true,
       },
       resolvers: [AcceptLanguageResolver],
