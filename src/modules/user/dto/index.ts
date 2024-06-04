@@ -116,3 +116,9 @@ export class ResetUserPasswordDto {
   @ApiProperty()
   password: string
 }
+
+export class DeleteUserDto {
+  @IsString()
+  @ApiProperty()
+  password: string
+}

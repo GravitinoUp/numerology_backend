@@ -5,6 +5,7 @@ import { User } from './entities/user.entity'
 import { ArrayUserResponse, StatusUserResponse, UserResponse } from './response'
 import {
   CreateUserDto,
+  DeleteUserDto,
   ResetUserPasswordDto,
   UpdateUserDto,
   UpdateUserPasswordDto,
@@ -308,19 +309,29 @@ export class UserService {
     }
   }
 
-  async delete(user_uuid: string): Promise<StatusUserResponse> {
+  async deleteCurrent(deleteDto: DeleteUserDto, user_uuid: string): Promise<StatusUserResponse> {
     try {
-      const deleteUser = await this.usersRepository
-        .createQueryBuilder()
-        .update()
-        .set({ is_active: false })
-        .where('user_uuid = :user_uuid', { user_uuid })
-        .execute()
+      const user = await this.usersRepository
+        .createQueryBuilder('user')
+        .select(['user.password'])
+        .where('user.user_uuid = :user_uuid', { user_uuid })
+        .getOne()
 
-      if (deleteUser.affected != 0) {
-        return { status: true }
+      if (await bcrypt.compare(deleteDto.password, user.password)) {
+        const deleteUser = await this.usersRepository
+          .createQueryBuilder()
+          .update()
+          .set({ is_active: false })
+          .where('user_uuid = :user_uuid', { user_uuid })
+          .execute()
+
+        if (deleteUser.affected != 0) {
+          return { status: true }
+        } else {
+          return { status: false }
+        }
       } else {
-        return { status: false }
+        throw new HttpException(await this.i18n.t('errors.wrong_password'), HttpStatus.BAD_REQUEST)
       }
     } catch (error) {
       console.log(error)

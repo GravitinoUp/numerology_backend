@@ -16,6 +16,7 @@ import { UserService } from './user.service'
 import {
   CheckUserExistsDto,
   CreateUserDto,
+  DeleteUserDto,
   ResetUserPasswordDto,
   UpdateUserDto,
   UpdateUserPasswordDto,
@@ -216,8 +217,8 @@ export class UserController {
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Delete('my')
-  async deleteCurrent(@Req() request) {
-    const result = await this.userService.delete(request.user.user_uuid)
+  async deleteCurrent(@Body() deleteDto: DeleteUserDto, @Req() request) {
+    const result = await this.userService.deleteCurrent(deleteDto, request.user.user_uuid)
     await this.clearCache()
     return result
   }
