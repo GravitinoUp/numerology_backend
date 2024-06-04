@@ -1,11 +1,11 @@
 {
   "access_denied": "Access denied!",
   "user_deactivated": "User deactivated!",
-  "wrong_credentials": "Incorrent phone or password!",
+  "wrong_credentials": "Incorreсt phone or password!",
   "invalid_jwt": "Invalid auth token!",
   "invalid_code": "Invalid code!",
   "password_mismatch": "Passwords don't match!",
-  "wrong_password": "Incorrent password!",
+  "wrong_password": "Incorreсt password!",
   "user_exists": "A user with such an E-Mail or phone number already exists!",
   "wrong_guessing_number": "The number must consist of 9 digits!",
   "self_status_change": "You cannot change your status!",
