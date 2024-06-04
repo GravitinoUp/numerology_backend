@@ -131,6 +131,33 @@ export class NumberService {
     }
   }
 
+  async getDiseases(query: string, language_code: string): Promise<FormulaResultResponse[]> {
+    try {
+      const diseases = await this.formulaResultService.findAllByType(
+        FormulaTypesEnum.METAPHYSICAL_CAUSES_OF_DISEASES,
+        language_code,
+      )
+
+      const pages = []
+      for (const disease of diseases) {
+        if (disease) {
+          disease.formula_type = getLocalizedFormulaType(disease.formula_type, language_code)
+          pages.push(disease)
+        } else {
+          Logger.error(`MISSING PAGE: ${JSON.stringify(disease)}`)
+        }
+      }
+
+      if (diseases.length == 0) {
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+      }
+
+      return pages
+    } catch (error) {
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
   async getProfessions(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)

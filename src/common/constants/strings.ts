@@ -71,6 +71,8 @@ export const AppStrings = {
   CHRONIC_DISEASE_GET_RESPONSE: 'Хроническое заболевание успешно получено',
   HEALTH_NUMEROLOGY_GET_OPERATION: 'Получение нумерологии здоровья',
   HEALTH_NUMEROLOGY_GET_RESPONSE: 'Числа успешно получены',
+  DISEASES_NUMEROLOGY_GET_OPERATION: 'Получение причин заболеваний',
+  DISEASES_NUMEROLOGY_GET_RESPONSE: 'Данные успешно получены',
   PROFESSIONS_GET_OPERATION: 'Получение профессий пользователя',
   PROFESSIONS_GET_RESPONSE: 'Профессии успешно получены',
   WEAK_QUALITIES_GET_OPERATION: 'Получение слабых качеств пользователя',

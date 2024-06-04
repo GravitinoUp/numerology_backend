@@ -5,6 +5,7 @@ import {
   Get,
   HttpStatus,
   Inject,
+  Param,
   Post,
   Query,
   Req,
@@ -77,6 +78,29 @@ export class NumberController {
         request.user.user_uuid,
         request.i18nLang,
       )
+      await this.cacheManager.set(key, result)
+      return result
+    }
+  }
+
+  @ApiOperation({ summary: AppStrings.DISEASES_NUMEROLOGY_GET_OPERATION })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: AppStrings.DISEASES_NUMEROLOGY_GET_RESPONSE,
+    type: FormulaResultResponse,
+    isArray: true,
+  })
+  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @Get('diseases/:query')
+  async getDiseases(@Param('query') query: string, @Req() request) {
+    const key = `${CacheRoutes.NUMBERS}/diseases-${request.i18nLang}`
+    let result: FormulaResultResponse[] = await this.cacheManager.get(key)
+
+    if (result) {
+      return result
+    } else {
+      result = await this.numberService.getDiseases(query, request.i18nLang)
+      result = result.filter((res) => res.result_name.toLowerCase().includes(query.toLowerCase()))
       await this.cacheManager.set(key, result)
       return result
     }

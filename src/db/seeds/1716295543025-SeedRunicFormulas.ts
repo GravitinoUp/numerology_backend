@@ -335,7 +335,6 @@ export class SeedRunicFormulas1716295543025 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.delete(FormulaResult, {
       formula_type_id: FormulaTypesEnum.RUNIC_FORMULAS,
-      language_code: 'ru',
     })
   }
 }
