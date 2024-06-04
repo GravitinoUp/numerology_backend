@@ -246,8 +246,8 @@ export class SeedAromatherapy1715772019952 implements MigrationInterface {
         formula_type_id: FormulaTypesEnum.DAY_ARCANE_ESSENTIAL_OIL,
         result_keys: ['18'],
         result_name: JSON.stringify({
-          ru: `Нероли — надежда, вдохновение и уверенность в будущем.`,
-          en: `Нероли — надежда, вдохновение и уверенность в будущем.`,
+          ru: `XVIII - Луна`,
+          en: `XVIII - Луна`,
         }),
         result_content: JSON.stringify({
           ru: `Жасмин — интуиция, сновидения и подсознательное.`,
