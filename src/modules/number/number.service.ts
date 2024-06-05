@@ -751,17 +751,17 @@ export class NumberService {
       const secondMonthArcane = secondDate.getMonth() + 1
       const secondDayArcane = getArcane(secondDate.getDate())
 
-      const firstArcane = getLongNumberArcane(firstPartnerDate)
-      const secondArcane = getLongNumberArcane(secondPartnerDate)
-      const arcaneCompatibility = {
-        number: getArcane(firstArcane + secondArcane),
-        type: FormulaTypesEnum.ARCANE_COMPATIBILITY,
-      }
+      // const firstArcane = getLongNumberArcane(firstPartnerDate)
+      // const secondArcane = getLongNumberArcane(secondPartnerDate)
+      // const arcaneCompatibility = {
+      //   number: getArcane(firstArcane + secondArcane),
+      //   type: FormulaTypesEnum.ARCANE_COMPATIBILITY,
+      // }
 
       const firstSoulNumber = getLongNumberArcane(firstPartnerDate, 9)
       const secondSoulNumber = getLongNumberArcane(secondPartnerDate, 9)
       const soulNumberCompatibility = {
-        number: getArcane(firstSoulNumber + secondSoulNumber),
+        number: getLongNumberArcane((firstSoulNumber + secondSoulNumber).toString(), 9),
         type: FormulaTypesEnum.SOUL_NUMBER_COMPATIBILITY,
       }
 
@@ -780,7 +780,7 @@ export class NumberService {
       }
 
       const keys = [
-        arcaneCompatibility,
+        //arcaneCompatibility,
         soulNumberCompatibility,
         tasksCompatibility,
         difficultiesCompatibility,
