@@ -39,6 +39,10 @@ export class FormulaResultResponse {
   @IsString()
   @ApiProperty()
   result_image: string
+
+  @IsString()
+  @ApiProperty()
+  formula_name: string
 }
 
 export class StatusFormulaResultResponse {

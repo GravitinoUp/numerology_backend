@@ -170,22 +170,27 @@ export class NumberService {
       const pg1 = {
         number: getArcane(dayArcane + monthArcane + yearArcane).toString(),
         key: FormulaTypesEnum.PROFESSIONS,
+        name: this.i18n.t('titles.profession_groups'),
       }
       const pg2 = {
         number: getArcane(dayArcane + 2 * monthArcane + yearArcane).toString(),
         key: FormulaTypesEnum.PROFESSIONS,
+        name: this.i18n.t('titles.profession_groups'),
       }
       const pg3 = {
         number: getArcane(6 * dayArcane + 6 * monthArcane + 5 * yearArcane).toString(),
         key: FormulaTypesEnum.PROFESSIONS,
+        name: this.i18n.t('titles.profession_groups'),
       }
       const pg4 = {
         number: getQuersumme(userBirthday).toString(),
         key: FormulaTypesEnum.PROFESSIONS,
+        name: this.i18n.t('titles.profession_groups'),
       }
       const pg5 = {
         number: getSoulNumber(userData.first_name).toString(),
         key: FormulaTypesEnum.PROFESSIONS,
+        name: this.i18n.t('titles.profession_groups'),
       }
       const keys = [pg1, pg2, pg3, pg4, pg5]
       const talentKeys = keys
@@ -193,6 +198,7 @@ export class NumberService {
       const pgPlanet1 = {
         number: pg4.number,
         key: FormulaTypesEnum.PLANETS,
+        name: this.i18n.t('titles.profession_planets'),
       }
       keys.push(pgPlanet1)
 
@@ -200,6 +206,7 @@ export class NumberService {
         const pgPlanet2 = {
           number: pg5.number, // TODO Должно быть 5 и 6
           key: FormulaTypesEnum.PLANETS,
+          name: this.i18n.t('titles.profession_planets'),
         }
 
         keys.push(pgPlanet2)
@@ -215,6 +222,7 @@ export class NumberService {
 
         if (page) {
           page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
+          page.formula_name = pg.name
           pages.push(page)
         } else {
           Logger.error(`MISSING PAGE: ${JSON.stringify(pg)}`)

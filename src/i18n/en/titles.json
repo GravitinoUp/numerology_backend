@@ -1,5 +1,6 @@
 {
-  "pg": "A group of professions by fate",
+  "profession_groups": "A group of professions by fate",
+  "profession_planets": "Professions planets",
   "negative_traits": "Negative character traits",
   "positive_traits": "Positive character traits",
   "fate_number": "The number of fate",
