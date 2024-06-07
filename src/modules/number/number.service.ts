@@ -9,7 +9,8 @@ import { GetCompatibilityDto } from './dto'
 import { getArcane, getLongNumberArcane, getNameNumber, getQuersumme, getSoulNumber } from 'src/common/utils/numbers'
 import { UserService } from '../user/user.service'
 import getLocalizedFormulaType from 'src/common/utils/get_localized_formula_type'
-import { GraphResponse } from './response'
+import { GraphDataResponse, GraphResponse } from './response'
+import checkIntersects from 'src/utils/check-intersect'
 
 @Injectable()
 export class NumberService {
@@ -895,17 +896,20 @@ export class NumberService {
     }
   }
 
-  async getGrahps(user_uuid: string): Promise<GraphResponse[]> {
+  async getGrahps(user_uuid: string, language_code: string): Promise<GraphDataResponse> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
-      const userDayMonth = `${userData.birthday_day}${userData.birthday_month}`
+      const userDay = userData.birthday_day < 10 ? `0${userData.birthday_day}` : userData.birthday_day.toString()
+      const userMonth =
+        userData.birthday_month < 10 ? `0${userData.birthday_month}` : userData.birthday_month.toString()
+      const userDayMonth = `${userDay}${userMonth}`
       const userYear = `${userData.birthday_year}`
 
       const xCoords = ['0', '12', '24', '36', '48', '60', '72']
 
       let destinyKey = (Number(userDayMonth) * Number(userYear)).toString()
       if (Number(destinyKey) < 1000000) destinyKey = `0${destinyKey}`
-      let volitionKey = destinyKey.replaceAll('0', '1')
+      let volitionKey = (Number(userDayMonth.replaceAll('0', '1')) * Number(userYear.replaceAll('0', '1'))).toString()
       if (Number(volitionKey) < 1000000) volitionKey = `0${volitionKey}`
 
       const destinyCoords = destinyKey.split('')
@@ -920,66 +924,99 @@ export class NumberService {
       volitionResponse.x_coords = xCoords
       volitionResponse.graph_name = this.i18n.t('titles.volition_graph')
 
+      const pages = []
+
       // Положение графиков: выше, ниже или пересекаются
+      let positionKey
       console.log('DESTINY: ', destinyCoords, 'VOLITION:', volitionCoords)
       if (destinyCoords.every((dy) => volitionCoords.every((vy) => Number(vy) > Number(dy)))) {
-        console.log('VOL > DEST')
+        positionKey = 'volition > destiny'
       } else if (destinyCoords.every((dy) => volitionCoords.every((vy) => Number(vy) < Number(dy)))) {
-        console.log('DEST > VOL')
+        positionKey = 'destiny > volition'
       } else {
-        console.log('CROSS')
+        positionKey = 'cross'
       }
+
+      const positionPage = await this.formulaResultService.findOneByKey(
+        positionKey,
+        FormulaTypesEnum.GRAPHS,
+        language_code,
+      )
+      pages.push(positionPage)
 
       // Падение графика судьбы в ноль
-      if (destinyCoords.some((dy) => Number(dy) == 0)) {
-        console.log('DESTINY ZERO')
-      }
-
+      let zeroKey
+      if (destinyCoords.some((dy) => Number(dy) == 0)) zeroKey = 'destiny-zero'
       // Падение графика воли в ноль
-      if (volitionCoords.some((vy) => Number(vy) == 0)) {
-        console.log('VOLITION ZERO')
+      if (volitionCoords.some((vy) => Number(vy) == 0)) zeroKey = 'volition-zero'
+
+      if (zeroKey) {
+        const zeroPage = await this.formulaResultService.findOneByKey(zeroKey, FormulaTypesEnum.GRAPHS, language_code)
+        pages.push(zeroPage)
       }
 
       // Пересечение графиков со средней линией
-      const comfortCoords = []
+      const comfortCoords: number[] = []
       for (let index = 0; index < destinyCoords.length; index++) {
-        const dy = destinyCoords[index]
-        const vy = volitionCoords[index]
+        const dy = Number(destinyCoords[index])
+        const vy = Number(volitionCoords[index])
 
-        comfortCoords.push((Number(dy) + Number(vy)) / 2)
+        comfortCoords.push((dy + vy) / 2)
       }
-      console.log(comfortCoords)
 
       const comfortResponse = new GraphResponse()
-      comfortResponse.y_coords = comfortCoords
+      comfortResponse.y_coords = comfortCoords.map(String)
       comfortResponse.x_coords = xCoords
       comfortResponse.graph_name = this.i18n.t('titles.comfort_graph')
 
+      let comfortKey
+
       // График судьбы пересекает линию комфорта
-      let key
-      let destinyComfortCross
-      if (comfortCoords.some((cy) => cy > destinyCoords[0] && destinyCoords.some((dy) => dy > cy))) {
-        destinyComfortCross = 'up'
-      } else if (comfortCoords.some((cy) => cy < destinyCoords[0] && destinyCoords.some((dy) => dy < cy))) {
-        destinyComfortCross = 'down'
+      let isDestinyIntersect = false
+      for (let index = 0; index < comfortCoords.length; index++) {
+        if (index < comfortCoords.length - 1) {
+          const comfortY = comfortCoords[index]
+          const destinyY = Number(destinyCoords[index])
+
+          const comfortYNext = comfortCoords[index + 1]
+          const destinyYNext = Number(destinyCoords[index + 1])
+
+          isDestinyIntersect = checkIntersects(comfortY, destinyY, comfortYNext, destinyYNext)
+          if (isDestinyIntersect == true) break
+        }
       }
 
       // График воли пересекает линию комфорта
-      let volitionComfortCross
-      if (comfortCoords.some((cy) => cy > volitionCoords[0] && volitionCoords.some((dy) => dy > cy))) {
-        volitionComfortCross = 'up'
-      } else if (comfortCoords.some((cy) => cy < volitionCoords[0] && volitionCoords.some((dy) => dy < cy))) {
-        volitionComfortCross = 'down'
+      let isVolitionIntersect = false
+      for (let index = 0; index < comfortCoords.length; index++) {
+        if (index < comfortCoords.length - 1) {
+          const comfortY = comfortCoords[index]
+          const volitionY = Number(volitionCoords[index])
+
+          const comfortYNext = comfortCoords[index + 1]
+          const volitionYNext = Number(volitionCoords[index + 1])
+
+          isVolitionIntersect = checkIntersects(comfortY, volitionY, comfortYNext, volitionYNext)
+          if (isVolitionIntersect == true) break
+        }
       }
 
-      if (destinyComfortCross != '' && volitionComfortCross != '') {
-        key = 'both-cross'
-      } else if (destinyComfortCross != '' && volitionComfortCross == '') {
-        key = `destiny-cross-${destinyComfortCross}`
-      } else if (destinyComfortCross == '' && volitionComfortCross != '') {
-        key = `volition-cross-${volitionComfortCross}`
+      if (isVolitionIntersect == true && isDestinyIntersect == true) {
+        comfortKey = 'both-comfort-cross'
+      } else if (isDestinyIntersect == true) {
+        comfortKey = 'destiny-comfort-cross'
+      } else if (isVolitionIntersect == true) {
+        comfortKey = 'volition-comfort-cross'
       }
-      console.log('COMFORT CROSS:', key)
+
+      if (comfortKey) {
+        const comfortCrossPage = await this.formulaResultService.findOneByKey(
+          comfortKey,
+          FormulaTypesEnum.GRAPHS,
+          language_code,
+        )
+        pages.push(comfortCrossPage)
+      }
 
       // Пиковые высшие точки
       const destinyMax = Math.max(...destinyCoords.map(Number))
@@ -987,8 +1024,34 @@ export class NumberService {
       console.log('DESTINY MAX:', destinyMax)
       console.log('VOLITION MAX:', volitionMax)
 
-      return [destinyResponse, volitionResponse, comfortResponse]
+      const linesPages = await this.formulaResultService.findAllByKeys(
+        [
+          'destiny-ascending-lines',
+          'destiny-descending-lines',
+          'volition-ascending-lines',
+          'volition-descending-lines',
+        ],
+        FormulaTypesEnum.GRAPHS,
+        language_code,
+      )
+      pages.push(...linesPages)
+
+      const highestPointsPage = await this.formulaResultService.findOneByKey(
+        'highest-point',
+        FormulaTypesEnum.GRAPHS,
+        language_code,
+      )
+      pages.push(highestPointsPage)
+
+      for (const page of pages) {
+        if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
+        }
+      }
+
+      return { graphs: [destinyResponse, volitionResponse, comfortResponse], results: pages }
     } catch (error) {
+      console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }

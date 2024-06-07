@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString } from 'class-validator'
+import { FormulaResultResponse } from 'src/modules/formula-result/response'
 
 export class GraphResponse {
   @ApiProperty()
@@ -11,4 +12,12 @@ export class GraphResponse {
   @IsString()
   @ApiProperty()
   graph_name: string
+}
+
+export class GraphDataResponse {
+  @ApiProperty()
+  graphs: GraphResponse[]
+
+  @ApiProperty()
+  results: FormulaResultResponse[]
 }

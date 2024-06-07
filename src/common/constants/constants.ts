@@ -38,6 +38,7 @@ export const FormulaTypesEnum = {
   DAY_ARCANE_ESSENTIAL_OIL: 30,
   TALENTS: 31,
   RUNIC_FORMULAS: 32,
+  GRAPHS: 33,
 }
 
 export const CacheRoutes = {
