@@ -6,13 +6,7 @@ import { FormulaTypesEnum } from 'src/common/constants/constants'
 import { I18nService } from 'nestjs-i18n'
 import { Person } from '../person/entities/person.entity'
 import { GetCompatibilityDto } from './dto'
-import {
-  getArcane,
-  getLongNumberArcane,
-  getNameNumber,
-  getQuersumme,
-  getSoulNumber,
-} from 'src/common/utils/numbers'
+import { getArcane, getLongNumberArcane, getNameNumber, getQuersumme, getSoulNumber } from 'src/common/utils/numbers'
 import { UserService } from '../user/user.service'
 import getLocalizedFormulaType from 'src/common/utils/get_localized_formula_type'
 import { GraphResponse } from './response'
@@ -31,32 +25,21 @@ export class NumberService {
       const userData = await this.personService.getPersonData(user_uuid)
       const key = `${('0' + userData.birthday_day).slice(-2)}.${('0' + userData.birthday_month).slice(-2)}`
 
-      const page = await this.formulaResultService.findOneByKey(
-        key,
-        FormulaTypesEnum.FATE_CARDS,
-        language_code,
-      )
+      const page = await this.formulaResultService.findOneByKey(key, FormulaTypesEnum.FATE_CARDS, language_code)
 
       if (page) {
         page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
 
         return [page]
       } else {
-        throw new HttpException(
-          await this.i18n.t('errors.fate_card_not_found'),
-          HttpStatus.NOT_FOUND,
-        )
+        throw new HttpException(await this.i18n.t('errors.fate_card_not_found'), HttpStatus.NOT_FOUND)
       }
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
-  async getFateNumber(
-    user_uuid: string,
-    language_code: string,
-    user_data?: Person,
-  ): Promise<FormulaResultResponse> {
+  async getFateNumber(user_uuid: string, language_code: string, user_data?: Person): Promise<FormulaResultResponse> {
     try {
       const userData = user_data ?? (await this.personService.getPersonData(user_uuid))
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -109,10 +92,7 @@ export class NumberService {
     }
   }
 
-  async getHealthNumerology(
-    user_uuid: string,
-    language_code: string,
-  ): Promise<FormulaResultResponse[]> {
+  async getHealthNumerology(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
@@ -214,11 +194,7 @@ export class NumberService {
 
       const pages = []
       for (const pg of keys) {
-        const page = await this.formulaResultService.findOneByKey(
-          pg.number.toString(),
-          pg.key,
-          language_code,
-        )
+        const page = await this.formulaResultService.findOneByKey(pg.number.toString(), pg.key, language_code)
 
         if (page) {
           page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
@@ -254,10 +230,7 @@ export class NumberService {
     }
   }
 
-  async getNegativeTraits(
-    user_uuid: string,
-    language_code: string,
-  ): Promise<FormulaResultResponse[]> {
+  async getNegativeTraits(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
@@ -297,11 +270,7 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.formulaResultService.findOneByKey(
-          key.number.toString(),
-          key.type,
-          language_code,
-        )
+        const page = await this.formulaResultService.findOneByKey(key.number.toString(), key.type, language_code)
 
         if (page) {
           page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
@@ -323,10 +292,7 @@ export class NumberService {
     }
   }
 
-  async getStrongQualitites(
-    user_uuid: string,
-    language_code: string,
-  ): Promise<FormulaResultResponse[]> {
+  async getStrongQualitites(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -376,11 +342,7 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.formulaResultService.findOneByKey(
-          key.number.toString(),
-          key.type,
-          language_code,
-        )
+        const page = await this.formulaResultService.findOneByKey(key.number.toString(), key.type, language_code)
 
         if (page) {
           page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
@@ -463,10 +425,7 @@ export class NumberService {
     }
   }
 
-  async getTotemicAnimals(
-    user_uuid: string,
-    language_code: string,
-  ): Promise<FormulaResultResponse[]> {
+  async getTotemicAnimals(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
 
@@ -506,10 +465,7 @@ export class NumberService {
     }
   }
 
-  async getDestinyProgram(
-    user_uuid: string,
-    language_code: string,
-  ): Promise<FormulaResultResponse[]> {
+  async getDestinyProgram(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -536,11 +492,7 @@ export class NumberService {
       }
       const expressionNumberKey = {
         number: getQuersumme(
-          getNameNumber(
-            `${userData.first_name}${userData.last_name}${userData.patronymic}`,
-            false,
-            true,
-          ).toString(),
+          getNameNumber(`${userData.first_name}${userData.last_name}${userData.patronymic}`, false, true).toString(),
         ),
         type: FormulaTypesEnum.EXPRESSION_NUMBER,
       }
@@ -549,23 +501,11 @@ export class NumberService {
         type: FormulaTypesEnum.LIFE_PATH_NUMBER,
       }
 
-      const keys = [
-        dayTask,
-        monthTask,
-        yearTask,
-        communityTask,
-        nameKey,
-        expressionNumberKey,
-        lifePathNumber,
-      ]
+      const keys = [dayTask, monthTask, yearTask, communityTask, nameKey, expressionNumberKey, lifePathNumber]
 
       const pages = []
       for (const key of keys) {
-        const page = await this.formulaResultService.findOneByKey(
-          key.number.toString(),
-          key.type,
-          language_code,
-        )
+        const page = await this.formulaResultService.findOneByKey(key.number.toString(), key.type, language_code)
 
         if (page) {
           page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
@@ -597,23 +537,11 @@ export class NumberService {
       const communityTask = getArcane(dayTask + monthTask + yearTask)
       const nameKey = getArcane(getNameNumber(userData.first_name, false))
       const expressionNumberKey = getQuersumme(
-        getNameNumber(
-          `${userData.first_name}${userData.last_name}${userData.patronymic}`,
-          false,
-          true,
-        ).toString(),
+        getNameNumber(`${userData.first_name}${userData.last_name}${userData.patronymic}`, false, true).toString(),
       )
       const lifePathNumber = getQuersumme(userBirthday)
 
-      const keys = [
-        dayTask,
-        monthTask,
-        yearTask,
-        communityTask,
-        nameKey,
-        expressionNumberKey,
-        lifePathNumber,
-      ]
+      const keys = [dayTask, monthTask, yearTask, communityTask, nameKey, expressionNumberKey, lifePathNumber]
 
       return keys
     } catch (error) {
@@ -668,11 +596,7 @@ export class NumberService {
 
   async getBloodType(bloodType: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
-      const page = await this.formulaResultService.findOneByKey(
-        bloodType,
-        FormulaTypesEnum.BLOOD_TYPE,
-        language_code,
-      )
+      const page = await this.formulaResultService.findOneByKey(bloodType, FormulaTypesEnum.BLOOD_TYPE, language_code)
 
       if (page) {
         page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
@@ -689,10 +613,7 @@ export class NumberService {
     }
   }
 
-  async getAngelicNumerology(
-    time: string,
-    language_code: string,
-  ): Promise<FormulaResultResponse[]> {
+  async getAngelicNumerology(time: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const page = await this.formulaResultService.findOneByKey(
         time,
@@ -796,11 +717,7 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.formulaResultService.findOneByKey(
-          key.number.toString(),
-          key.type,
-          language_code,
-        )
+        const page = await this.formulaResultService.findOneByKey(key.number.toString(), key.type, language_code)
 
         if (page) {
           page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
@@ -819,10 +736,7 @@ export class NumberService {
     }
   }
 
-  async getPersonalYearNumber(
-    user_uuid: string,
-    language_code: string,
-  ): Promise<FormulaResultResponse[]> {
+  async getPersonalYearNumber(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const day = getQuersumme(userData.birthday_day.toString())
@@ -853,10 +767,7 @@ export class NumberService {
     }
   }
 
-  async getPhoneNumberCalculation(
-    user_uuid: string,
-    language_code: string,
-  ): Promise<FormulaResultResponse[]> {
+  async getPhoneNumberCalculation(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.userService.findByUuid(user_uuid, false)
       const phoneKey = getQuersumme(userData.phone.replaceAll('+', ''))
@@ -882,10 +793,7 @@ export class NumberService {
     }
   }
 
-  async getHouseNumberCalculation(
-    number: number,
-    language_code: string,
-  ): Promise<FormulaResultResponse[]> {
+  async getHouseNumberCalculation(number: number, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const houseKey = getQuersumme(number.toString())
 
@@ -936,10 +844,7 @@ export class NumberService {
     }
   }
 
-  async getAromatherapy(
-    user_uuid: string,
-    language_code: string,
-  ): Promise<FormulaResultResponse[]> {
+  async getAromatherapy(user_uuid: string, language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const userData = await this.personService.getPersonData(user_uuid)
       const userBirthday = `${userData.birthday_day}${userData.birthday_month}${userData.birthday_year}`
@@ -958,11 +863,7 @@ export class NumberService {
 
       const pages = []
       for (const key of keys) {
-        const page = await this.formulaResultService.findOneByKey(
-          key.number.toString(),
-          key.type,
-          language_code,
-        )
+        const page = await this.formulaResultService.findOneByKey(key.number.toString(), key.type, language_code)
 
         if (page) {
           page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
@@ -983,10 +884,7 @@ export class NumberService {
 
   async getRunicFormulas(language_code: string): Promise<FormulaResultResponse[]> {
     try {
-      const pages = await this.formulaResultService.findAllByType(
-        FormulaTypesEnum.RUNIC_FORMULAS,
-        language_code,
-      )
+      const pages = await this.formulaResultService.findAllByType(FormulaTypesEnum.RUNIC_FORMULAS, language_code)
 
       if (pages.length == 0) {
         throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
@@ -1010,17 +908,86 @@ export class NumberService {
       let volitionKey = destinyKey.replaceAll('0', '1')
       if (Number(volitionKey) < 1000000) volitionKey = `0${volitionKey}`
 
+      const destinyCoords = destinyKey.split('')
       const destinyResponse = new GraphResponse()
-      destinyResponse.y_coords = destinyKey.split('')
+      destinyResponse.y_coords = destinyCoords
       destinyResponse.x_coords = xCoords
       destinyResponse.graph_name = this.i18n.t('titles.destiny_graph')
 
+      const volitionCoords = volitionKey.split('')
       const volitionResponse = new GraphResponse()
-      volitionResponse.y_coords = volitionKey.split('')
+      volitionResponse.y_coords = volitionCoords
       volitionResponse.x_coords = xCoords
       volitionResponse.graph_name = this.i18n.t('titles.volition_graph')
 
-      return [destinyResponse, volitionResponse]
+      // Положение графиков: выше, ниже или пересекаются
+      console.log('DESTINY: ', destinyCoords, 'VOLITION:', volitionCoords)
+      if (destinyCoords.every((dy) => volitionCoords.every((vy) => Number(vy) > Number(dy)))) {
+        console.log('VOL > DEST')
+      } else if (destinyCoords.every((dy) => volitionCoords.every((vy) => Number(vy) < Number(dy)))) {
+        console.log('DEST > VOL')
+      } else {
+        console.log('CROSS')
+      }
+
+      // Падение графика судьбы в ноль
+      if (destinyCoords.some((dy) => Number(dy) == 0)) {
+        console.log('DESTINY ZERO')
+      }
+
+      // Падение графика воли в ноль
+      if (volitionCoords.some((vy) => Number(vy) == 0)) {
+        console.log('VOLITION ZERO')
+      }
+
+      // Пересечение графиков со средней линией
+      const comfortCoords = []
+      for (let index = 0; index < destinyCoords.length; index++) {
+        const dy = destinyCoords[index]
+        const vy = volitionCoords[index]
+
+        comfortCoords.push((Number(dy) + Number(vy)) / 2)
+      }
+      console.log(comfortCoords)
+
+      const comfortResponse = new GraphResponse()
+      comfortResponse.y_coords = comfortCoords
+      comfortResponse.x_coords = xCoords
+      comfortResponse.graph_name = this.i18n.t('titles.comfort_graph')
+
+      // График судьбы пересекает линию комфорта
+      let key
+      let destinyComfortCross
+      if (comfortCoords.some((cy) => cy > destinyCoords[0] && destinyCoords.some((dy) => dy > cy))) {
+        destinyComfortCross = 'up'
+      } else if (comfortCoords.some((cy) => cy < destinyCoords[0] && destinyCoords.some((dy) => dy < cy))) {
+        destinyComfortCross = 'down'
+      }
+
+      // График воли пересекает линию комфорта
+      let volitionComfortCross
+      if (comfortCoords.some((cy) => cy > volitionCoords[0] && volitionCoords.some((dy) => dy > cy))) {
+        volitionComfortCross = 'up'
+      } else if (comfortCoords.some((cy) => cy < volitionCoords[0] && volitionCoords.some((dy) => dy < cy))) {
+        volitionComfortCross = 'down'
+      }
+
+      if (destinyComfortCross != '' && volitionComfortCross != '') {
+        key = 'both-cross'
+      } else if (destinyComfortCross != '' && volitionComfortCross == '') {
+        key = `destiny-cross-${destinyComfortCross}`
+      } else if (destinyComfortCross == '' && volitionComfortCross != '') {
+        key = `volition-cross-${volitionComfortCross}`
+      }
+      console.log('COMFORT CROSS:', key)
+
+      // Пиковые высшие точки
+      const destinyMax = Math.max(...destinyCoords.map(Number))
+      const volitionMax = Math.max(...volitionCoords.map(Number))
+      console.log('DESTINY MAX:', destinyMax)
+      console.log('VOLITION MAX:', volitionMax)
+
+      return [destinyResponse, volitionResponse, comfortResponse]
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
     }
