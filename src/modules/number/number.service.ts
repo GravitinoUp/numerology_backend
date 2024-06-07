@@ -131,7 +131,7 @@ export class NumberService {
     }
   }
 
-  async getDiseases(query: string, language_code: string): Promise<FormulaResultResponse[]> {
+  async getDiseases(language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const diseases = await this.formulaResultService.findAllByType(
         FormulaTypesEnum.METAPHYSICAL_CAUSES_OF_DISEASES,

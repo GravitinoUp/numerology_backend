@@ -99,7 +99,7 @@ export class NumberController {
     if (result) {
       return result
     } else {
-      result = await this.numberService.getDiseases(query, request.i18nLang)
+      result = await this.numberService.getDiseases(request.i18nLang)
       result = result.filter((res) => res.result_name.toLowerCase().includes(query.toLowerCase()))
       await this.cacheManager.set(key, result)
       return result
