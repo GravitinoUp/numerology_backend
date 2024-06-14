@@ -46,7 +46,7 @@ export class FormulaTypeController {
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('all')
-  async findAll(@Req() request, @Query('format_names') format_names?: boolean) {
+  async findAll(@Req() request, @Query('format_names') format_names?: string) {
     const key = `${CacheRoutes.FORMULA_TYPES}/all-${request.i18nLang}-${format_names}`
     let types: FormulaTypeResponse[] = await this.cacheManager.get(key)
 
@@ -72,7 +72,7 @@ export class FormulaTypeController {
   async findAllByType(
     @Param('type_key') type_key: string,
     @Req() request,
-    @Query('format_names') format_names?: boolean,
+    @Query('format_names') format_names?: string,
   ) {
     const key = `${CacheRoutes.FORMULA_TYPES}/all-${type_key}-${request.i18nLang}-${format_names}`
     let types: FormulaTypeResponse[] = await this.cacheManager.get(key)
@@ -119,10 +119,7 @@ export class FormulaTypeController {
   async update(@Body() updateFormulaTypeDto: UpdateFormulaTypeDto) {
     const isExists = await this.formulaTypeService.isExists(updateFormulaTypeDto.formula_type_id)
     if (!isExists) {
-      throw new HttpException(
-        await this.i18n.t('errors.formula_type_not_found'),
-        HttpStatus.NOT_FOUND,
-      )
+      throw new HttpException(await this.i18n.t('errors.formula_type_not_found'), HttpStatus.NOT_FOUND)
     }
 
     const result = await this.formulaTypeService.update(updateFormulaTypeDto)

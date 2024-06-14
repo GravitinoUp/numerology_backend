@@ -45,7 +45,7 @@ export class CategoryController {
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('all')
-  async findAll(@Req() request, @Query('format_names') format_names?: boolean) {
+  async findAll(@Req() request, @Query('format_names') format_names?: string) {
     const key = `${CacheRoutes.CATEGORIES}/all-${request.i18nLang}-${format_names}`
     let categories: CategoryResponse[] = await this.cacheManager.get(key)
 

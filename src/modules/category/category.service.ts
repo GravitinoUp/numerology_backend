@@ -13,7 +13,7 @@ export class CategoryService {
     private dataSource: DataSource,
   ) {}
 
-  async findAll(language_code: string, format_names: boolean = true): Promise<CategoryResponse[]> {
+  async findAll(language_code: string, format_names: string = 'true'): Promise<CategoryResponse[]> {
     try {
       const categories = await this.categoryRepository
         .createQueryBuilder()
@@ -21,7 +21,7 @@ export class CategoryService {
         .orderBy('position', 'ASC')
         .getMany()
 
-      if (format_names == true) {
+      if (format_names == 'true') {
         const result = this.formatLocalization(categories, language_code)
         return result
       } else {
@@ -75,11 +75,7 @@ export class CategoryService {
 
     await queryRunner.startTransaction()
     try {
-      if (
-        category.position &&
-        category.old_position &&
-        category.position != category.old_position
-      ) {
+      if (category.position && category.old_position && category.position != category.old_position) {
         const categories = await queryRunner.manager
           .getRepository(Category)
           .createQueryBuilder('category')
@@ -100,12 +96,7 @@ export class CategoryService {
             .useTransaction(true)
             .update()
             .set({
-              position:
-                category.old_position == index
-                  ? category.position
-                  : isMovedToTop
-                    ? index - 1
-                    : index + 1,
+              position: category.old_position == index ? category.position : isMovedToTop ? index - 1 : index + 1,
             })
             .where({ category_id: categories[index - 1].category_id })
             .execute()

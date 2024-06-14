@@ -29,11 +29,11 @@ export class OnboardService {
     }
   }
 
-  async findAll(language_code: string, format_names: boolean = true): Promise<OnboardResponse[]> {
+  async findAll(language_code: string, format_names: string = 'true'): Promise<OnboardResponse[]> {
     try {
       const onboards = await this.onboardRepository.createQueryBuilder().select().getMany()
 
-      if (format_names == true) {
+      if (format_names == 'true') {
         const result = this.formatLocalization(onboards, language_code)
         return result
       } else {

@@ -12,10 +12,7 @@ export class FormulaTypeService {
     private formulaTypeRepository: Repository<FormulaType>,
   ) {}
 
-  async findAll(
-    language_code: string,
-    format_names: boolean = true,
-  ): Promise<FormulaTypeResponse[]> {
+  async findAll(language_code: string, format_names: string = 'true'): Promise<FormulaTypeResponse[]> {
     try {
       const formulaTypes = await this.formulaTypeRepository
         .createQueryBuilder()
@@ -23,7 +20,7 @@ export class FormulaTypeService {
         .orderBy('formula_type_id', 'ASC')
         .getMany()
 
-      if (format_names == true) {
+      if (format_names == 'true') {
         const result = this.formatLocalization(formulaTypes, language_code)
         return result
       } else {
@@ -39,7 +36,7 @@ export class FormulaTypeService {
   async findAllByType(
     formula_type_key: string,
     language_code: string,
-    format_names: boolean = true,
+    format_names: string = 'true',
   ): Promise<FormulaTypeResponse[]> {
     try {
       const formulaTypes = await this.formulaTypeRepository
@@ -49,7 +46,7 @@ export class FormulaTypeService {
         .orderBy('formula_type_id', 'ASC')
         .getMany()
 
-      if (format_names == true) {
+      if (format_names == 'true') {
         const result = this.formatLocalization(formulaTypes, language_code)
         return result
       } else {
@@ -75,9 +72,7 @@ export class FormulaTypeService {
 
       const formattedFormulaType = Object.assign(formulaType, {
         formula_type_name: JSON.parse(formulaType.formula_type_name)[language_code] as string,
-        formula_type_description: JSON.parse(formulaType.formula_type_description)[
-          language_code
-        ] as string,
+        formula_type_description: JSON.parse(formulaType.formula_type_description)[language_code] as string,
       })
 
       return formattedFormulaType
@@ -129,9 +124,7 @@ export class FormulaTypeService {
     for (const object of data) {
       const formattedObject = Object.assign(object, {
         formula_type_name: JSON.parse(object.formula_type_name)[language_code] as string,
-        formula_type_description: JSON.parse(object.formula_type_description)[
-          language_code
-        ] as string,
+        formula_type_description: JSON.parse(object.formula_type_description)[language_code] as string,
       })
 
       result.push(formattedObject)

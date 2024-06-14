@@ -64,11 +64,7 @@ export class FormulaResultController {
   @UseGuards(JwtAuthGuard, ActiveGuard, RolesGuard)
   @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
   @Get('all/:type')
-  async findAllByType(
-    @Param('type') type: number,
-    @Req() request,
-    @Query('format_names') format_names?: boolean,
-  ) {
+  async findAllByType(@Param('type') type: number, @Req() request, @Query('format_names') format_names?: string) {
     const key = `${CacheRoutes.RESULTS}/all/${type}-${request.i18nLang}-${format_names}`
     let results: FormulaResultResponse[] = await this.cacheManager.get(key)
 
@@ -91,9 +87,7 @@ export class FormulaResultController {
   @Roles([RolesEnum.MANAGER, RolesEnum.ADMIN])
   @Patch()
   async update(@Body() formulaResult: UpdateFormulaResultDto) {
-    const isExists = await this.formulaResultService.isFormulaResultExists(
-      formulaResult.result_uuid,
-    )
+    const isExists = await this.formulaResultService.isFormulaResultExists(formulaResult.result_uuid)
 
     if (!isExists) {
       throw new NotFoundException(this.i18n.t('errors.result_not_found'))

@@ -29,10 +29,7 @@ export class FormulaResultService {
     }
   }
 
-  async findAll(
-    language_code: string,
-    format_names: boolean = true,
-  ): Promise<FormulaResultResponse[]> {
+  async findAll(language_code: string, format_names: string = 'true'): Promise<FormulaResultResponse[]> {
     try {
       const results = await this.formulaResultRepository
         .createQueryBuilder()
@@ -41,7 +38,7 @@ export class FormulaResultService {
         .orderBy('result_keys', 'ASC')
         .getMany()
 
-      if (format_names == true) {
+      if (format_names == 'true') {
         const result = this.formatLocalization(results, language_code)
         return result
       } else {
@@ -54,11 +51,7 @@ export class FormulaResultService {
     }
   }
 
-  async findOneByKey(
-    key: string,
-    type_id: number,
-    language_code: string,
-  ): Promise<FormulaResultResponse> {
+  async findOneByKey(key: string, type_id: number, language_code: string): Promise<FormulaResultResponse> {
     try {
       const formulaResult = await this.formulaResultRepository
         .createQueryBuilder('result')
@@ -91,7 +84,7 @@ export class FormulaResultService {
     keys: string[],
     type_id: number,
     language_code: string,
-    format_names: boolean = true,
+    format_names: string = 'true',
   ): Promise<FormulaResultResponse[]> {
     try {
       const data = await this.formulaResultRepository
@@ -105,7 +98,7 @@ export class FormulaResultService {
         .orderBy('result_keys', 'ASC')
         .getMany()
 
-      if (format_names == true) {
+      if (format_names == 'true') {
         const result = this.formatLocalization(data, language_code)
         return result
       } else {
@@ -121,7 +114,7 @@ export class FormulaResultService {
   async findAllByType(
     type_id: number,
     language_code: string,
-    format_names: boolean = true,
+    format_names: string = 'true',
   ): Promise<FormulaResultResponse[]> {
     try {
       const data = await this.formulaResultRepository
@@ -134,7 +127,7 @@ export class FormulaResultService {
         .orderBy('result_keys', 'ASC')
         .getMany()
 
-      if (format_names == true) {
+      if (format_names == 'true') {
         const result = this.formatLocalization(data, language_code)
         return result
       } else {

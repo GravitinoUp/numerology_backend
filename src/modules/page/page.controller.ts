@@ -46,7 +46,7 @@ export class PageController {
   })
   @UseGuards(JwtAuthGuard, ActiveGuard)
   @Get('all')
-  async findAll(@Req() request, @Query('format_names') format_names?: boolean) {
+  async findAll(@Req() request, @Query('format_names') format_names?: string) {
     const key = `${CacheRoutes.PAGES}/all-${request.i18nLang}-${format_names}`
     let result: PageResponse[] = await this.cacheManager.get(key)
 
@@ -71,7 +71,7 @@ export class PageController {
   async findByCategory(
     @Param('category_id') categoryId: number,
     @Req() request,
-    @Query('format_names') format_names?: boolean,
+    @Query('format_names') format_names?: string,
   ) {
     const key = `${CacheRoutes.PAGES}/all/${categoryId}-${request.i18nLang}-${format_names}`
     let result: PageResponse[] = await this.cacheManager.get(key)

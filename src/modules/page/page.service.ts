@@ -12,11 +12,11 @@ export class PageService {
     private pageRepository: Repository<Page>,
   ) {}
 
-  async findAll(language_code: string, format_names: boolean = true): Promise<PageResponse[]> {
+  async findAll(language_code: string, format_names: string = 'true'): Promise<PageResponse[]> {
     try {
       const pages = await this.pageRepository.createQueryBuilder().select().getMany()
 
-      if (format_names == true) {
+      if (format_names == 'true') {
         const result = this.formatLocalization(pages, language_code)
         return result
       } else {
@@ -32,7 +32,7 @@ export class PageService {
   async findByCategory(
     category_id: number,
     language_code: string,
-    format_names: boolean = true,
+    format_names: string = 'true',
   ): Promise<PageResponse[]> {
     try {
       const pages = await this.pageRepository
@@ -44,7 +44,7 @@ export class PageService {
         .orderBy('page_uuid', 'ASC')
         .getMany()
 
-      if (format_names == true) {
+      if (format_names == 'true') {
         const result = this.formatLocalization(pages, language_code)
         return result
       } else {
