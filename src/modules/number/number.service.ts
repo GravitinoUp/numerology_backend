@@ -629,7 +629,7 @@ export class NumberService {
       }
 
       if (!page) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(this.i18n.t('errors.angelic_data_not_found'))
       }
       return [page]
     } catch (error) {
@@ -886,6 +886,12 @@ export class NumberService {
   async getRunicFormulas(language_code: string): Promise<FormulaResultResponse[]> {
     try {
       const pages = await this.formulaResultService.findAllByType(FormulaTypesEnum.RUNIC_FORMULAS, language_code)
+
+      for (const page of pages) {
+        if (page) {
+          page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
+        }
+      }
 
       if (pages.length == 0) {
         throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
