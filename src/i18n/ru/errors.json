@@ -7,8 +7,10 @@
   "password_mismatch": "Пароли не совпадают!",
   "wrong_password": "Неправильный пароль!",
   "user_exists": "Пользователь с таким E-Mail или номером телефона уже существует!",
+  "email_exists": "Такой E-Mail уже зарегистрирован!",
   "wrong_guessing_number": "Число должно состоять из 9 цифр!",
   "self_status_change": "Вы не можете изменить свой статус!",
+  "admin_passwordless_login": "Вы не можете авторизоваться без использования пароля!",
 
   "user_not_found": "Пользователь не найден!",
   "language_not_found": "Язык не найден!",

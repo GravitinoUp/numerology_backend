@@ -31,7 +31,7 @@ export class UserService {
     private dataSource: DataSource,
   ) {}
 
-  async create(user: CreateUserDto, code: CreateAuthCodeDto): Promise<StatusUserResponse> {
+  async create(user: CreateUserDto): Promise<StatusUserResponse> {
     const queryRunner = this.dataSource.createQueryRunner()
     await queryRunner.connect()
     await queryRunner.startTransaction()
@@ -47,7 +47,7 @@ export class UserService {
       const newPerson = await queryRunner.manager.insert(Person, person)
       const personUuid = newPerson.identifiers[0].person_uuid
 
-      user.password = await bcrypt.hash(user.password.toString(), 10)
+      // user.password = await bcrypt.hash(user.password.toString(), 10)
       const newUser = await queryRunner.manager
         .getRepository(User)
         .createQueryBuilder()
@@ -64,8 +64,6 @@ export class UserService {
 
       const result = newUser.raw[0]
       if (result) {
-        await this.authCodeService.deleteAuthCode(code, queryRunner, true)
-
         await queryRunner.commitTransaction()
         return { status: true, data: result }
       } else {
@@ -81,17 +79,25 @@ export class UserService {
     }
   }
 
-  async findByUuid(user_uuid: string, includeJoins: boolean = true): Promise<UserResponse> {
+  async findByUuid(
+    user_uuid: string,
+    includeJoins: boolean = true,
+    isPasswordless: boolean = false,
+  ): Promise<UserResponse> {
     try {
       let query = this.usersRepository.createQueryBuilder('user').select()
       if (includeJoins) {
-        query = query
-          .leftJoinAndSelect('user.role', 'role')
-          .leftJoinAndSelect('user.person', 'person')
+        query = query.leftJoinAndSelect('user.role', 'role').leftJoinAndSelect('user.person', 'person')
       }
       query = query.where('user.user_uuid = :user_uuid', { user_uuid })
 
       const user = await query.getOne()
+
+      if (isPasswordless) {
+        if (user.role_id != RolesEnum.USER) {
+          throw new HttpException(this.i18n.t('errors.admin_passwordless_login'), HttpStatus.FORBIDDEN)
+        }
+      }
 
       return user
     } catch (error) {
@@ -207,10 +213,7 @@ export class UserService {
     }
   }
 
-  async updatePassword(
-    updateUserPasswordDto: UpdateUserPasswordDto,
-    user_uuid: string,
-  ): Promise<StatusUserResponse> {
+  async updatePassword(updateUserPasswordDto: UpdateUserPasswordDto, user_uuid: string): Promise<StatusUserResponse> {
     try {
       const user = await this.usersRepository
         .createQueryBuilder('user')
@@ -233,10 +236,7 @@ export class UserService {
           return { status: false }
         }
       } else {
-        throw new HttpException(
-          await this.i18n.t('errors.password_mismatch'),
-          HttpStatus.BAD_REQUEST,
-        )
+        throw new HttpException(await this.i18n.t('errors.password_mismatch'), HttpStatus.BAD_REQUEST)
       }
     } catch (error) {
       console.log(error)
