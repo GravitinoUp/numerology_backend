@@ -13,24 +13,28 @@ export class PurchaseGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredPurchases = this.reflector.getAllAndOverride<PurchasesEnum[]>('purchases', [
-      context.getHandler(),
-      context.getClass(),
-    ])
-
-    if (!requiredPurchases) {
+    if (true) {
       return true
-    }
-
-    const { user } = context.switchToHttp().getRequest()
-    const result = await asyncSome(requiredPurchases, async (purchase) => {
-      return await this.purchaseService.checkPurchase(purchase, user.user_uuid)
-    })
-
-    if (result) {
-      return result
     } else {
-      throw new ForbiddenException(this.i18n.t('errors.access_denied'))
+      const requiredPurchases = this.reflector.getAllAndOverride<PurchasesEnum[]>('purchases', [
+        context.getHandler(),
+        context.getClass(),
+      ])
+
+      if (!requiredPurchases) {
+        return true
+      }
+
+      const { user } = context.switchToHttp().getRequest()
+      const result = await asyncSome(requiredPurchases, async (purchase) => {
+        return await this.purchaseService.checkPurchase(purchase, user.user_uuid)
+      })
+
+      if (result) {
+        return result
+      } else {
+        throw new ForbiddenException(this.i18n.t('errors.access_denied'))
+      }
     }
   }
 }
