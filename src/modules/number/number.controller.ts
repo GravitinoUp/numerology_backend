@@ -24,6 +24,9 @@ import { GetCompatibilityDto } from './dto'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 import { CacheRoutes } from 'src/common/constants/constants'
 import { GraphDataResponse } from './response'
+import { PurchaseGuard } from '../purchase/guards/purchase.guard'
+import { HasPurchases } from '../purchase/guards/decorators/purchase.decorator'
+import { PurchasesEnum } from '../purchase/guards/enums/purchases.enum'
 
 @ApiBearerAuth()
 @ApiTags('Numbers')
@@ -132,7 +135,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.WeakQualities])
   @Get('weak-qualities')
   async getNegaiveTraits(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/weak-qualities-${request.user.user_uuid}-${request.i18nLang}`

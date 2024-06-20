@@ -20,6 +20,7 @@ export class CreatePurchase1718807507650 implements MigrationInterface {
           {
             name: 'expiration_date',
             type: 'timestamp',
+            isNullable: true,
           },
           {
             name: 'product_sku',

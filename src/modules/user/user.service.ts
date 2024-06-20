@@ -92,14 +92,17 @@ export class UserService {
       query = query.where('user.user_uuid = :user_uuid', { user_uuid })
 
       const user = await query.getOne()
-
-      if (isPasswordless) {
-        if (user.role_id != RolesEnum.USER) {
-          throw new HttpException(this.i18n.t('errors.admin_passwordless_login'), HttpStatus.FORBIDDEN)
+      if (user) {
+        if (isPasswordless) {
+          if (user.role_id != RolesEnum.USER) {
+            throw new HttpException(this.i18n.t('errors.admin_passwordless_login'), HttpStatus.FORBIDDEN)
+          }
         }
-      }
 
-      return user
+        return user
+      } else {
+        return null
+      }
     } catch (error) {
       console.log(error)
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)

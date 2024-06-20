@@ -38,6 +38,7 @@ export class AuthController {
   @Post('passwordless')
   async loginPasswordless(@Body() authDto: CodeAuthDto, @Ip() ipAddress, @Req() request) {
     const user = await this.userService.findByUuid(authDto.code, false, true)
+
     if (!user) {
       throw new HttpException(await this.i18n.t('errors.user_not_found'), HttpStatus.NOT_FOUND)
     } else if (!user.is_active) {

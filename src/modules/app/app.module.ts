@@ -98,7 +98,7 @@ import { PurchaseModule } from '../purchase/purchase.module'
         autoLoadEntities: false,
         synchronize: false,
         migrationsRun: false,
-        logging: false,
+        logging: true,
       }),
     }),
     AuthModule,
