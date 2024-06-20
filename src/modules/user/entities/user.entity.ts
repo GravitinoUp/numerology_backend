@@ -37,13 +37,13 @@ export class User extends BaseModel {
   @ApiProperty({ required: false })
   email?: string
 
-  @Column()
-  @ApiProperty()
-  phone: string
+  @Column({ nullable: true })
+  @ApiProperty({ required: false })
+  phone?: string
 
-  @Column({ select: false })
-  @ApiProperty()
-  password: string
+  @Column({ select: false, nullable: true })
+  @ApiProperty({ required: false })
+  password?: string
 
   @Column({ type: 'varchar', array: true })
   @ApiProperty()

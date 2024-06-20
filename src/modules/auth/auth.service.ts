@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import * as bcrypt from 'bcrypt'
-import { AuthDto, CreateAuthDto } from './dto/auth.dto'
+import { AuthDto, CodeAuthDto, CreateAuthDto } from './dto/auth.dto'
 import { Auth } from './entities/auth.entity'
 import { sign, verify } from 'jsonwebtoken'
 import { ConfigService } from '@nestjs/config'
@@ -55,6 +55,21 @@ export class AuthService {
     }
   }
 
+  async loginPasswordless(auth: CodeAuthDto, values: { userAgent: string; ipAddress: string }) {
+    try {
+      const loginData = await this.usersService.findByUuid(auth.code)
+
+      if (loginData) {
+        return this.newRefreshAndAccessToken(loginData, values)
+      } else {
+        throw new HttpException(await this.i18n.t('errors.wrong_credentials'), HttpStatus.FORBIDDEN)
+      }
+    } catch (error) {
+      console.log(error)
+      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
   private async newRefreshAndAccessToken(
     loginData: UserResponse,
     values: { userAgent: string; ipAddress: string },
@@ -93,11 +108,21 @@ export class AuthService {
       throw new HttpException(await this.i18n.t('errors.user_not_found'), HttpStatus.NOT_FOUND)
     }
 
-    const loginData = await this.usersService.authByPhone(user.phone)
-    delete loginData['password']
+    let accessToken
+    if (user.phone) {
+      const loginData = await this.usersService.authByPhone(user.phone)
+      delete loginData['password']
 
-    const accessToken = {
-      ...loginData,
+      accessToken = {
+        ...loginData,
+      }
+    } else {
+      const loginData = await this.usersService.findByUuid(user.user_uuid)
+      delete loginData['password']
+
+      accessToken = {
+        ...loginData,
+      }
     }
 
     return sign(accessToken, this.configService.get('access_secret'), {
@@ -136,11 +161,7 @@ export class AuthService {
     if (!foundAuth) {
       throw new HttpException(await this.i18n.t('errors.invalid_jwt'), HttpStatus.FORBIDDEN)
     } else {
-      await this.authRepository
-        .createQueryBuilder()
-        .delete()
-        .where('auth_uuid = :auth_uuid', { auth_uuid })
-        .execute()
+      await this.authRepository.createQueryBuilder().delete().where('auth_uuid = :auth_uuid', { auth_uuid }).execute()
 
       return { status: true }
     }

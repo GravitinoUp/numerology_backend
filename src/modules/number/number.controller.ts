@@ -24,6 +24,9 @@ import { GetCompatibilityDto } from './dto'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 import { CacheRoutes } from 'src/common/constants/constants'
 import { GraphDataResponse } from './response'
+import { PurchaseGuard } from '../purchase/guards/purchase.guard'
+import { HasPurchases } from '../purchase/guards/decorators/purchase.decorator'
+import { PurchasesEnum } from '../purchase/guards/enums/purchases.enum'
 
 @ApiBearerAuth()
 @ApiTags('Numbers')
@@ -87,7 +90,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.Diseases])
   @Get('diseases/:query')
   async getDiseases(@Param('query') query: string, @Req() request) {
     const key = `${CacheRoutes.NUMBERS}/diseases-${request.i18nLang}`
@@ -110,7 +114,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.Professions])
   @Get('professions')
   async getProfessions(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/professions-${request.user.user_uuid}-${request.i18nLang}`
@@ -132,7 +137,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.WeakQualities])
   @Get('weak-qualities')
   async getNegaiveTraits(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/weak-qualities-${request.user.user_uuid}-${request.i18nLang}`
@@ -154,7 +160,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.StrongQualities])
   @Get('strong-qualities')
   async getStrongQualitites(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/strong-qualities-${request.user.user_uuid}-${request.i18nLang}`
@@ -197,7 +204,8 @@ export class NumberController {
     description: AppStrings.ANCESTORS_GET_RESPONSE,
     type: FormulaResultResponse,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.Ancestors])
   @Get('ancestors')
   async getAncestors(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/ancestors-${request.user.user_uuid}-${request.i18nLang}`
@@ -219,7 +227,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.TotemicAnimals])
   @Get('totemic-animals')
   async getTotemicAnimals(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/totemic-animals-${request.user.user_uuid}-${request.i18nLang}`
@@ -241,7 +250,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.DestinyProgram])
   @Get('destiny-program')
   async getDestinyProgram(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/destiny-program-${request.user.user_uuid}-${request.i18nLang}`
@@ -263,7 +273,8 @@ export class NumberController {
     type: Number,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.LuckyNumbers])
   @Get('lucky-numbers')
   async getLuckyNumbers(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/lucky-numbers-${request.user.user_uuid}-${request.i18nLang}`
@@ -285,7 +296,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.Karma])
   @Get('karma')
   async getKarma(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/karma-${request.user.user_uuid}-${request.i18nLang}`
@@ -349,7 +361,8 @@ export class NumberController {
     description: AppStrings.GUESSING_NUMBER_GET_RESPONSE,
     type: FormulaResultResponse,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.GuessingNumber])
   @Get('guessing-number')
   async getGuessingNumber(@Query('query') number: number, @Req() request) {
     if (number > 999999999 || number < 100000000) {
@@ -374,7 +387,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.Compatibility])
   @Post('compatibility')
   async getCompatibility(@Body() compatibilityDto: GetCompatibilityDto, @Req() request) {
     const key = `${CacheRoutes.NUMBERS}/compatibility-${JSON.stringify(compatibilityDto)}-${request.i18nLang}`
@@ -416,7 +430,8 @@ export class NumberController {
     description: AppStrings.PHONE_NUMBER_CALCULATION_GET_RESPONSE,
     type: FormulaResultResponse,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.PhoneCalculation])
   @Get('phone-calculation')
   async getPhoneNumberCalculation(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/phone-calculation-${request.user.user_uuid}-${request.i18nLang}`
@@ -437,7 +452,8 @@ export class NumberController {
     description: AppStrings.HOUSE_NUMBER_CALCULATION_GET_RESPONSE,
     type: FormulaResultResponse,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.HouseCalculation])
   @Get('house-calculation')
   async getHouseNumberCalculation(@Query('query') number: number, @Req() request) {
     const key = `${CacheRoutes.NUMBERS}/house-calculation-${number}-${request.i18nLang}`
@@ -458,7 +474,8 @@ export class NumberController {
     description: AppStrings.FATE_NUMBER_GIFTS_GET_RESPONSE,
     type: FormulaResultResponse,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.FateNumberGifts])
   @Get('fate-number-gifts')
   async getFateNumberGift(@Query('query') date: Date, @Req() request) {
     const formattedDate = new Date(date)
@@ -481,7 +498,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.Aromatherapy])
   @Get('aromatherapy')
   async getAromatherapy(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/aromatherapy-${request.user.user_uuid}-${request.i18nLang}`
@@ -503,7 +521,8 @@ export class NumberController {
     type: FormulaResultResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.RunicFormulas])
   @Get('runic-formulas')
   async getRunicFormulas(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/runic-formulas-${request.i18nLang}`
@@ -525,7 +544,8 @@ export class NumberController {
     type: GraphDataResponse,
     isArray: true,
   })
-  @UseGuards(JwtAuthGuard, ActiveGuard)
+  @UseGuards(JwtAuthGuard, ActiveGuard, PurchaseGuard)
+  @HasPurchases([PurchasesEnum.Graphs])
   @Get('graphs')
   async getGraphs(@Req() request) {
     const key = `${CacheRoutes.NUMBERS}/graphs-${request.user.user_uuid}-${request.i18nLang}`

@@ -7,8 +7,10 @@
   "password_mismatch": "Passwords don't match!",
   "wrong_password": "Incorreсt password!",
   "user_exists": "A user with such an E-Mail or phone number already exists!",
+  "email_exists": "Such an E-Mail has already been registered!",
   "wrong_guessing_number": "The number must consist of 9 digits!",
   "self_status_change": "You cannot change your status!",
+  "admin_passwordless_login": "You cannot log in without using a password!",
 
   "user_not_found": "User not found!",
   "language_not_found": "Language not found!",

@@ -25,6 +25,7 @@ import { NotificationsModule } from '../notifications/notifications.module'
 import { CacheModule, CacheOptions } from '@nestjs/cache-manager'
 import * as redisStore from 'cache-manager-redis-store'
 import { RedisClientOptions } from 'redis'
+import { PurchaseModule } from '../purchase/purchase.module'
 
 @Module({
   imports: [
@@ -97,7 +98,7 @@ import { RedisClientOptions } from 'redis'
         autoLoadEntities: false,
         synchronize: false,
         migrationsRun: false,
-        logging: false,
+        logging: true,
       }),
     }),
     AuthModule,
@@ -111,6 +112,7 @@ import { RedisClientOptions } from 'redis'
     OnboardModule,
     PageModule,
     PersonModule,
+    PurchaseModule,
     RoleModule,
     UserModule,
   ],
