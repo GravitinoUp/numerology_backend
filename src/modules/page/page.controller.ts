@@ -22,7 +22,7 @@ import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { Roles } from '../role/guards/decorators/role.decorator'
 import { RolesGuard } from '../role/guards/roles.guard'
 import { PageResponse, StatusPageResponse } from './response'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { UpdatePageDto, UpdatePageStatusDto } from './dto'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 
@@ -97,7 +97,10 @@ export class PageController {
   async updateStatus(@Body() pageStatus: UpdatePageStatusDto) {
     const isCategoryExists = await this.pageService.isExists(pageStatus.page_uuid)
     if (!isCategoryExists) {
-      throw new HttpException(await this.i18n.t('errors.page_not_found'), HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        await this.i18n.t('errors.page_not_found', { lang: I18nContext.current().lang }),
+        HttpStatus.NOT_FOUND,
+      )
     }
 
     const result = await this.pageService.updateStatus(pageStatus)
@@ -117,7 +120,10 @@ export class PageController {
   async update(@Body() updatePage: UpdatePageDto) {
     const isExists = await this.pageService.isExists(updatePage.page_uuid)
     if (!isExists) {
-      throw new HttpException(await this.i18n.t('errors.page_not_found'), HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        await this.i18n.t('errors.page_not_found', { lang: I18nContext.current().lang }),
+        HttpStatus.NOT_FOUND,
+      )
     }
 
     const result = await this.pageService.update(updatePage)

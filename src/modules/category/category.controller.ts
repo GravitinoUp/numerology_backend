@@ -18,7 +18,7 @@ import { ActiveGuard } from '../auth/guards/active.guard'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { CategoryResponse, StatusCategoryResponse } from './response'
 import { UpdateCategoryDto, UpdateCategoryStatusDto } from './dto'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { RolesGuard } from '../role/guards/roles.guard'
 import { Roles } from '../role/guards/decorators/role.decorator'
 import { CacheRoutes, RolesEnum } from 'src/common/constants/constants'
@@ -70,7 +70,10 @@ export class CategoryController {
   async update(@Body() updateCategory: UpdateCategoryDto) {
     const isCategoryExists = await this.categoryService.isCategoryExists(updateCategory.category_id)
     if (!isCategoryExists) {
-      throw new HttpException(await this.i18n.t('errors.category_not_found'), HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        await this.i18n.t('errors.category_not_found', { lang: I18nContext.current().lang }),
+        HttpStatus.NOT_FOUND,
+      )
     }
 
     const result = await this.categoryService.update(updateCategory)
@@ -90,7 +93,10 @@ export class CategoryController {
   async updateStatus(@Body() categoryStatus: UpdateCategoryStatusDto) {
     const isCategoryExists = await this.categoryService.isCategoryExists(categoryStatus.category_id)
     if (!isCategoryExists) {
-      throw new HttpException(await this.i18n.t('errors.category_not_found'), HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        await this.i18n.t('errors.category_not_found', { lang: I18nContext.current().lang }),
+        HttpStatus.NOT_FOUND,
+      )
     }
 
     const result = await this.categoryService.updateStatus(categoryStatus)

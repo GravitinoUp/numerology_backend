@@ -8,7 +8,7 @@ import { AuthResponse, StatusAuthResponse } from './response'
 import { InjectRepository } from '@nestjs/typeorm'
 import { UserService } from '../user/user.service'
 import { Repository } from 'typeorm'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { UserResponse } from '../user/response'
 
 @Injectable()
@@ -47,7 +47,10 @@ export class AuthService {
 
         return this.newRefreshAndAccessToken(loginData, values)
       } else {
-        throw new HttpException(await this.i18n.t('errors.wrong_credentials'), HttpStatus.FORBIDDEN)
+        throw new HttpException(
+          await this.i18n.t('errors.wrong_credentials', { lang: I18nContext.current().lang }),
+          HttpStatus.FORBIDDEN,
+        )
       }
     } catch (error) {
       console.log(error)
@@ -62,7 +65,10 @@ export class AuthService {
       if (loginData) {
         return this.newRefreshAndAccessToken(loginData, values)
       } else {
-        throw new HttpException(await this.i18n.t('errors.wrong_credentials'), HttpStatus.FORBIDDEN)
+        throw new HttpException(
+          await this.i18n.t('errors.wrong_credentials', { lang: I18nContext.current().lang }),
+          HttpStatus.FORBIDDEN,
+        )
       }
     } catch (error) {
       console.log(error)
@@ -100,12 +106,18 @@ export class AuthService {
   async refresh(refreshStr: string): Promise<string | undefined> {
     const refreshToken = await this.retrieveRefreshToken(refreshStr)
     if (!refreshToken) {
-      throw new HttpException(await this.i18n.t('errors.invalid_jwt'), HttpStatus.FORBIDDEN)
+      throw new HttpException(
+        await this.i18n.t('errors.invalid_jwt', { lang: I18nContext.current().lang }),
+        HttpStatus.FORBIDDEN,
+      )
     }
 
     const user = await this.usersService.findByUuid(refreshToken.user_uuid, false)
     if (!user) {
-      throw new HttpException(await this.i18n.t('errors.user_not_found'), HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        await this.i18n.t('errors.user_not_found', { lang: I18nContext.current().lang }),
+        HttpStatus.NOT_FOUND,
+      )
     }
 
     let accessToken
@@ -159,7 +171,10 @@ export class AuthService {
       .where('auth_uuid = :auth_uuid', { auth_uuid })
       .getOne()
     if (!foundAuth) {
-      throw new HttpException(await this.i18n.t('errors.invalid_jwt'), HttpStatus.FORBIDDEN)
+      throw new HttpException(
+        await this.i18n.t('errors.invalid_jwt', { lang: I18nContext.current().lang }),
+        HttpStatus.FORBIDDEN,
+      )
     } else {
       await this.authRepository.createQueryBuilder().delete().where('auth_uuid = :auth_uuid', { auth_uuid }).execute()
 

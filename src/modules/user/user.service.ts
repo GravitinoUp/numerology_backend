@@ -17,7 +17,7 @@ import * as bcrypt from 'bcrypt'
 import { DefaultPagination, RolesEnum } from 'src/common/constants/constants'
 import { CreateAuthCodeDto } from '../auth_code/dto'
 import { AuthCodeService } from '../auth_code/auth_code.service'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { UserFilter } from './filter'
 import { formatFilter } from 'src/utils/format-filter'
 
@@ -95,7 +95,10 @@ export class UserService {
       if (user) {
         if (isPasswordless) {
           if (user.role_id != RolesEnum.USER) {
-            throw new HttpException(this.i18n.t('errors.admin_passwordless_login'), HttpStatus.FORBIDDEN)
+            throw new HttpException(
+              this.i18n.t('errors.admin_passwordless_login', { lang: I18nContext.current().lang }),
+              HttpStatus.FORBIDDEN,
+            )
           }
         }
 
@@ -239,7 +242,10 @@ export class UserService {
           return { status: false }
         }
       } else {
-        throw new HttpException(await this.i18n.t('errors.password_mismatch'), HttpStatus.BAD_REQUEST)
+        throw new HttpException(
+          await this.i18n.t('errors.password_mismatch', { lang: I18nContext.current().lang }),
+          HttpStatus.BAD_REQUEST,
+        )
       }
     } catch (error) {
       console.log(error)
@@ -304,7 +310,10 @@ export class UserService {
           return { status: false }
         }
       } else {
-        throw new HttpException(await this.i18n.t('errors.invalid_code'), HttpStatus.BAD_REQUEST)
+        throw new HttpException(
+          await this.i18n.t('errors.invalid_code', { lang: I18nContext.current().lang }),
+          HttpStatus.BAD_REQUEST,
+        )
       }
     } catch (error) {
       console.log(error)
@@ -334,7 +343,10 @@ export class UserService {
           return { status: false }
         }
       } else {
-        throw new HttpException(await this.i18n.t('errors.wrong_password'), HttpStatus.BAD_REQUEST)
+        throw new HttpException(
+          await this.i18n.t('errors.wrong_password', { lang: I18nContext.current().lang }),
+          HttpStatus.BAD_REQUEST,
+        )
       }
     } catch (error) {
       console.log(error)

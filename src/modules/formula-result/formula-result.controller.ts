@@ -17,7 +17,7 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { FormulaResultService } from './formula-result.service'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { FormulaResultResponse, StatusFormulaResultResponse } from './response'
 import { CacheRoutes, RolesEnum } from 'src/common/constants/constants'
 import { AppStrings } from 'src/common/constants/strings'
@@ -90,7 +90,7 @@ export class FormulaResultController {
     const isExists = await this.formulaResultService.isFormulaResultExists(formulaResult.result_uuid)
 
     if (!isExists) {
-      throw new NotFoundException(this.i18n.t('errors.result_not_found'))
+      throw new NotFoundException(this.i18n.t('errors.result_not_found', { lang: I18nContext.current().lang }))
     }
 
     const result = await this.formulaResultService.update(formulaResult)
@@ -110,7 +110,7 @@ export class FormulaResultController {
   async delete(@Param('uuid') id: string) {
     const isExists = await this.formulaResultService.isFormulaResultExists(id)
     if (!isExists) {
-      throw new NotFoundException(this.i18n.t('errors.result_not_found'))
+      throw new NotFoundException(this.i18n.t('errors.result_not_found', { lang: I18nContext.current().lang }))
     }
 
     const result = await this.formulaResultService.delete(id)

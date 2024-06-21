@@ -15,7 +15,7 @@ import { UserService } from './user.service'
 import { CheckUserExistsDto, CreateUserDto, UpdateUserDto, UpdateUserStatusDto } from './dto'
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { ArrayUserResponse, StatusUserResponse, UserResponse } from './response'
 import { AppStrings } from 'src/common/constants/strings'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
@@ -123,13 +123,19 @@ export class UserController {
   async updateCurrent(@Body() user: UpdateUserDto, @Req() request) {
     const isUserExists = await this.userService.isUserExists({ user_uuid: request.user.user_uuid })
     if (!isUserExists) {
-      throw new HttpException(await this.i18n.t('errors.user_not_found'), HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        await this.i18n.t('errors.user_not_found', { lang: I18nContext.current().lang }),
+        HttpStatus.NOT_FOUND,
+      )
     }
 
     if (user.email) {
       const isEmailExists = await this.userService.isUserExists({ email: user.email })
       if (isEmailExists) {
-        throw new HttpException(await this.i18n.t('errors.email_exists'), HttpStatus.NOT_FOUND)
+        throw new HttpException(
+          await this.i18n.t('errors.email_exists', { lang: I18nContext.current().lang }),
+          HttpStatus.NOT_FOUND,
+        )
       }
     }
 
@@ -163,7 +169,10 @@ export class UserController {
   @Patch('status')
   async updateStatus(@Body() updateUserStatusDto: UpdateUserStatusDto, @Req() request) {
     if (request.user.user_uuid == updateUserStatusDto.user_uuid) {
-      throw new HttpException(await this.i18n.t('errors.self_status_change'), HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        await this.i18n.t('errors.self_status_change', { lang: I18nContext.current().lang }),
+        HttpStatus.NOT_FOUND,
+      )
     }
     const result = await this.userService.updateStatus(updateUserStatusDto)
     await this.clearCache()

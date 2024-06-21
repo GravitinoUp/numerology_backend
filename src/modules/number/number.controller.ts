@@ -19,7 +19,7 @@ import { AppStrings } from 'src/common/constants/strings'
 import { FormulaResultResponse } from '../formula-result/response'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { GetCompatibilityDto } from './dto'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 import { CacheRoutes } from 'src/common/constants/constants'
@@ -366,7 +366,7 @@ export class NumberController {
   @Get('guessing-number')
   async getGuessingNumber(@Query('query') number: number, @Req() request) {
     if (number > 999999999 || number < 100000000) {
-      throw new BadRequestException(this.i18n.t('errors.wrong_guessing_number'))
+      throw new BadRequestException(this.i18n.t('errors.wrong_guessing_number', { lang: I18nContext.current().lang }))
     }
     const key = `${CacheRoutes.NUMBERS}/guessing-number-${number}-${request.i18nLang}`
     let result: FormulaResultResponse[] = await this.cacheManager.get(key)

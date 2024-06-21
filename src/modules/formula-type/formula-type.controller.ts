@@ -15,7 +15,7 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { FormulaTypeService } from './formula-type.service'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { AppStrings } from 'src/common/constants/strings'
 import { FormulaTypeResponse, StatusFormulaTypeResponse } from './response'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
@@ -119,7 +119,10 @@ export class FormulaTypeController {
   async update(@Body() updateFormulaTypeDto: UpdateFormulaTypeDto) {
     const isExists = await this.formulaTypeService.isExists(updateFormulaTypeDto.formula_type_id)
     if (!isExists) {
-      throw new HttpException(await this.i18n.t('errors.formula_type_not_found'), HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        await this.i18n.t('errors.formula_type_not_found', { lang: I18nContext.current().lang }),
+        HttpStatus.NOT_FOUND,
+      )
     }
 
     const result = await this.formulaTypeService.update(updateFormulaTypeDto)

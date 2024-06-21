@@ -4,7 +4,7 @@ import { ApiTags } from '@nestjs/swagger'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { UserService } from '../user/user.service'
 import { AuthDto, CodeAuthDto } from './dto/auth.dto'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { RefreshTokenDto } from './dto/refresh-token.dto'
 import { Throttle } from '@nestjs/throttler'
 
@@ -23,9 +23,15 @@ export class AuthController {
   async login(@Body() authDto: AuthDto, @Ip() ipAddress, @Req() request) {
     const user = await this.userService.authByPhone(authDto.phone)
     if (!user) {
-      throw new HttpException(await this.i18n.t('errors.user_not_found'), HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        await this.i18n.t('errors.user_not_found', { lang: I18nContext.current().lang }),
+        HttpStatus.NOT_FOUND,
+      )
     } else if (!user.is_active) {
-      throw new HttpException(await this.i18n.t('errors.user_deactivated'), HttpStatus.FORBIDDEN)
+      throw new HttpException(
+        await this.i18n.t('errors.user_deactivated', { lang: I18nContext.current().lang }),
+        HttpStatus.FORBIDDEN,
+      )
     }
 
     return this.authService.login(authDto, {
@@ -40,9 +46,15 @@ export class AuthController {
     const user = await this.userService.findByUuid(authDto.code, false, true)
 
     if (!user) {
-      throw new HttpException(await this.i18n.t('errors.user_not_found'), HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        await this.i18n.t('errors.user_not_found', { lang: I18nContext.current().lang }),
+        HttpStatus.NOT_FOUND,
+      )
     } else if (!user.is_active) {
-      throw new HttpException(await this.i18n.t('errors.user_deactivated'), HttpStatus.FORBIDDEN)
+      throw new HttpException(
+        await this.i18n.t('errors.user_deactivated', { lang: I18nContext.current().lang }),
+        HttpStatus.FORBIDDEN,
+      )
     }
 
     return this.authService.loginPasswordless(authDto, {

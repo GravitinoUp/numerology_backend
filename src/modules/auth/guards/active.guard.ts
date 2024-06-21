@@ -1,11 +1,5 @@
-import {
-  Injectable,
-  CanActivate,
-  ExecutionContext,
-  UnauthorizedException,
-  ForbiddenException,
-} from '@nestjs/common'
-import { I18nService } from 'nestjs-i18n'
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, ForbiddenException } from '@nestjs/common'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { UserService } from 'src/modules/user/user.service'
 
 @Injectable()
@@ -19,7 +13,9 @@ export class ActiveGuard implements CanActivate {
     const { user } = context.switchToHttp().getRequest()
 
     if (!user) {
-      throw new UnauthorizedException(await this.i18n.t('errors.user_deactivated'))
+      throw new UnauthorizedException(
+        await this.i18n.t('errors.user_deactivated', { lang: I18nContext.current().lang }),
+      )
     }
 
     const canActivate = await this.userService.canUserActivate(user.user_uuid)
@@ -27,7 +23,7 @@ export class ActiveGuard implements CanActivate {
     if (canActivate) {
       return canActivate
     } else {
-      throw new ForbiddenException(await this.i18n.t('errors.user_deactivated'))
+      throw new ForbiddenException(await this.i18n.t('errors.user_deactivated', { lang: I18nContext.current().lang }))
     }
   }
 }

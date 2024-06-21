@@ -1,5 +1,5 @@
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { PurchaseService } from '../purchase.service'
 import { Reflector } from '@nestjs/core'
 import { PurchasesEnum } from './enums/purchases.enum'
@@ -33,7 +33,7 @@ export class PurchaseGuard implements CanActivate {
       if (result) {
         return result
       } else {
-        throw new ForbiddenException(this.i18n.t('errors.access_denied'))
+        throw new ForbiddenException(this.i18n.t('errors.access_denied', { lang: I18nContext.current().lang }))
       }
     }
   }

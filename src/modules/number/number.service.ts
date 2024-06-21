@@ -3,7 +3,7 @@ import { PersonService } from '../person/person.service'
 import { FormulaResultService } from '../formula-result/formula-result.service'
 import { FormulaResultResponse } from '../formula-result/response'
 import { FormulaTypesEnum } from 'src/common/constants/constants'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { Person } from '../person/entities/person.entity'
 import { GetCompatibilityDto } from './dto'
 import { getArcane, getLongNumberArcane, getNameNumber, getQuersumme, getSoulNumber } from 'src/common/utils/numbers'
@@ -33,7 +33,10 @@ export class NumberService {
 
         return [page]
       } else {
-        throw new HttpException(await this.i18n.t('errors.fate_card_not_found'), HttpStatus.NOT_FOUND)
+        throw new HttpException(
+          await this.i18n.t('errors.fate_card_not_found', { lang: I18nContext.current().lang }),
+          HttpStatus.NOT_FOUND,
+        )
       }
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -103,7 +106,7 @@ export class NumberService {
       const pages = [fateNumber, chronicDisease]
 
       if (!fateNumber && !chronicDisease) {
-        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
 
       return pages
@@ -130,7 +133,7 @@ export class NumberService {
       }
 
       if (diseases.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
 
       return pages
@@ -151,27 +154,27 @@ export class NumberService {
       const pg1 = {
         number: getArcane(dayArcane + monthArcane + yearArcane).toString(),
         key: FormulaTypesEnum.PROFESSIONS,
-        name: this.i18n.t('titles.profession_groups'),
+        name: this.i18n.t('titles.profession_groups', { lang: I18nContext.current().lang }),
       }
       const pg2 = {
         number: getArcane(dayArcane + 2 * monthArcane + yearArcane).toString(),
         key: FormulaTypesEnum.PROFESSIONS,
-        name: this.i18n.t('titles.profession_groups'),
+        name: this.i18n.t('titles.profession_groups', { lang: I18nContext.current().lang }),
       }
       const pg3 = {
         number: getArcane(6 * dayArcane + 6 * monthArcane + 5 * yearArcane).toString(),
         key: FormulaTypesEnum.PROFESSIONS,
-        name: this.i18n.t('titles.profession_groups'),
+        name: this.i18n.t('titles.profession_groups', { lang: I18nContext.current().lang }),
       }
       const pg4 = {
         number: getQuersumme(userBirthday).toString(),
         key: FormulaTypesEnum.PROFESSIONS,
-        name: this.i18n.t('titles.profession_groups'),
+        name: this.i18n.t('titles.profession_groups', { lang: I18nContext.current().lang }),
       }
       const pg5 = {
         number: getSoulNumber(userData.first_name).toString(),
         key: FormulaTypesEnum.PROFESSIONS,
-        name: this.i18n.t('titles.profession_groups'),
+        name: this.i18n.t('titles.profession_groups', { lang: I18nContext.current().lang }),
       }
       const keys = [pg1, pg2, pg3, pg4, pg5]
       const talentKeys = keys
@@ -179,7 +182,7 @@ export class NumberService {
       const pgPlanet1 = {
         number: pg4.number,
         key: FormulaTypesEnum.PLANETS,
-        name: this.i18n.t('titles.profession_planets'),
+        name: this.i18n.t('titles.profession_planets', { lang: I18nContext.current().lang }),
       }
       keys.push(pgPlanet1)
 
@@ -187,7 +190,7 @@ export class NumberService {
         const pgPlanet2 = {
           number: pg5.number, // TODO Должно быть 5 и 6
           key: FormulaTypesEnum.PLANETS,
-          name: this.i18n.t('titles.profession_planets'),
+          name: this.i18n.t('titles.profession_planets', { lang: I18nContext.current().lang }),
         }
 
         keys.push(pgPlanet2)
@@ -222,7 +225,7 @@ export class NumberService {
       }
 
       if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
 
       return pages
@@ -282,7 +285,7 @@ export class NumberService {
       }
 
       if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
 
       return pages
@@ -354,7 +357,7 @@ export class NumberService {
       }
 
       if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
 
       return pages
@@ -394,7 +397,7 @@ export class NumberService {
       }
 
       if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
 
       return pages
@@ -419,7 +422,7 @@ export class NumberService {
         page.formula_type = getLocalizedFormulaType(page.formula_type, language_code)
         return [page]
       } else {
-        throw new NotFoundException(await this.i18n.t('errors.page_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.page_not_found', { lang: I18nContext.current().lang }))
       }
     } catch (error) {
       throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
@@ -457,7 +460,7 @@ export class NumberService {
       }
 
       if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
 
       return pages
@@ -517,7 +520,7 @@ export class NumberService {
       }
 
       if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
 
       return pages
@@ -587,7 +590,7 @@ export class NumberService {
       }
 
       if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
       return pages
     } catch (error) {
@@ -606,7 +609,7 @@ export class NumberService {
       }
 
       if (!page) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
       return [page]
     } catch (error) {
@@ -629,7 +632,7 @@ export class NumberService {
       }
 
       if (!page) {
-        throw new NotFoundException(this.i18n.t('errors.angelic_data_not_found'))
+        throw new NotFoundException(this.i18n.t('errors.angelic_data_not_found', { lang: I18nContext.current().lang }))
       }
       return [page]
     } catch (error) {
@@ -655,7 +658,7 @@ export class NumberService {
       }
 
       if (!page) {
-        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
       return [page]
     } catch (error) {
@@ -729,7 +732,7 @@ export class NumberService {
       }
 
       if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
       return pages
     } catch (error) {
@@ -760,7 +763,7 @@ export class NumberService {
       }
 
       if (!page) {
-        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
       return [page]
     } catch (error) {
@@ -786,7 +789,7 @@ export class NumberService {
       }
 
       if (!page) {
-        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
       return [page]
     } catch (error) {
@@ -811,7 +814,7 @@ export class NumberService {
       }
 
       if (!page) {
-        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
       return [page]
     } catch (error) {
@@ -837,7 +840,7 @@ export class NumberService {
       }
 
       if (!page) {
-        throw new NotFoundException(this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
       return [page]
     } catch (error) {
@@ -875,7 +878,7 @@ export class NumberService {
       }
 
       if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
       return pages
     } catch (error) {
@@ -894,7 +897,7 @@ export class NumberService {
       }
 
       if (pages.length == 0) {
-        throw new NotFoundException(await this.i18n.t('errors.data_not_found'))
+        throw new NotFoundException(await this.i18n.t('errors.data_not_found', { lang: I18nContext.current().lang }))
       }
       return pages
     } catch (error) {
@@ -922,13 +925,13 @@ export class NumberService {
       const destinyResponse = new GraphResponse()
       destinyResponse.y_coords = destinyCoords
       destinyResponse.x_coords = xCoords
-      destinyResponse.graph_name = this.i18n.t('titles.destiny_graph')
+      destinyResponse.graph_name = this.i18n.t('titles.destiny_graph', { lang: I18nContext.current().lang })
 
       const volitionCoords = volitionKey.split('')
       const volitionResponse = new GraphResponse()
       volitionResponse.y_coords = volitionCoords
       volitionResponse.x_coords = xCoords
-      volitionResponse.graph_name = this.i18n.t('titles.volition_graph')
+      volitionResponse.graph_name = this.i18n.t('titles.volition_graph', { lang: I18nContext.current().lang })
 
       const pages = []
 
@@ -973,7 +976,7 @@ export class NumberService {
       const comfortResponse = new GraphResponse()
       comfortResponse.y_coords = comfortCoords.map(String)
       comfortResponse.x_coords = xCoords
-      comfortResponse.graph_name = this.i18n.t('titles.comfort_graph')
+      comfortResponse.graph_name = this.i18n.t('titles.comfort_graph', { lang: I18nContext.current().lang })
 
       let comfortKey
 

@@ -21,7 +21,7 @@ import { AppStrings } from 'src/common/constants/strings'
 import { ActiveGuard } from '../auth/guards/active.guard'
 import { JwtAuthGuard } from '../auth/guards/auth.guard'
 import { CreateOnboardDto, UpdateOnboardDto } from './dto'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 import { AllExceptionsFilter } from 'src/common/exception.filter'
 import { CacheRoutes, RolesEnum } from 'src/common/constants/constants'
 import { Roles } from '../role/guards/decorators/role.decorator'
@@ -88,7 +88,7 @@ export class OnboardController {
     const isOnboardExists = await this.onboardService.isExists(updateOnboardDto.onboard_id)
 
     if (!isOnboardExists) {
-      throw new NotFoundException(await this.i18n.t('errors.onboard_not_found'))
+      throw new NotFoundException(await this.i18n.t('errors.onboard_not_found', { lang: I18nContext.current().lang }))
     }
 
     const result = await this.onboardService.update(updateOnboardDto)
@@ -109,7 +109,7 @@ export class OnboardController {
     const isOnboardExists = await this.onboardService.isExists(onboard_id)
 
     if (!isOnboardExists) {
-      throw new NotFoundException(await this.i18n.t('errors.onboard_not_found'))
+      throw new NotFoundException(await this.i18n.t('errors.onboard_not_found', { lang: I18nContext.current().lang }))
     }
 
     const result = await this.onboardService.delete(onboard_id)

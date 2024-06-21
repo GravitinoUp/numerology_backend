@@ -2,7 +2,7 @@ import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from
 import { Reflector } from '@nestjs/core'
 import { UserService } from 'src/modules/user/user.service'
 import { Roles } from './decorators/role.decorator'
-import { I18nService } from 'nestjs-i18n'
+import { I18nContext, I18nService } from 'nestjs-i18n'
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -27,13 +27,13 @@ export class RolesGuard implements CanActivate {
         if (roles.includes(currentUser.role_id)) {
           return true
         } else {
-          throw new UnauthorizedException(this.i18n.t('errors.access_denied'))
+          throw new UnauthorizedException(this.i18n.t('errors.access_denied', { lang: I18nContext.current().lang }))
         }
       } else {
-        throw new UnauthorizedException(this.i18n.t('errors.access_denied'))
+        throw new UnauthorizedException(this.i18n.t('errors.access_denied', { lang: I18nContext.current().lang }))
       }
     } else {
-      throw new UnauthorizedException(this.i18n.t('errors.access_denied'))
+      throw new UnauthorizedException(this.i18n.t('errors.access_denied', { lang: I18nContext.current().lang }))
     }
   }
 }
