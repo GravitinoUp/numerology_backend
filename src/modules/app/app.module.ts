@@ -30,7 +30,7 @@ import { PurchaseModule } from '../purchase/purchase.module'
 @Module({
   imports: [
     I18nModule.forRoot({
-      fallbackLanguage: 'ru',
+      fallbackLanguage: 'en',
       fallbacks: {
         'ru-*': 'ru',
         'en-*': 'en',
