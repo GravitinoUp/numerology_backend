@@ -5,8 +5,8 @@ import { Repository, DataSource, DeleteResult, QueryRunner } from 'typeorm'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import * as moment from 'moment'
 import getRandomInt from 'src/common/utils/get_random_int'
-import { AuthCodeResponse, StatusAuthCodeResponse } from './response'
-import { CreateAuthCodeDto, SendEmailAuthCodeDto, SendPhoneAuthCodeDto } from './dto'
+import { AuthCodeResponse } from './response'
+import { CreateAuthCodeDto } from './dto'
 import { AppErrors } from 'src/common/constants/errors'
 import { codeTTL } from 'src/common/constants/constants'
 
@@ -71,31 +71,31 @@ export class AuthCodeService {
     }
   }
 
-  async sendPhoneCode(sendPhoneAuthCodeDto: SendPhoneAuthCodeDto): Promise<StatusAuthCodeResponse> {
-    try {
-      const generatedCode = await this.generateCode(sendPhoneAuthCodeDto.phone)
-      console.log(generatedCode)
+  // async sendPhoneCode(sendPhoneAuthCodeDto: SendPhoneAuthCodeDto): Promise<StatusAuthCodeResponse> {
+  //   try {
+  //     const generatedCode = await this.generateCode(sendPhoneAuthCodeDto.phone)
+  //     console.log(generatedCode)
 
-      // SEND CODE TODO
+  //     // SEND CODE TODO
 
-      return { status: true }
-    } catch (error) {
-      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-  }
+  //     return { status: true }
+  //   } catch (error) {
+  //     throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+  //   }
+  // }
 
-  async sendEmailCode(sendEmailAuthCodeDto: SendEmailAuthCodeDto): Promise<StatusAuthCodeResponse> {
-    try {
-      const generatedCode = await this.generateCode(null, sendEmailAuthCodeDto.email)
-      console.log(generatedCode)
+  // async sendEmailCode(sendEmailAuthCodeDto: SendEmailAuthCodeDto): Promise<StatusAuthCodeResponse> {
+  //   try {
+  //     const generatedCode = await this.generateCode(null, sendEmailAuthCodeDto.email)
+  //     console.log(generatedCode)
 
-      // SEND CODE TODO
+  //     // SEND CODE TODO
 
-      return { status: true }
-    } catch (error) {
-      throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-  }
+  //     return { status: true }
+  //   } catch (error) {
+  //     throw new HttpException(error.message, error.status ?? HttpStatus.INTERNAL_SERVER_ERROR)
+  //   }
+  // }
 
   async findCode(code: number): Promise<AuthCodeResponse> {
     try {
